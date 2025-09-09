@@ -1,0 +1,3 @@
+- s'inspirer des questionnaires en exemples pour créer le nouveau formulaire en les retravaillant pour qu'il soit plus intelligent
+- faire en sorte que l'étudiant remplisse obligatoirement tous les champs en ligne
+- l'étudiant dois se connecter à un site (par un login peut-être) et pouvoir remplir le formulaire une unique fois
