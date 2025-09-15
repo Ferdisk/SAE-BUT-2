@@ -1,3 +1,7 @@
 - s'inspirer des questionnaires en exemples pour créer le nouveau formulaire en les retravaillant pour qu'il soit plus intelligent
 - faire en sorte que l'étudiant remplisse obligatoirement tous les champs en ligne
 - l'étudiant dois se connecter à un site (par un login peut-être) et pouvoir remplir le formulaire une unique fois
+- justifier les choix de la solution choisie et pq ne pas avoir choisi les autres solutions
+- pour les questions poser aux professeurs en premiers avant d'autres entités comme la DSI...
+- gestion des données avec le RGP ?
+- 
