@@ -6,7 +6,7 @@ const boutonform_actions = divbtnform_actions.querySelectorAll('button');
 boutonform_actions.forEach(btn => {
     btn.addEventListener('click', () => {
             if (verifiePresenceQuestion()){
-
+                //TODO
             } else {
                 alert("Vous n'avez ajouté aucune question au formulaire !")
             };
@@ -14,5 +14,5 @@ boutonform_actions.forEach(btn => {
     });
 
 function verifiePresenceQuestion() {
-
+    //TODO
 }
