@@ -28,7 +28,6 @@ function displayQuestions() {
         questionsHidden = true
     }
 }
-}
 
 function addQCM() {
     let nbr_questions = 1;
