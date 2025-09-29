@@ -4,20 +4,23 @@ const boutonform_actions = divbtnform_actions.querySelectorAll('button');
 let questionsHidden = true;
 let nbr_questions = 0;
 
+
+//TODO: faire en sorte que le code ci-dessous ne fasse pas buguer l'affichafe de QCM et Texte quand on sur ajout bouton  
 //Vérifie s'il y a des questions quand le bouton envoyer et effacer sont clicker
 // boutonform_actions.forEach(btn => {
-//     btn.addEventListener('click', () => {
-//             if (verifiePresenceQuestion()){
+// btn.addEventListener('click', () => {
+//     if (!verifiePresenceQuestion()){
+//         alert("Vous n'avez ajouté aucune question au formulaire !");
+//     } 
 
-//             } else {
-//                 alert("Vous n'avez ajouté aucune question au formulaire !")
-//             };
-//         });
-//     });
+function verifiePresenceQuestion() {
+     const questionsContainer = document.getElementById("questions-container");
+    
+     return questionsContainer.childElementCount > 0;
+ }
 
-// function verifiePresenceQuestion() {
+//TODO: quand on créer une question, ajouter un bouton obligatoire qui permet de rendre la question obligatoire et faire en sorte que quand un utilisateur envoie le questionnaire sans avoir remplie la question obligatoire cela bloque et affiche la question obligatoire
 
-// }
 
 function displayQuestions() {
     if (questionsHidden) {
@@ -28,6 +31,8 @@ function displayQuestions() {
         questionsHidden = true
     }
 }
+
+
 
 function addQCM() {
     let nbr_questions = 1;
