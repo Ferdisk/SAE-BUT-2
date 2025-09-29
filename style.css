@@ -101,4 +101,18 @@ body {
     margin-top: 2rem;
 }
 
+#builder-questions-container {
+    display: none;
+}
 
+button.link {
+    background: none;
+    border: none;
+}
+
+button.link:hover {
+    cursor: pointer;
+    color: blue;
+    font-weight: bold;
+    text-decoration: underline;
+}

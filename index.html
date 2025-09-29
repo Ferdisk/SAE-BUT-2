@@ -5,14 +5,18 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Questionnaire</title>
     <link rel="stylesheet" href="style.css">
-    <script src="scripts/main.js"></script>
+    <script src="scripts/scripts.js" defer></script>
 </head>
 <body>
     <div class="page-container">
         <div class="builder-panel">
             <h2>Ajout de questions</h2>
-            <button id="ajout-question-btn" class="builder-button">Ajout de question</button>
+            <button id="ajout-question-btn" class="builder-button" onclick="displayQuestions()">Ajout de question</button>
             <div id="builder-questions-container">
+                <ul>
+                    <li><button class="link" onclick="addQCM()">QCM</button></li>
+                    <li><button class="link" onclick="addTexte()">Texte</button></li>
+                </ul>
             </div>
         </div>
 
@@ -29,7 +33,7 @@
                     </div>
                     <div class="form-actions">
                         <button type="submit" class="submit-btn">Envoyer</button>
-                        <button type="reset" class="clear-btn">Effacer</button>
+                        <button type="reset" class="clear-btn" onclick="removeLastQuestion()">Effacer</button>
                     </div>
                 </form>
             </div>
