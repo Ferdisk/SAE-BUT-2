@@ -20,40 +20,50 @@ function displayQuestions() {
 function addQCM() {
     let nbr_questions = 1;
     const containerQCM = document.createElement("ul");
+    containerQCM.classList.add("containerQCM");
     const titreQCM = document.createElement("textarea");
+    titreQCM.classList.add("titreQCM");
     let textTitreQCM = document.createTextNode("QCM");
+    
     const listQCM = document.createElement("ul");
+    listQCM.classList.add("listQCM");
     const elementQCM = document.createElement("li");
+    elementQCM.classList.add("elementQCM");
     const caseACocher = document.createElement("INPUT");
     caseACocher.setAttribute("type", "checkbox");
+    caseACocher.classList.add("caseACocher");
     const textQuestionContainer = document.createElement("span");
+    textQuestionContainer.classList.add("textQuestionContainer");
     const textAreaQuestion = document.createElement("textarea");
+    textAreaQuestion.classList.add("textAreaQuestion");
     let textQuestion = document.createTextNode("Choix " + nbr_questions.toString());
+    
     const addQuestion = document.createElement("button");
     const addQuestionText = document.createTextNode("+");
+    
     const removeQuestion = document.createElement("button");
     const removeQuestionText = document.createTextNode("-");
+    
 
     addQuestion.onclick = function(){
         nbr_questions += 1;
         const addElementQCM = document.createElement("li");
+        addElementQCM.classList.add("nvElementQCM");
         const addCaseACocher = document.createElement("INPUT");
+        addCaseACocher.classList.add("nvCaseACocher");
         addCaseACocher.setAttribute("type", "checkbox");
         addElementQCM.appendChild(addCaseACocher);
         listQCM.appendChild(addElementQCM);
 
         const addTextQuestionContainer = document.createElement("span");
+        addTextQuestionContainer.classList.add("nvTextQuestionContainer");
         const addTextAreaQuestion = document.createElement("textarea");
-        let addTextQuestion = document.createTextNode("Question " + nbr_questions.toString());
+        addTextAreaQuestion.classList.add("nvTextAreaQuestion");
+        let addTextQuestion = document.createTextNode("Choix " + nbr_questions.toString());
+        addTextQuestion.classList.add("nvTextQuestion");
         addTextAreaQuestion.appendChild(addTextQuestion);
         addTextQuestionContainer.appendChild(addTextAreaQuestion);
         addElementQCM.appendChild(addTextQuestionContainer);
-
-        addElementQCM.classList.add("nvElementQCM");
-        addCaseACocher.classList.add("nvCaseACocher");
-        addTextQuestionContainer.classList.add("nvTextQuestionContainer");
-        addTextAreaQuestion.classList.add("nvTextAreaQuestion");
-        addTextQuestion.classList.add("nvTextQuestion");
     };
 
     removeQuestion.onclick = function(){
@@ -80,14 +90,7 @@ function addQCM() {
     elementQCM.appendChild(textQuestionContainer);
     element.appendChild(containerQCM);
 
-    containerQCM.classList.add("containerQCM");
-    titreQCM.classList.add("titreQCM");
     textTitreQCM.classList.add("textTitreQCM");
-    listQCM.classList.add("listQCM");
-    elementQCM.classList.add("elementQCM");
-    caseACocher.classList.add("caseACocher");
-    textQuestionContainer.classList.add("textQuestionContainer");
-    textAreaQuestion.classList.add("textAreaQuestion");
     textQuestion.classList.add("textQuestion");
     addQuestionText.classList.add("addQuestionText");
     removeQuestionText.classList.add("removeQuestionText");
@@ -95,11 +98,17 @@ function addQCM() {
 
 function addTexte() {
     const containerText = document.createElement("ul");
+    containerText.classList.add("containerText");
     const titreQuestion = document.createElement("textarea");
+    titreQuestion.classList.add("titreQuestion");
     let titreQuestionText = document.createTextNode("Titre");
+    
     const containerReponse = document.createElement("li");
+    containerReponse.classList.add("containerReponse");
     const reponseQuestion = document.createElement("textarea");
+    reponseQuestion.classList.add("reponseQuestion");
     let reponseQuestionText = document.createTextNode("Écrivez votre réponse : ");
+    
     titreQuestion.appendChild(titreQuestionText);
     reponseQuestion.appendChild(reponseQuestionText);
     containerText.appendChild(titreQuestion);
@@ -108,11 +117,7 @@ function addTexte() {
     const element = document.getElementById("questions-container");
     element.append(containerText);
 
-    containerText.classList.add("containerText");
-    titreQuestion.classList.add("titreQuestion");
     titreQuestionText.classList.add("titreQuestionText");
-    containerReponse.classList.add("containerReponse");
-    reponseQuestion.classList.add("reponseQuestion");
     reponseQuestionText.classList.add("reponseQuestionText");
 }
 
