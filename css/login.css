@@ -1,7 +1,3 @@
-@font-face {
-  font-family: 'OpenDyslexic';
-  src: url('https://cdn.jsdelivr.net/gh/antijingoist/open-dyslexic/otf/OpenDyslexic-Regular.otf') format('opentype');
-}
 
 :root {
     --primary-color: #0a0d4b;
