@@ -60,10 +60,12 @@ function addQCM() {
         const addTextAreaQuestion = document.createElement("textarea");
         addTextAreaQuestion.classList.add("nvTextAreaQuestion");
         let addTextQuestion = document.createTextNode("Choix " + nbr_questions.toString());
-        addTextQuestion.classList.add("nvTextQuestion");
         addTextAreaQuestion.appendChild(addTextQuestion);
         addTextQuestionContainer.appendChild(addTextAreaQuestion);
         addElementQCM.appendChild(addTextQuestionContainer);
+
+        
+        addTextQuestion.classList.add("nvTextQuestion");
     };
 
     removeQuestion.onclick = function(){
