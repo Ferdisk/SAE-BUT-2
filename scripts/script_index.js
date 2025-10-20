@@ -131,17 +131,6 @@ function verifiePresenceQuestion(){
     return !!(container && container.children.length > 0);
 }
 
-// Ajoute un écouteur d'événement au bouton d'envoi pour valider la présence de questions
-function envoyerEstClicker(){
-    const btn = document.getElementById("submit-btn");
-    
-    // Vérifier que le bouton existe avant d'ajouter l'écouteur
-    if (btn) {
-        btn.addEventListener('click', () => {
-            btnEnvoyerClickerSansQuestion();
-        }); 
-}
-
 
 function btnEnvoyerClickerSansQuestion(){
     if (!verifiePresenceQuestion()) {
@@ -153,4 +142,4 @@ function btnEnvoyerClickerSansQuestion(){
 
 document.addEventListener('DOMContentLoaded', () => {
     envoyerEstClicker();
-})}
+})
