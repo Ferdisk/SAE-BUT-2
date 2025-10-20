@@ -4,7 +4,6 @@ const boutonform_actions = divbtnform_actions.querySelectorAll('button');
 let questionsHidden = true;
 let nbr_questions = 0;
 
-
 function displayQuestions() {
     if (questionsHidden) {
         document.getElementById("builder-questions-container").style.display = 'block';
@@ -14,8 +13,6 @@ function displayQuestions() {
         questionsHidden = true
     }
 }
-
-
 
 function addQCM() {
     let nbr_questions = 1;
