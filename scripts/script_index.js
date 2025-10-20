@@ -143,3 +143,7 @@ function btnEnvoyerClickerSansQuestion(){
 document.addEventListener('DOMContentLoaded', () => {
     envoyerEstClicker();
 })
+
+function addEchelleNotation() {
+    
+}
