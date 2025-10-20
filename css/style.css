@@ -2,12 +2,14 @@
     --primary-color: #2ebf02; 
     --primary-hover-color: #019701;
     --background-color: #ebebeb; 
+    --background-color-QCM: #f5f5f5;
     --panel-background: #ffffff;
     --text-color: #333;
-    --border-color: #ced4da;
+    --border-color: #747679;
     --input-focus-shadow: 0 0 0 0.2rem rgba(0, 255, 26, 0.25);
     --danger-color: #dc3545;
     --danger-hover-color: #c82333;
+    
 }
 
 body {
@@ -115,4 +117,131 @@ button.link:hover {
     color: blue;
     font-weight: bold;
     text-decoration: underline;
+}
+
+.containerQCM {
+    border: 2px solid var(--border-color);
+    padding: 1rem;
+    border-radius: 5px;
+    margin-bottom: 1.5rem;
+    background-color: var(--panel-background);
+}
+
+.titreQCM {
+    font-weight: bold;
+    margin-bottom: 0.5rem;
+    background-color: var(--background-color-QCM);
+    border: 1px solid;
+    resize: none;
+    width: 50%;
+    height: 50px;
+}
+
+
+.listQCM {
+    list-style-type: none;
+    padding-left: 0;
+}
+
+.elementQCM {
+    margin-bottom: 0.5rem;
+}
+
+
+
+
+.textQuestionContainer {
+    margin-bottom: 1rem;
+}
+
+.textAreaQuestion {
+    width: 80%;
+    height: 40px;
+    padding: 0.5rem;
+    border: 1px solid var(--border-color);
+    border-radius: 4px;
+    font-size: 1rem;
+    resize: none;
+}
+
+.textQuestion{
+    font-size: 1rem;
+    font-weight: 500;
+    margin-bottom: 0.5rem;
+}
+
+
+.nvElementQCM {
+    display: flex;
+    align-items: center;
+    margin-bottom: 0.5rem;
+    resize: none;
+}
+
+
+.nvCaseACocher {
+    margin-right: 0.5rem;
+}
+
+.nvTextAreaQuestion {
+    
+    padding: 0.5rem;
+    border: 1px solid var(--border-color);
+    border-radius: 4px;
+    font-size: 1rem;
+    resize: none;
+}
+
+.nvTextQuestionContainer {
+    flex-grow: 1;
+}
+
+.nvTextQuestion {
+    font-size: 1rem;
+    font-weight: 500;
+    margin-bottom: 0.5rem;
+}
+
+
+.containerText {
+    border: 2px solid var(--border-color);
+    padding: 1rem;
+    border-radius: 5px;
+    margin-bottom: 1.5rem;
+    background-color: var(--panel-background);
+}
+
+.titreQuestion{
+    font-weight: bold;
+    margin-bottom: 0.5rem;
+    background-color: var(--background-color-QCM);
+    border: 1px solid;
+    resize: none;
+    width: 50%;
+    height: 50px;
+}
+
+.titreQuestionText {
+    font-size: 1rem;
+    font-weight: 500;
+    margin-bottom: 0.5rem;
+}
+
+
+.reponseQuestion {
+    font-size: 1rem;
+    font-weight: 500;
+    margin-bottom: 0.5rem;
+    width: 80%;
+    resize: none;
+}
+
+.reponseQuestionText{
+    width: 80%;
+    height: 40px;
+    padding: 0.5rem;
+    border: 1px solid var(--border-color);
+    border-radius: 4px;
+    font-size: 1rem;
+    resize: none;
 }
