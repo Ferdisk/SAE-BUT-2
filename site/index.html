@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Questionnaire</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="scripts/scripts.js" defer></script>
+</head>
+<body>
+    <div class="page-container">
+        <div class="builder-panel">
+            <h2>Ajout de questions</h2>
+            <button id="ajout-question-btn" class="builder-button" onclick="displayQuestions()">Ajout de question</button>
+            <div id="builder-questions-container">
+                <ul>
+                    <li><button class="link" onclick="addQCM()">QCM</button></li>
+                    <li><button class="link" onclick="addTexte()">Texte</button></li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="preview-panel">
+            <div class="form-container">
+                <div class="form-header"></div>
+                <form class="survey-form" action="#" method="POST" onsubmit="return false;">
+                    <div class="form-title-section">
+                        <h1>Questionnaire de stage</h1>
+                        <hr class="required-divider">
+                        <p class="texte-obg">* Réponse obligatoire</p>
+                    </div>
+                    <div id="questions-container">
+                    </div>
+                    <div class="form-actions">
+                        <button type="submit" class="submit-btn">Envoyer</button>
+                        <button type="reset" class="clear-btn" onclick="removeLastQuestion()">Effacer</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
