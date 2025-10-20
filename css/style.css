@@ -1,0 +1,118 @@
+:root {
+    --primary-color: #2ebf02; 
+    --primary-hover-color: #019701;
+    --background-color: #ebebeb; 
+    --panel-background: #ffffff;
+    --text-color: #333;
+    --border-color: #ced4da;
+    --input-focus-shadow: 0 0 0 0.2rem rgba(0, 255, 26, 0.25);
+    --danger-color: #dc3545;
+    --danger-hover-color: #c82333;
+}
+
+body {
+    font-family: 'Arial', sans-serif;
+    background-color: var(--background-color);
+    color: var(--text-color);
+    margin: 0;
+    line-height: 1.6;
+}
+
+.page-container {
+    display: flex;
+    min-height: 100vh;
+}
+
+
+.builder-panel {
+    width: 40%;
+    padding: 2rem;
+    background-color: var(--panel-background);
+    border-right: 1px solid var(--border-color);
+    overflow-y: auto;
+}
+
+.builder-panel h2 {
+    color: var(--text-color);
+    margin-top: 0;
+    border-bottom: 2px solid var(--border-color);
+    padding-bottom: 0.5rem;
+}
+
+.builder-button,
+.add-option-btn {
+    display: inline-block;
+    width: 100%;
+    padding: 0.75rem;
+    margin-bottom: 1rem;
+    font-size: 1rem;
+    font-weight: 500;
+    color: #fff;
+    background-color: var(--primary-color);
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.2s ease-in-out;
+}
+
+.builder-button:hover,
+.add-option-btn:hover {
+    background-color: var(--primary-hover-color);
+}
+
+
+.preview-panel {
+    width: 60%;
+    padding: 2rem;
+    overflow-y: auto;
+    background-color: var(--background-color);
+}
+
+.form-container {
+    max-width: 700px;
+    margin: 0 auto;
+    background-color: var(--panel-background);
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.survey-form {
+    padding: 2rem 2.5rem;
+}
+
+.form-title-section h1 {
+    font-size: 2rem;
+    margin: 0 0 0.5rem 0;
+}
+
+
+.required-divider {
+    border: 0;
+    border-top: 1px solid var(--border-color);
+    margin: 1.5rem 0;
+}
+
+.texte-obg {
+    font-size: 0.9rem;
+    color: var(--danger-color);
+}
+
+#questions-container {
+    margin-top: 2rem;
+}
+
+#builder-questions-container {
+    display: none;
+}
+
+button.link {
+    background: none;
+    border: none;
+}
+
+button.link:hover {
+    cursor: pointer;
+    color: blue;
+    font-weight: bold;
+    text-decoration: underline;
+}
