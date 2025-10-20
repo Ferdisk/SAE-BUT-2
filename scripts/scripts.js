@@ -15,6 +15,8 @@ function displayQuestions() {
     }
 }
 
+
+
 function addQCM() {
     let nbr_questions = 1;
     const containerQCM = document.createElement("ul");
