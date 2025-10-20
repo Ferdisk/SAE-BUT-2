@@ -10,12 +10,13 @@
 <body>
     <div class="page-container">
         <div class="builder-panel">
-            <h2>Ajout de questions</h2>
-            <button id="ajout-question-btn" class="builder-button" onclick="displayQuestions()">Ajout de question</button>
+            <h2>Ajout de Questions</h2>
+            <button id="ajout-question-btn" class="builder-button" onclick="displayQuestions()">Ajouter</button>
             <div id="builder-questions-container">
                 <ul>
                     <li><button class="link" onclick="addQCM()">QCM</button></li>
                     <li><button class="link" onclick="addTexte()">Texte</button></li>
+                    <li><button class="link" onclick="addEchelleNotation()">Échelle de notation</button></li>
                 </ul>
             </div>
         </div>
@@ -25,9 +26,9 @@
                 <div class="form-header"></div>
                 <form class="survey-form" action="#" method="POST" onsubmit="return false;">
                     <div class="form-title-section">
-                        <h1>Questionnaire de stage</h1>
+                        <h1>Questionnaire de Stage</h1>
                         <hr class="required-divider">
-                        <p class="texte-obg">* Réponse obligatoire</p>
+                        <p class="texte-obg">* Réponse Obligatoire</p>
                     </div>
                     <div id="questions-container">
                     </div>
