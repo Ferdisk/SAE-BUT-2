@@ -4,4 +4,3 @@
 - justifier les choix de la solution choisie et pq ne pas avoir choisi les autres solutions
 - pour les questions poser aux professeurs en premiers avant d'autres entités comme la DSI...
 - gestion des données avec le RGPD ?
-- 
