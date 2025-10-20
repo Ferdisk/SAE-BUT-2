@@ -124,3 +124,33 @@ function removeLastQuestion() {
     const element = document.getElementById("questions-container");
     element.removeChild(element.lastChild);
 }
+
+
+function verifiePresenceQuestion(){
+    const container = document.getElementById('questions-container');
+    return !!(container && container.children.length > 0);
+}
+
+// Ajoute un écouteur d'événement au bouton d'envoi pour valider la présence de questions
+function envoyerEstClicker(){
+    const btn = document.getElementById("submit-btn");
+    
+    // Vérifier que le bouton existe avant d'ajouter l'écouteur
+    if (btn) {
+        btn.addEventListener('click', () => {
+            btnEnvoyerClickerSansQuestion();
+        }); 
+}
+
+
+function btnEnvoyerClickerSansQuestion(){
+    if (!verifiePresenceQuestion()) {
+        alert("Vous devez insérer des questions pour envoyer");
+    } else {
+        console.log("Formulaire valide, prêt à être envoyé");
+    }
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+    envoyerEstClicker();
+})}
