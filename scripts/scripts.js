@@ -4,20 +4,6 @@ const boutonform_actions = divbtnform_actions.querySelectorAll('button');
 let questionsHidden = true;
 let nbr_questions = 0;
 
-//Vérifie s'il y a des questions quand le bouton envoyer et effacer sont clicker
-// boutonform_actions.forEach(btn => {
-//     btn.addEventListener('click', () => {
-//             if (verifiePresenceQuestion()){
-
-//             } else {
-//                 alert("Vous n'avez ajouté aucune question au formulaire !")
-//             };
-//         });
-//     });
-
-// function verifiePresenceQuestion() {
-
-// }
 
 function displayQuestions() {
     if (questionsHidden) {
@@ -31,7 +17,7 @@ function displayQuestions() {
 
 function addQCM() {
     let nbr_questions = 1;
-    const containerQCM = document.createElement("ul")
+    const containerQCM = document.createElement("ul");
     const titreQCM = document.createElement("textarea");
     let textTitreQCM = document.createTextNode("QCM");
     const listQCM = document.createElement("ul");
@@ -40,7 +26,7 @@ function addQCM() {
     caseACocher.setAttribute("type", "checkbox");
     const textQuestionContainer = document.createElement("span");
     const textAreaQuestion = document.createElement("textarea");
-    let textQuestion = document.createTextNode("Question " + nbr_questions.toString());
+    let textQuestion = document.createTextNode("Choix " + nbr_questions.toString());
     const addQuestion = document.createElement("button");
     const addQuestionText = document.createTextNode("+");
     const removeQuestion = document.createElement("button");
@@ -60,14 +46,20 @@ function addQCM() {
         addTextAreaQuestion.appendChild(addTextQuestion);
         addTextQuestionContainer.appendChild(addTextAreaQuestion);
         addElementQCM.appendChild(addTextQuestionContainer);
-    }; //ajout choix
+
+        addElementQCM.classList.add("nvElementQCM");
+        addCaseACocher.classList.add("nvCaseACocher");
+        addTextQuestionContainer.classList.add("nvTextQuestionContainer");
+        addTextAreaQuestion.classList.add("nvTextAreaQuestion");
+        addTextQuestion.classList.add("nvTextQuestion");
+    };
 
     removeQuestion.onclick = function(){
         if (nbr_questions>1){
             nbr_questions -= 1;
             listQCM.removeChild(listQCM.lastChild);
         }
-    } //suppression choix
+    };
     
     addQuestion.classList.add("link");
     addQuestion.appendChild(addQuestionText);
@@ -85,14 +77,21 @@ function addQCM() {
     elementQCM.appendChild(caseACocher);
     elementQCM.appendChild(textQuestionContainer);
     element.appendChild(containerQCM);
+
+    containerQCM.classList.add("containerQCM");
+    titreQCM.classList.add("titreQCM");
+    textTitreQCM.classList.add("textTitreQCM");
+    listQCM.classList.add("listQCM");
+    elementQCM.classList.add("elementQCM");
+    caseACocher.classList.add("caseACocher");
+    textQuestionContainer.classList.add("textQuestionContainer");
+    textAreaQuestion.classList.add("textAreaQuestion");
+    textQuestion.classList.add("textQuestion");
+    addQuestionText.classList.add("addQuestionText");
+    removeQuestionText.classList.add("removeQuestionText");
 }
 
 function addTexte() {
-    // const para = document.createElement("p");
-    // const node = document.createTextNode("Texte");
-    // const element = document.getElementById("questions-container");
-    // para.appendChild(node);
-    // element.appendChild(para);
     const containerText = document.createElement("ul");
     const titreQuestion = document.createElement("textarea");
     let titreQuestionText = document.createTextNode("Titre");
@@ -106,6 +105,13 @@ function addTexte() {
     containerText.appendChild(containerReponse);
     const element = document.getElementById("questions-container");
     element.append(containerText);
+
+    containerText.classList.add("containerText");
+    titreQuestion.classList.add("titreQuestion");
+    titreQuestionText.classList.add("titreQuestionText");
+    containerReponse.classList.add("containerReponse");
+    reponseQuestion.classList.add("reponseQuestion");
+    reponseQuestionText.classList.add("reponseQuestionText");
 }
 
 function removeLastQuestion() {
