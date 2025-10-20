@@ -1,0 +1,52 @@
+
+:root {
+    --primary-color: #0a0d4b;
+    --btn-color: #05a9ab;
+    --btn-hover-color: #038f90;
+    --text-color: white;
+    --text-font: Verdana, sans-serif;
+}
+
+body{
+    background-color: rgb(3, 3, 28);
+}
+.login-btn,
+add-option-btn{
+    background-color: var(--btn-color);
+    width: 20%;
+    height: 40%;
+
+}
+
+.login-btn:hover,
+add-option-btn:hover{
+    background-color: var(--btn-hover-color);
+}
+
+header {
+    background-color: var(--primary-color);
+    color: var(--text-color);
+    font-family: var(--text-font);
+    padding: 1rem 2rem;
+    text-align: center;
+}
+
+form {
+    background-color: var(--primary-color);
+    color: var(--text-color);
+    font-family: var(--text-font);
+    padding: 1rem 2rem;
+    text-align: center;
+}
+
+.form-group{
+    margin-bottom: 1rem;
+}
+
+.form-actions{
+    margin-top: 1rem;
+}
+
+.form-register{
+    margin-top: 1rem;
+}
