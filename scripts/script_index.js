@@ -128,10 +128,54 @@ function addTexte() {
 
 /**
  * Ajoute une question de type Échelle de Notation.
- * @todo À implémenter (Phase 3)
+ * @param {string} labelText - Le titre de la question
  */
-function addEchelleNotation() {
-    //TODO: implémenter la fonction
+function addRatingScale(labelText = 'Échelle de notation') {
+    // Générer un ID unique pour lier label/input et input/datalist
+    const uniqueId = Date.now(); 
+
+    // 1. Conteneur principal 
+    const container = document.createElement('ul');
+    container.classList.add('containerRating');
+
+    // 2. Titre / Label
+    const liTitre = document.createElement('li');
+    const label = document.createElement('label');
+    label.textContent = labelText;
+    label.htmlFor = `slider-${uniqueId}`;
+    
+    liTitre.appendChild(label);
+    container.appendChild(liTitre);
+
+    // 3. Le Slider (Range)
+    const liSlider = document.createElement('li');
+    const slider = document.createElement('input');
+    slider.type = 'range';
+    slider.id = `slider-${uniqueId}`;
+    slider.min = 0;
+    slider.max = 10;
+    slider.value = 5;
+    
+    // Liaison avec le datalist via l'ID unique
+    slider.setAttribute('list', `list-${uniqueId}`); 
+
+    liSlider.appendChild(slider);
+    
+
+    // 4. Le Datalist (Repères visuels)
+    const datalist = document.createElement('datalist');
+    datalist.id = `list-${uniqueId}`;
+
+    [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10].forEach(val => {
+        const opt = document.createElement('option');
+        opt.value = val;
+        datalist.appendChild(opt);
+    });
+
+    liSlider.appendChild(datalist);
+    container.appendChild(liSlider);
+    
+    document.getElementById("questions-container").appendChild(container);
 }
 
 /**
