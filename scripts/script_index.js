@@ -1,149 +1,182 @@
-const ajoutQuestionBtn = document.getElementById('ajout-question-btn');
-const divbtnform_actions = document.querySelector('.form-actions');
-const boutonform_actions = divbtnform_actions.querySelectorAll('button');
-let questionsHidden = true;
-let nbr_questions = 0;
+/**
+ * @file script_index.js
+ * @description Gestion de la logique du constructeur de questionnaire (Builder Panel)
+ * et de la prévisualisation.
+ */
 
+const ajoutQuestionBtn = document.getElementById('ajout-question-btn');
+const formActionsContainer = document.querySelector('.form-actions');
+const formActionButtons = formActionsContainer ? formActionsContainer.querySelectorAll('button') : [];
+
+let isBuilderPanelHidden = true;
+
+/**
+ * Bascule l'affichage du panneau de construction de questions.
+ */
 function displayQuestions() {
-    if (questionsHidden) {
-        document.getElementById("builder-questions-container").style.display = 'block';
-        questionsHidden = false
-    } else {
-        document.getElementById("builder-questions-container").style.display = 'none';
-        questionsHidden = true
-    }
+    const container = document.getElementById("builder-questions-container");
+    if (!container) return;
+
+    container.style.display = isBuilderPanelHidden ? 'block' : 'none';
+    isBuilderPanelHidden = !isBuilderPanelHidden;
 }
 
+/**
+ * Ajoute une nouvelle question de type QCM au formulaire.
+ */
 function addQCM() {
-    let nbr_questions = 1;
+    let localOptionCounter = 1;
+
     const containerQCM = document.createElement("ul");
     containerQCM.classList.add("containerQCM");
+
     const titreQCM = document.createElement("textarea");
     titreQCM.classList.add("titreQCM");
-    let textTitreQCM = document.createTextNode("QCM");
-    
+    titreQCM.placeholder = "Titre du QCM";
+
     const listQCM = document.createElement("ul");
     listQCM.classList.add("listQCM");
-    const elementQCM = document.createElement("li");
-    elementQCM.classList.add("elementQCM");
-    const caseACocher = document.createElement("INPUT");
-    caseACocher.setAttribute("type", "checkbox");
-    caseACocher.classList.add("caseACocher");
-    const textQuestionContainer = document.createElement("span");
-    textQuestionContainer.classList.add("textQuestionContainer");
-    const textAreaQuestion = document.createElement("textarea");
-    textAreaQuestion.classList.add("textAreaQuestion");
-    let textQuestion = document.createTextNode("Choix " + nbr_questions.toString());
-    
-    const addQuestion = document.createElement("button");
-    const addQuestionText = document.createTextNode("+");
-    
-    const removeQuestion = document.createElement("button");
-    const removeQuestionText = document.createTextNode("-");
-    
 
-    addQuestion.onclick = function(){
-        nbr_questions += 1;
-        const addElementQCM = document.createElement("li");
-        addElementQCM.classList.add("nvElementQCM");
-        const addCaseACocher = document.createElement("INPUT");
-        addCaseACocher.classList.add("nvCaseACocher");
-        addCaseACocher.setAttribute("type", "checkbox");
-        addElementQCM.appendChild(addCaseACocher);
-        listQCM.appendChild(addElementQCM);
+    // Helper interne pour créer une ligne d'option
+    const createOptionElement = (optionIndex) => {
+        const li = document.createElement("li");
+        li.classList.add("elementQCM");
 
-        const addTextQuestionContainer = document.createElement("span");
-        addTextQuestionContainer.classList.add("nvTextQuestionContainer");
-        const addTextAreaQuestion = document.createElement("textarea");
-        addTextAreaQuestion.classList.add("nvTextAreaQuestion");
-        let addTextQuestion = document.createTextNode("Choix " + nbr_questions.toString());
-        addTextAreaQuestion.appendChild(addTextQuestion);
-        addTextQuestionContainer.appendChild(addTextAreaQuestion);
-        addElementQCM.appendChild(addTextQuestionContainer);
+        const checkbox = document.createElement("input");
+        checkbox.type = "checkbox";
+        checkbox.classList.add("caseACocher");
 
-        
-        addTextQuestion.classList.add("nvTextQuestion");
+        const textContainer = document.createElement("span");
+        textContainer.classList.add("textQuestionContainer");
+
+        const textArea = document.createElement("textarea");
+        textArea.classList.add("textAreaQuestion");
+        textArea.value = `Choix ${optionIndex}`;
+
+        textContainer.appendChild(textArea);
+        li.appendChild(checkbox);
+        li.appendChild(textContainer);
+
+        return { li, textContainer };
     };
 
-    removeQuestion.onclick = function(){
-        if (nbr_questions>1){
-            nbr_questions -= 1;
+    // Création de la première option par défaut
+    const { li: firstOption, textContainer: firstTextContainer } = createOptionElement(localOptionCounter);
+
+    const btnAddOption = document.createElement("button");
+    btnAddOption.type = "button";
+    btnAddOption.classList.add("link", "addQuestionText");
+    btnAddOption.textContent = "+";
+
+    const btnRemoveOption = document.createElement("button");
+    btnRemoveOption.type = "button";
+    btnRemoveOption.classList.add("link");
+    btnRemoveOption.textContent = "-";
+
+    btnAddOption.addEventListener('click', (e) => {
+        e.preventDefault();
+        localOptionCounter++;
+        const { li: newOption } = createOptionElement(localOptionCounter);
+        listQCM.appendChild(newOption);
+    });
+
+    btnRemoveOption.addEventListener('click', (e) => {
+        e.preventDefault();
+        if (listQCM.children.length > 1) {
+            localOptionCounter--;
             listQCM.removeChild(listQCM.lastChild);
+        } else {
+            alert("Un QCM doit avoir au moins une option.");
         }
-    };
+    });
+
+    // Assemblage
+    firstTextContainer.appendChild(btnAddOption);
+    firstTextContainer.appendChild(btnRemoveOption);
     
-    addQuestion.classList.add("link");
-    addQuestion.appendChild(addQuestionText);
-    removeQuestion.classList.add("link");
-    removeQuestion.appendChild(removeQuestionText);
-    textAreaQuestion.appendChild(textQuestion);
-    textQuestionContainer.appendChild(textAreaQuestion);
-    textQuestionContainer.appendChild(addQuestion);
-    textQuestionContainer.appendChild(removeQuestion);
-    const element = document.getElementById("questions-container");
+    listQCM.appendChild(firstOption);
     containerQCM.appendChild(titreQCM);
     containerQCM.appendChild(listQCM);
-    titreQCM.appendChild(textTitreQCM);
-    listQCM.appendChild(elementQCM);
-    elementQCM.appendChild(caseACocher);
-    elementQCM.appendChild(textQuestionContainer);
-    element.appendChild(containerQCM);
 
-    textTitreQCM.classList.add("textTitreQCM");
-    textQuestion.classList.add("textQuestion");
-    addQuestionText.classList.add("addQuestionText");
-    removeQuestionText.classList.add("removeQuestionText");
+    document.getElementById("questions-container").appendChild(containerQCM);
 }
 
+/**
+ * Ajoute une nouvelle question de type Texte Libre.
+ */
 function addTexte() {
     const containerText = document.createElement("ul");
     containerText.classList.add("containerText");
+
     const titreQuestion = document.createElement("textarea");
     titreQuestion.classList.add("titreQuestion");
-    let titreQuestionText = document.createTextNode("Titre");
-    
+    titreQuestion.placeholder = "Titre de la question texte";
+
     const containerReponse = document.createElement("li");
     containerReponse.classList.add("containerReponse");
+
     const reponseQuestion = document.createElement("textarea");
     reponseQuestion.classList.add("reponseQuestion");
-    let reponseQuestionText = document.createTextNode("Écrivez votre réponse : ");
-    
-    titreQuestion.appendChild(titreQuestionText);
-    reponseQuestion.appendChild(reponseQuestionText);
+    reponseQuestion.placeholder = "Écrivez votre réponse ici...";
+
+    containerReponse.appendChild(reponseQuestion);
     containerText.appendChild(titreQuestion);
-    containerReponse.appendChild(reponseQuestion)
     containerText.appendChild(containerReponse);
-    const element = document.getElementById("questions-container");
-    element.append(containerText);
 
-    titreQuestionText.classList.add("titreQuestionText");
-    reponseQuestionText.classList.add("reponseQuestionText");
+    document.getElementById("questions-container").appendChild(containerText);
 }
 
+/**
+ * Ajoute une question de type Échelle de Notation.
+ * @todo À implémenter (Phase 3)
+ */
+function addEchelleNotation() {
+    //TODO: implémenter la fonction
+}
+
+/**
+ * Supprime la dernière question ajoutée au conteneur.
+ */
 function removeLastQuestion() {
-    const element = document.getElementById("questions-container");
-    element.removeChild(element.lastChild);
+    const container = document.getElementById("questions-container");
+    if (container?.lastChild) {
+        container.removeChild(container.lastChild);
+    }
 }
 
-
-function verifiePresenceQuestion(){
+/**
+ * Vérifie si le formulaire contient au moins une question.
+ * @returns {boolean}
+ */
+function hasQuestions() {
     const container = document.getElementById('questions-container');
     return !!(container && container.children.length > 0);
 }
 
-
-function btnEnvoyerClickerSansQuestion(){
-    if (!verifiePresenceQuestion()) {
+/**
+ * Gestionnaire de validation avant envoi.
+ */
+function handleSubmitAttempt() {
+    if (!hasQuestions()) {
         alert("Vous devez insérer des questions pour envoyer");
     } else {
         console.log("Formulaire valide, prêt à être envoyé");
+        // TODO: Implémenter l'envoi fetch() ici
     }
 }
 
-document.addEventListener('DOMContentLoaded', () => {
-    envoyerEstClicker();
-})
-
-function addEchelleNotation() {
+/**
+ * Initialise les écouteurs d'événements globaux.
+ */
+function initEventListeners() {
+    const submitBtn = document.getElementById("submit-btn");
     
+    if (submitBtn) {
+        submitBtn.addEventListener('click', (event) => {
+            event.preventDefault();
+            handleSubmitAttempt();
+        });
+    }
 }
+
+document.addEventListener('DOMContentLoaded', initEventListeners);
