@@ -3,42 +3,46 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Questionnaire</title>
+    <title>Création de Questionnaire</title>
     <link rel="stylesheet" href="../css/style.css">
-    <script src="../scripts/script_index.js" defer></script>
 </head>
 <body>
-    <div class="page-container">
-        <div class="builder-panel">
-            <h2>Ajout de Questions</h2>
-            <button id="ajout-question-btn" class="builder-button" onclick="displayQuestions()">Ajouter</button>
-            <div id="builder-questions-container">
-                <ul>
-                    <li><button class="link" onclick="addQCM()">QCM</button></li>
-                    <li><button class="link" onclick="addTexte()">Texte</button></li>
-                    <li><button class="link" onclick="addEchelleNotation()">Échelle de notation</button></li>
-                </ul>
-            </div>
-        </div>
-        
-        <div class="preview-panel">
-            <div class="form-container">
-                <div class="form-header"></div>
-                <form class="survey-form" action="#" method="POST" onsubmit="return false;">
-                    <div class="form-title-section">
-                        <h1>Questionnaire de Stage</h1>
-                        <hr class="required-divider">
-                        <p class="texte-obg">* Réponse Obligatoire</p>
-                    </div>
-                    <div id="questions-container">
-                    </div>
-                    <div class="form-actions">
-                        <button type="submit" id="submit-btn" onclick="btnEnvoyerClickerSansQuestion()" >Envoyer</button>
-                        <button class="clear-btn" onclick="removeLastQuestion()">Effacer</button>
-                    </div>
-                </form>
-            </div>
-        </div>
+
+<header class="topbar">
+    <div class="logo">
+        <img src="../images/logo-unilim.png">
+        <span>Création de Questionnaire</span>
     </div>
+
+    <div class="top-actions">
+        <a href="#" class="small-link">Retour</a>
+        <span class="icon">🔔</span>
+        <a href="#" class="small-link">Déconnexion</a>
+    </div>
+</header>
+
+<main class="container">
+    <aside class="left-panel">
+        <h3>Ajout Questions</h3>
+
+        <button class="btn white-btn">+ QCM</button>
+        <button class="btn white-btn">+ Texte</button>
+        <button class="btn white-btn">+ Échelle de notation</button>
+
+        <h3 class="desc-title">Description</h3>
+        <textarea class="desc-box" placeholder="Ajoutez une description pour ce questionnaire..."></textarea>
+    </aside>
+
+    <section class="questionnaire-panel">
+        <input class="title-box" type="text" value="Questionnaire" />
+        <p class="hint">Cliquez sur un type de question pour commencer</p>
+    </section>
+</main>
+
+<footer class="footer-actions">
+    <button class="btn red-btn">Envoyer</button>
+    <button class="btn blue-btn">Exporter</button>
+</footer>
+
 </body>
 </html>
