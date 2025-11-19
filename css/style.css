@@ -1,247 +1,147 @@
 :root {
-    --primary-color: #2ebf02; 
-    --primary-hover-color: #019701;
-    --background-color: #ebebeb; 
-    --background-color-QCM: #f5f5f5;
-    --panel-background: #ffffff;
-    --text-color: #333;
-    --border-color: #747679;
-    --input-focus-shadow: 0 0 0 0.2rem rgba(0, 255, 26, 0.25);
-    --danger-color: #dc3545;
-    --danger-hover-color: #c82333;
-    
+    --main-red: #e2001a;
 }
 
 body {
-    font-family: 'Arial', sans-serif;
-    background-color: var(--background-color);
-    color: var(--text-color);
     margin: 0;
-    line-height: 1.6;
+    font-family: Arial, sans-serif;
+    background: white;
 }
 
-.page-container {
+.topbar {
+    background: var(--main-red);
+    color: white;
+    padding: 10px 30px;
     display: flex;
-    min-height: 100vh;
+    justify-content: space-between;
+    align-items: center;
 }
 
-
-.builder-panel {
-    width: 40%;
-    padding: 2rem;
-    background-color: var(--panel-background);
-    border-right: 1px solid var(--border-color);
-    overflow-y: auto;
-}
-
-.builder-panel h2 {
-    color: var(--text-color);
-    margin-top: 0;
-    border-bottom: 2px solid var(--border-color);
-    padding-bottom: 0.5rem;
-}
-
-.builder-button,
-.add-option-btn {
-    display: inline-block;
-    width: 100%;
-    padding: 0.75rem;
-    margin-bottom: 1rem;
-    font-size: 1rem;
-    font-weight: 500;
-    color: #fff;
-    background-color: var(--primary-color);
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    transition: background-color 0.2s ease-in-out;
-}
-
-.builder-button:hover,
-.add-option-btn:hover {
-    background-color: var(--primary-hover-color);
-}
-
-
-.preview-panel {
-    width: 60%;
-    padding: 2rem;
-    overflow-y: auto;
-    background-color: var(--background-color);
-}
-
-.form-container {
-    max-width: 700px;
-    margin: 0 auto;
-    background-color: var(--panel-background);
-    border-radius: 8px;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-}
-
-.survey-form {
-    padding: 2rem 2.5rem;
-}
-
-.form-title-section h1 {
-    font-size: 2rem;
-    margin: 0 0 0.5rem 0;
-}
-
-
-.required-divider {
-    border: 0;
-    border-top: 1px solid var(--border-color);
-    margin: 1.5rem 0;
-}
-
-.texte-obg {
-    font-size: 0.9rem;
-    color: var(--danger-color);
-}
-
-#questions-container {
-    margin-top: 2rem;
-}
-
-#builder-questions-container {
-    display: none;
-}
-
-button.link {
-    background: none;
-    border: none;
-}
-
-button.link:hover {
-    cursor: pointer;
-    color: blue;
-    font-weight: bold;
-    text-decoration: underline;
-}
-
-.containerQCM {
-    border: 2px solid var(--border-color);
-    padding: 1rem;
-    border-radius: 5px;
-    margin-bottom: 1.5rem;
-    background-color: var(--panel-background);
-}
-
-.titreQCM {
-    font-weight: bold;
-    margin-bottom: 0.5rem;
-    background-color: var(--background-color-QCM);
-    border: 1px solid;
-    resize: none;
-    width: 50%;
-    height: 50px;
-}
-
-
-.listQCM {
-    list-style-type: none;
-    padding-left: 0;
-}
-
-.elementQCM {
-    margin-bottom: 0.5rem;
-}
-
-
-
-
-.textQuestionContainer {
-    margin-bottom: 1rem;
-}
-
-.textAreaQuestion {
-    width: 80%;
-    height: 40px;
-    padding: 0.5rem;
-    border: 1px solid var(--border-color);
-    border-radius: 4px;
-    font-size: 1rem;
-    resize: none;
-}
-
-.textQuestion{
-    font-size: 1rem;
-    font-weight: 500;
-    margin-bottom: 0.5rem;
-}
-
-
-.nvElementQCM {
+.topbar .logo {
     display: flex;
     align-items: center;
-    margin-bottom: 0.5rem;
-    resize: none;
-}
-
-
-.nvCaseACocher {
-    margin-right: 0.5rem;
-}
-
-.nvTextAreaQuestion {
-    
-    padding: 0.5rem;
-    border: 1px solid var(--border-color);
-    border-radius: 4px;
-    font-size: 1rem;
-    resize: none;
-}
-
-.nvTextQuestionContainer {
-    flex-grow: 1;
-}
-
-.nvTextQuestion {
-    font-size: 1rem;
-    font-weight: 500;
-    margin-bottom: 0.5rem;
-}
-
-
-.containerText {
-    border: 2px solid var(--border-color);
-    padding: 1rem;
-    border-radius: 5px;
-    margin-bottom: 1.5rem;
-    background-color: var(--panel-background);
-}
-
-.titreQuestion{
+    gap: 15px;
+    font-size: 22px;
     font-weight: bold;
-    margin-bottom: 0.5rem;
-    background-color: var(--background-color-QCM);
-    border: 1px solid;
-    resize: none;
-    width: 50%;
-    height: 50px;
 }
 
-.titreQuestionText {
-    font-size: 1rem;
-    font-weight: 500;
-    margin-bottom: 0.5rem;
-}
-
-
-.reponseQuestion {
-    font-size: 1rem;
-    font-weight: 500;
-    margin-bottom: 0.5rem;
-    width: 80%;
-    resize: none;
-}
-
-.reponseQuestionText{
-    width: 80%;
+.topbar .logo img {
     height: 40px;
-    padding: 0.5rem;
-    border: 1px solid var(--border-color);
-    border-radius: 4px;
-    font-size: 1rem;
+}
+
+.top-actions {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+.small-link {
+    color: white;
+    font-size: 15px;
+    text-decoration: none;
+}
+
+.container {
+    display: flex;
+    padding: 30px;
+    gap: 40px;
+}
+
+.left-panel {
+    width: 300px;
+    background: var(--main-red);
+    padding: 20px;
+    border-radius: 6px;
+    color: white;
+}
+
+.left-panel h3 {
+    margin-bottom: 10px;
+}
+
+.btn {
+    width: 100%;
+    padding: 15px;
+    font-size: 16px;
+    margin: 8px 0;
+    border-radius: 5px;
+    cursor: pointer;
+    border: none;
+}
+
+.white-btn {
+    background: white;
+    color: var(--main-red);
+}
+
+.desc-title {
+    margin-top: 25px;
+}
+
+.desc-box {
+    width: 95%;
+    height: 200px;
+    margin-top: 15px;
+    border: none;
+    border-radius: 6px;
+    padding: 10px;
     resize: none;
+}
+
+.questionnaire-panel {
+    flex: 1;
+    background: var(--main-red);
+    border-radius: 6px;
+    padding: 30px;
+    color: white;
+    text-align: center;
+    min-height: 500px;
+}
+
+.title-box {
+    background: var(--main-red);
+
+    padding: 12px;
+    border-radius: 4px;
+    width: 90%;
+    margin: 0 auto;
+    border: 1px solid white;
+    font-size: 18px;
+    text-align: center;
+    color: white;
+}
+
+.hint {
+    margin-top: 80px;
+    font-size: 16px;
+    opacity: 0.9;
+}
+
+.footer-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 12px;
+    padding: 20px 40px;
+}
+
+.footer-actions .btn {
+    width: 10%;
+    padding: 8px 18px;
+    font-size: 14px;
+}
+
+.red-btn {
+    background: var(--main-red);
+    color: white;
+}
+
+.blue-btn {
+    background: #007bba;
+    color: white;
+}
+
+.small-btn {
+    width: 15%;
+    padding: 8px 18px;
+    font-size: 14px;
 }
