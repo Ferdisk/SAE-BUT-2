@@ -40,7 +40,9 @@ form {
     background-color: var(--primary-color);
     color: var(--text-color);
     font-family: var(--text-font);
-    padding: 1rem 2rem;
+    padding: 1rem 0;
+    width: 100%;
+    max-width: 450px;
 }
 
 .form-group{
@@ -56,27 +58,30 @@ form {
 }
 .form-input {
     width: 100%;
-    padding: 0.75rem;
-    font-size: 1.1rem;
+    padding: .75rem;
+    font-size: 1.2rem;
     border: 1px solid #ccc;
     border-radius: 6px;
     font-family: var(--text-font);
     background-color: #f4f4f4;
+    box-sizing: border-box;
 }
 
 .role-selector {
     background-color: #f4f4f4;
-    padding: 0.5rem;
+    padding: .25rem;
     border-radius: 8px;
     display: flex;
     justify-content: center;
-    gap: 0.5rem;
-    width: fit-content;
+    align-items: center;
+    gap: 0.1rem;
+    width: 100%;
+    max-width: 450px;
     margin: 0 auto;
+    box-sizing: border-box;
 }
 
 .role-btn {
-    background-color: #ffffff;
     border: none;
     color: var(--text-color);
     font-family: var(--text-font);
@@ -84,6 +89,8 @@ form {
     cursor: pointer;
     transition: color 0.3s ease;
     border-radius: 6px;
+    flex: 1;
+    text-align: center;
 }
 
 .role-btn:hover {
@@ -92,6 +99,7 @@ form {
 
 .role-active {
     color: #e40202 !important;
+    background-color: #ffffff;
 }
 
 .main-container {
@@ -108,9 +116,13 @@ form {
     border: 2px solid #ffffff;
     border-radius: 10px;
     padding: 2rem;
-    max-width: 500px;
+    max-width: 600px;
+    width: 100%;
     margin: 0 auto;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
 #login-submit-btn {
@@ -120,10 +132,12 @@ form {
     color: #ffffff;
     padding: 0.8rem 2rem;
     font-size: 0.8rem;
-    width: 50%;
+    width: 100%;
+    max-width: 450px;
     border-radius: 5px;
     border: 1px solid #e40202;
     font-family: var(--text-font);
     cursor: pointer;
     text-align: center;
+    margin-top: 5%;
 }
