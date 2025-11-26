@@ -5,12 +5,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Gestionnaire de Questionnaires - Connexion</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="../css/login.css">
 </head>
 <body>
 
     <header class="site-header">
         <div class="logo-container">
-            <img src="https://upload.wikimedia.org/wikipedia/fr/thumb/a/a0/Logo_IUT_Limousin.png/320px-Logo_IUT_Limousin.png" alt="Logo IUT Limousin" id="main-logo" width="150">
+            <img src="../images/media/logo_unilim_avec_texte.png" alt="Logo IUT Limousin" id="main-logo" width="150">
         </div>
         
         <div class="text-header">
@@ -19,7 +20,7 @@
         </div>
     </header>
 
-    <br>
+   
 
     <main class="main-container">
         
@@ -30,14 +31,14 @@
                 <p class="section-description">Choisissez votre type de compte pour vous connecter</p>
             </div>
 
-            <br>
+            
 
             <div class="role-selector" id="role-tabs">
                 <button type="button" class="role-btn role-active" id="btn-student">
                     <i class="fa-solid fa-graduation-cap icon"></i> Étudiant
                 </button>
                 
-                <button type="button" class="role-btn" id="btn-teacher">
+                <button type="button" class="role-btn" id="btn-teacher" onclick="window.location.href='profview.html'">
                     <i class="fa-regular fa-circle-user icon"></i> Professeur
                 </button>
                 
@@ -46,23 +47,23 @@
                 </button>
             </div>
 
-            <br>
+        
 
             <form action="/login" method="POST" class="login-form" id="auth-form">
                 
                 <div class="form-group">
-                    <label for="user-email" class="form-label">Adresse email</label><br>
+                    <label for="user-email" class="form-label">Adresse email</label>
                     <input type="email" id="user-email" name="email" class="form-input" placeholder="votre.email@etu.unilim.fr" required>
                 </div>
 
-                <br>
+                
 
                 <div class="form-group">
-                    <label for="user-password" class="form-label">Mot de passe</label><br>
+                    <label for="user-password" class="form-label">Mot de passe</label>
                     <input type="password" id="user-password" name="password" class="form-input" placeholder="........" required>
                 </div>
 
-                <br>
+            
 
                 <button type="submit" class="btn-submit" id="login-submit-btn">
                     Se connecter

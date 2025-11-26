@@ -1,14 +1,15 @@
 
 :root {
-    --primary-color: #0a0d4b;
-    --btn-color: #05a9ab;
+    --primary-color: #fefefe;
+    --btn-color: #23e0e4;
     --btn-hover-color: #038f90;
-    --text-color: white;
+    --text-color: rgb(0, 0, 0);
     --text-font: Verdana, sans-serif;
 }
 
 body{
-    background-color: rgb(3, 3, 28);
+    background-color: rgb(255, 255, 255);
+    font-family: var(--text-font);
 }
 .login-btn,
 add-option-btn{
@@ -20,7 +21,8 @@ add-option-btn{
 
 .login-btn:hover,
 add-option-btn:hover{
-    background-color: var(--btn-hover-color);
+    background-color: #e40202 var(--btn-hover-color);
+    
 }
 
 header {
@@ -29,6 +31,9 @@ header {
     font-family: var(--text-font);
     padding: 1rem 2rem;
     text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
 form {
@@ -36,17 +41,89 @@ form {
     color: var(--text-color);
     font-family: var(--text-font);
     padding: 1rem 2rem;
-    text-align: center;
 }
 
 .form-group{
-    margin-bottom: 1rem;
+    margin-bottom: 1px;
+    text-align: left;
+}
+.form-label {
+    text-align: left;
+    display: block;
+    margin-bottom: 0.5rem;
+    margin-top: 0.5rem;
+    font-family: var(--text-font);
+}
+.form-input {
+    width: 100%;
+    padding: 0.75rem;
+    font-size: 1.1rem;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    font-family: var(--text-font);
+    background-color: #f4f4f4;
 }
 
-.form-actions{
-    margin-top: 1rem;
+.role-selector {
+    background-color: #f4f4f4;
+    padding: 0.5rem;
+    border-radius: 8px;
+    display: flex;
+    justify-content: center;
+    gap: 0.5rem;
+    width: fit-content;
+    margin: 0 auto;
 }
 
-.form-register{
-    margin-top: 1rem;
+.role-btn {
+    background-color: #ffffff;
+    border: none;
+    color: var(--text-color);
+    font-family: var(--text-font);
+    padding: 0.75rem 1.5rem;
+    cursor: pointer;
+    transition: color 0.3s ease;
+    border-radius: 6px;
+}
+
+.role-btn:hover {
+    color: #e40202;
+}
+
+.role-active {
+    color: #e40202 !important;
+}
+
+.main-container {
+    background-color: #ffffff;
+    margin: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 80vh;
+}
+
+.login-card {
+    background-color: #ffffff;
+    border: 2px solid #ffffff;
+    border-radius: 10px;
+    padding: 2rem;
+    max-width: 500px;
+    margin: 0 auto;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+#login-submit-btn {
+    display: block;
+    margin: 0 auto;
+    background-color: #e40202;
+    color: #ffffff;
+    padding: 0.8rem 2rem;
+    font-size: 0.8rem;
+    width: 50%;
+    border-radius: 5px;
+    border: 1px solid #e40202;
+    font-family: var(--text-font);
+    cursor: pointer;
+    text-align: center;
 }
