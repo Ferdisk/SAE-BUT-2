@@ -141,3 +141,18 @@ form {
     text-align: center;
     margin-top: 5%;
 }
+
+.section-title {
+    font-size: 1.8rem;
+    margin-bottom: 0.5rem;
+    text-align: center;
+}
+
+.link-secondary {
+    display: block;
+    text-align: center;
+    margin-top: 1rem;
+    color: #e40202;
+    text-decoration: none;
+    font-family: Verdana, sans-serif;
+}

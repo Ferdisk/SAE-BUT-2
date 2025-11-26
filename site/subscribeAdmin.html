@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Gestionnaire de Questionnaires - Connexion</title>
+    <title>Gestionnaire de Questionnaires - Inscription</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="../css/login.css">
 </head>
@@ -27,22 +27,22 @@
         <section class="login-card">
             
             <div class="card-header">
-                <h2 class="section-title">Connexion</h2>
-                <p class="section-description">Choisissez votre type de compte pour vous connecter</p>
+                <h2 class="section-title">Inscription</h2>
+                <p class="section-description">Choisissez votre type de compte pour vous inscrire</p>
             </div>
 
             
 
             <div class="role-selector" id="role-tabs">
-                <button type="button" class="role-btn role-active" id="btn-student">
+                <button type="button" class="role-btn" id="btn-student" onclick="window.location.href='subscribe.html'">
                     <i class="fa-solid fa-graduation-cap icon"></i> Étudiant
                 </button>
                 
-                <button type="button" class="role-btn" id="btn-teacher" onclick="window.location.href='loginProf.html'">
+                <button type="button" class="role-btn" id="btn-teacher" onclick="window.location.href='subscribeProf.html'">
                     <i class="fa-regular fa-circle-user icon"></i> Professeur
                 </button>
                 
-                <button type="button" class="role-btn" id="btn-admin" onclick="window.location.href='loginAdmin.html'">
+                <button type="button" class="role-btn role-active" id="btn-admin">
                     <i class="fa-solid fa-shield-halved icon"></i> Admin
                 </button>
             </div>
@@ -66,10 +66,10 @@
             
 
                 <button type="submit" class="btn-submit" id="login-submit-btn">
-                    Se connecter
+                    S'inscrire
                 </button>
 
-                <a href="subscribe.html" class="link-secondary">Pas de compte ? Inscrivez-vous ici</a>
+                <a href="login.html" class="link-secondary">Déjà un compte ? Connectez-vous</a>
 
             </form>
 
