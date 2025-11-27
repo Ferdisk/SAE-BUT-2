@@ -25,9 +25,9 @@
     <aside class="left-panel">
         <h3>Ajout Questions</h3>
 
-        <button class="btn white-btn">+ QCM</button>
-        <button class="btn white-btn">+ Texte</button>
-        <button class="btn white-btn">+ Échelle de notation</button>
+        <button id="btn-qcm" class="btn white-btn">+ QCM</button>
+        <button id="btn-texte" class="btn white-btn">+ Texte</button>
+        <button id="btn-echelle" class="btn white-btn">+ Échelle de notation</button>
 
         <h3 class="desc-title">Description</h3>
         <textarea class="desc-box" placeholder="Ajoutez une description pour ce questionnaire..."></textarea>
@@ -36,13 +36,15 @@
     <section class="questionnaire-panel">
         <input class="title-box" type="text" value="Questionnaire" />
         <p class="hint">Cliquez sur un type de question pour commencer</p>
+        <div id="questions-container"></div>
     </section>
 </main>
 
 <footer class="footer-actions">
-    <button class="btn red-btn">Envoyer</button>
+    <button id="submit-btn" class="btn red-btn">Envoyer</button>
     <button class="btn blue-btn">Exporter</button>
 </footer>
 
+<script src="../scripts/script_questionnaire.js"></script>
 </body>
 </html>
