@@ -27,15 +27,19 @@ function displayQuestions() {
 function addQCM() {
     let localOptionCounter = 1;
 
-    // 1. Conteneur principal
+    // 1. Conteneur principal 
+    const div = document.createElement("div");
+    div.classList.add("question-wrapper");
+
+    // 2. Conteneur du QCM (ul)
     const containerQCM = document.createElement("ul");
     containerQCM.classList.add("containerQCM");
 
-    // 3. Liste des options QCM (déclaré en premier pour être accessible dans les listeners)
+    // 3. Liste des options QCM 
     const listQCM = document.createElement("ul");
     listQCM.classList.add("listQCM");
 
-    // Helper interne pour créer une ligne d'option (avec boutons +/- visuels sans action)
+    // Helper interne pour créer une ligne d'option (avec boutons +/- visuels)
     const createOptionElement = (optionIndex) => {
         const li = document.createElement("li");
         li.classList.add("elementQCM");
@@ -56,8 +60,7 @@ function addQCM() {
         btnAddPlaceholder.type = "button";
         btnAddPlaceholder.classList.add("btn-option", "btn-placeholder");
         btnAddPlaceholder.textContent = "+";
-        
-        //TODO: faire le compoertement pour le bouton +
+        // TODO: faire le comportement pour le bouton +
 
         const btnRemovePlaceholder = document.createElement("button");
         btnRemovePlaceholder.type = "button";
@@ -65,13 +68,13 @@ function addQCM() {
         btnRemovePlaceholder.textContent = "-";
 
         btnRemovePlaceholder.addEventListener('click', () => {
-        if (listQCM.children.length > 1) {
-            localOptionCounter--;
-            li.remove();
-        } else {
-            alert("Un QCM doit avoir au moins une option.");
-        }
-        })
+            if (listQCM.children.length > 1) {
+                localOptionCounter--;
+                li.remove();
+            } else {
+                alert("Un QCM doit avoir au moins une option.");
+            }
+        });
         
         textContainer.appendChild(textArea);
         textContainer.appendChild(btnAddPlaceholder);
@@ -83,7 +86,7 @@ function addQCM() {
         return { li, textContainer };
     };
 
-    // 2. Header avec titre + boutons +/- fonctionnels + bouton supprimer
+    // 4. Header avec titre et boutons +/x 
     const headerRow = document.createElement("li");
     headerRow.classList.add("header-row");
 
@@ -91,7 +94,7 @@ function addQCM() {
     titreQCM.classList.add("titreQCM");
     titreQCM.placeholder = "Titre du QCM";
 
-    // Bouton + du header (ajoute une option)
+    // Bouton + du header 
     const btnAddHeader = document.createElement("button");
     btnAddHeader.type = "button";
     btnAddHeader.classList.add("btn-option", "btn-add");
@@ -103,14 +106,14 @@ function addQCM() {
         listQCM.appendChild(newOption);
     });
 
-    // Bouton × du header (supprime le QCM entier)
+    // Bouton × du header 
     const btnDelete = document.createElement("button");
     btnDelete.type = "button";
     btnDelete.classList.add("btn-delete");
     btnDelete.textContent = "×";
 
     btnDelete.addEventListener('click', () => {
-        containerQCM.remove();
+        div.remove();  
         affichemessage();
     });
 
@@ -119,15 +122,37 @@ function addQCM() {
     headerRow.appendChild(btnAddHeader);
     headerRow.appendChild(btnDelete);
 
-    // 4. Création de la première option par défaut
+    // 5. Création de la première option par défaut
     const { li: firstOption } = createOptionElement(localOptionCounter);
 
-    // 5. Assemblage final
+    // 6. Assemblage du containerQCM
     listQCM.appendChild(firstOption);
     containerQCM.appendChild(headerRow);
     containerQCM.appendChild(listQCM);
 
-    document.getElementById("questions-container").appendChild(containerQCM);
+    // 7. Section "Autre choix"
+    const otheroptiondiv = document.createElement("div");
+    otheroptiondiv.classList.add("other-option");
+
+    const separator = document.createElement("hr");
+
+    const optionCheckbox = document.createElement("input");
+    optionCheckbox.type = "checkbox";
+    optionCheckbox.id = `other-option-${Date.now()}`;  // ID unique
+
+    const optionLabel = document.createElement("label");
+    optionLabel.textContent = "Autre choix";
+    optionLabel.htmlFor = optionCheckbox.id;
+
+    otheroptiondiv.appendChild(separator);
+    otheroptiondiv.appendChild(optionCheckbox);
+    otheroptiondiv.appendChild(optionLabel);
+
+    // 8. Assemblage final
+    div.appendChild(containerQCM);
+    div.appendChild(otheroptiondiv);
+
+    document.getElementById("questions-container").appendChild(div);
     affichemessage();
 }
 
