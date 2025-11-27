@@ -1,4 +1,3 @@
-
 :root {
     --primary-color: #fefefe;
     --btn-color: #23e0e4;
@@ -154,5 +153,5 @@ form {
     margin-top: 1rem;
     color: #e40202;
     text-decoration: none;
-    font-family: Verdana, sans-serif;
+    font-family: var(--text-font);
 }

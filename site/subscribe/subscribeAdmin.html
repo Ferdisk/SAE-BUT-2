@@ -3,15 +3,15 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Gestionnaire de Questionnaires - Connexion</title>
+    <title>Gestionnaire de Questionnaires - Inscription</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link rel="stylesheet" href="../css/login.css">
+    <link rel="stylesheet" href="../../css/login.css">
 </head>
 <body>
 
     <header class="site-header">
         <div class="logo-container">
-            <img src="../images/media/logo_unilim_avec_texte.png" alt="Logo IUT Limousin" id="main-logo" width="150">
+            <img src="../../images/media/logoUnilimAvecTexte.png" alt="Logo IUT Limousin" id="main-logo" width="150">
         </div>
         
         <div class="text-header">
@@ -27,18 +27,18 @@
         <section class="login-card">
             
             <div class="card-header">
-                <h2 class="section-title">Connexion</h2>
-                <p class="section-description">Choisissez votre type de compte pour vous connecter</p>
+                <h2 class="section-title">Inscription</h2>
+                <p class="section-description">Choisissez votre type de compte pour vous inscrire</p>
             </div>
 
             
 
             <div class="role-selector" id="role-tabs">
-                <button type="button" class="role-btn" id="btn-student" onclick="window.location.href='login.html'">
+                <button type="button" class="role-btn" id="btn-student" onclick="window.location.href='subscribe.html'">
                     <i class="fa-solid fa-graduation-cap icon"></i> Étudiant
                 </button>
                 
-                <button type="button" class="role-btn" id="btn-teacher" onclick="window.location.href='loginProf.html'">
+                <button type="button" class="role-btn" id="btn-teacher" onclick="window.location.href='subscribeProf.html'">
                     <i class="fa-regular fa-circle-user icon"></i> Professeur
                 </button>
                 
@@ -53,7 +53,7 @@
                 
                 <div class="form-group">
                     <label for="user-email" class="form-label">Adresse email</label>
-                    <input type="email" id="user-email" name="email" class="form-input" placeholder="votre.email@unilim.fr" required>
+                    <input type="email" id="user-email" name="email" class="form-input" placeholder="votre.email@etu.unilim.fr" required>
                 </div>
 
                 
@@ -66,10 +66,10 @@
             
 
                 <button type="submit" class="btn-submit" id="login-submit-btn">
-                    Se connecter
+                    S'inscrire
                 </button>
 
-                <a href="subscribe.html" class="link-secondary">Pas de compte ? Inscrivez-vous ici</a>
+                <a href="../login/loginAdmin.html" class="link-secondary">Déjà un compte ? Connectez-vous</a>
 
             </form>
 
