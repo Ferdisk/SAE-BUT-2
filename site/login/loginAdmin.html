@@ -5,13 +5,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Gestionnaire de Questionnaires - Connexion</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link rel="stylesheet" href="../css/login.css">
+    <link rel="stylesheet" href="../../css/login.css">
 </head>
 <body>
 
     <header class="site-header">
         <div class="logo-container">
-            <img src="../images/media/logo_unilim_avec_texte.png" alt="Logo IUT Limousin" id="main-logo" width="150">
+            <img src="../../images/media/logo_unilim_avec_texte.png" alt="Logo IUT Limousin" id="main-logo" width="150">
         </div>
         
         <div class="text-header">
@@ -34,7 +34,7 @@
             
 
             <div class="role-selector" id="role-tabs">
-                <button type="button" class="role-btn role-active" id="btn-student">
+                <button type="button" class="role-btn" id="btn-student" onclick="window.location.href='login.html'">
                     <i class="fa-solid fa-graduation-cap icon"></i> Étudiant
                 </button>
                 
@@ -42,7 +42,7 @@
                     <i class="fa-regular fa-circle-user icon"></i> Professeur
                 </button>
                 
-                <button type="button" class="role-btn" id="btn-admin" onclick="window.location.href='loginAdmin.html'">
+                <button type="button" class="role-btn role-active" id="btn-admin">
                     <i class="fa-solid fa-shield-halved icon"></i> Admin
                 </button>
             </div>
@@ -53,7 +53,7 @@
                 
                 <div class="form-group">
                     <label for="user-email" class="form-label">Adresse email</label>
-                    <input type="email" id="user-email" name="email" class="form-input" placeholder="votre.email@etu.unilim.fr" required>
+                    <input type="email" id="user-email" name="email" class="form-input" placeholder="votre.email@unilim.fr" required>
                 </div>
 
                 
@@ -69,7 +69,7 @@
                     Se connecter
                 </button>
 
-                <a href="subscribe.html" class="link-secondary">Pas de compte ? Inscrivez-vous ici</a>
+                <a href="../subscribe/subscribeAdmin.html" class="link-secondary">Pas de compte ? Inscrivez-vous ici</a>
 
             </form>
 
