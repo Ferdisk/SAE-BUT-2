@@ -62,6 +62,55 @@ function addQCM() {
         btnAddPlaceholder.textContent = "+";
         // TODO: faire le comportement pour le bouton +
 
+        btnAddPlaceholder.addEventListener('click', () => {
+            const existinMenu = li.querySelector('.dropdown');
+            if (existinMenu) {
+                existinMenu.remove();
+                return;
+            }
+
+            const menu = document.createElement("div");
+            menu.classList.add('dropdown');
+
+            const option1 = document.createElement("button");
+            option1.textContent = "Sous-question QCM";
+
+            option1.addEventListener('click', () => {
+                console.log("Wesh 1");
+                
+            })
+
+            const option2 = document.createElement("button");
+            option2.textContent = "Sous-question Texte";
+
+            option2.addEventListener('click', () => {
+                //TODO
+                console.log("Wesh 2");
+            })
+
+            const option3 = document.createElement("button");
+            option3.textContent = "Sous-question Échelle de notation";
+
+            option3.addEventListener('click', () => {
+                //TODO
+                console.log("Wesh 3");
+            })
+
+            menu.appendChild(option1);
+            menu.appendChild(option2);
+            menu.appendChild(option3);
+            
+            li.querySelector(".textQuestionContainer").appendChild(menu);
+
+
+            const ul = document.createElement("ul");
+            li.appendChild(ul); 
+
+
+        })
+
+        
+
         const btnRemovePlaceholder = document.createElement("button");
         btnRemovePlaceholder.type = "button";
         btnRemovePlaceholder.classList.add("btn-option", "btn-placeholder");
@@ -306,6 +355,7 @@ function handleSubmitAttempt() {
     } else {
         console.log("Formulaire valide, prêt à être envoyé");
         // TODO: Implémenter l'envoi fetch() ici
+        //TODO Utiliser 
     }
 }
 
@@ -345,3 +395,11 @@ function initEventListeners() {
 }
 
 document.addEventListener('DOMContentLoaded', initEventListeners);
+
+
+/**
+ * Sauvegarde la structure du formulaire au format JSON pour l'expoter vers la BDD
+ */
+function getFormStructure() {
+    //TODO
+}
