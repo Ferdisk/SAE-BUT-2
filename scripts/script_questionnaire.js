@@ -72,35 +72,32 @@ function addQCM() {
             const menu = document.createElement("div");
             menu.classList.add('dropdown');
 
-            const option1 = document.createElement("button");
-            option1.textContent = "Sous-question QCM";
+            const optionQCM = document.createElement("button");
+            optionQCM.textContent = "Sous-question QCM";
 
-            option1.addEventListener('click', () => {
-                console.log("Wesh 1");
-                
+            optionQCM.addEventListener('click', () => {
+                addQCM();
             })
 
-            const option2 = document.createElement("button");
-            option2.textContent = "Sous-question Texte";
+            const optionTxt = document.createElement("button");
+            optionTxt.textContent = "Sous-question Texte";
 
-            option2.addEventListener('click', () => {
-                //TODO
-                console.log("Wesh 2");
+            optionTxt.addEventListener('click', () => {
+                addTexte();
             })
 
-            const option3 = document.createElement("button");
-            option3.textContent = "Sous-question Échelle de notation";
+            const optionScale = document.createElement("button");
+            optionScale.textContent = "Sous-question Échelle de notation";
 
-            option3.addEventListener('click', () => {
-                //TODO
-                console.log("Wesh 3");
+            optionScale.addEventListener('click', () => {
+                li.appendChild(addRatingScale()); //TODO: ça marche pas à changer
             })
 
-            menu.appendChild(option1);
-            menu.appendChild(option2);
-            menu.appendChild(option3);
+            menu.appendChild(optionQCM);
+            menu.appendChild(optionTxt);
+            menu.appendChild(optionScale);
             
-            li.querySelector(".textQuestionContainer").appendChild(menu);
+            containerQCM.appendChild(menu);
 
 
             const ul = document.createElement("ul");
