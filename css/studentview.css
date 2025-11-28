@@ -2,13 +2,20 @@
     --text-font: Verdana, sans-serif;
     --background-color:#e40202;
 }
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
 header {
     font-family: var(--text-font);
     color:white;
+    background-color: var(--background-color);
 }
 .main-header{
    background-color: var(--background-color);
    height: auto;
+   width: 100%;
 }
 .header-site{
     display: flex;
