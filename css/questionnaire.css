@@ -146,9 +146,8 @@ body {
     font-size: 14px;
 }
 
-.containerQCM,
-.listQCM,
-.elementQCM {
+
+ul {
     list-style: none;
     margin: 0;
     padding: 0;
