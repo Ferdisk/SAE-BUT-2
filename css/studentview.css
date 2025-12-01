@@ -79,3 +79,59 @@ header {
 #header-notif:hover {
     filter: brightness(1) invert(1);
 }
+/* BODY DU SITE  */
+.main-body{
+    font-family: var(--text-font);  
+}
+/*centrage du site en flex box*/
+#center-main-body{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 40px;
+    padding-top: 20px;
+}
+/* titre au centre en haut de notre box*/
+#center-text{
+    text-align: center;
+}
+/*couleur du titre*/
+#center-text #questionnaire-title{
+    color :red;
+}
+
+#center-text #questionnaire-desc{
+    filter: opacity(70%);
+}
+
+/* partie du bas de notre box*/
+#questionaire-link{
+    background-color: rgb(250, 250, 250);
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    border: 1px solid rgb(239, 239, 239);
+    border-radius: 5px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    padding: 30px;
+    width: 400px;
+}
+#enter-link-desc {
+    font-size: 12px;
+}
+#questionnaire-access-button{
+    width: 100%;
+    background-color: var(--background-color);
+    color:white;
+    height: 3em;
+    border-radius: 5px;
+    border: none;
+
+}
+#label-link{
+    height: 40px;
+}
+#label-link::placeholder{
+    padding: 1%;
+}
