@@ -76,28 +76,34 @@ function addQCM() {
             optionQCM.textContent = "Sous-question QCM";
 
             optionQCM.addEventListener('click', () => {
-                addQCM();
-            })
+            const subQCM = addQCM();
+            li.appendChild(subQCM);  
+            menu.remove();
+            });
 
             const optionTxt = document.createElement("button");
             optionTxt.textContent = "Sous-question Texte";
 
             optionTxt.addEventListener('click', () => {
-                addTexte();
-            })
+                const subTxt = addTexte();    
+                li.appendChild(subTxt);      
+                menu.remove();               
+            });
 
             const optionScale = document.createElement("button");
             optionScale.textContent = "Sous-question Échelle de notation";
 
             optionScale.addEventListener('click', () => {
-                li.appendChild(addRatingScale()); //TODO: ça marche pas à changer
-            })
+                const subScale = addRatingScale();   
+                li.appendChild(subScale);     
+                menu.remove();               
+            });
 
             menu.appendChild(optionQCM);
             menu.appendChild(optionTxt);
             menu.appendChild(optionScale);
             
-            containerQCM.appendChild(menu);
+            li.appendChild(menu);
 
 
             const ul = document.createElement("ul");
@@ -198,8 +204,7 @@ function addQCM() {
     div.appendChild(containerQCM);
     div.appendChild(otheroptiondiv);
 
-    document.getElementById("questions-container").appendChild(div);
-    affichemessage();
+    return div;
 }
 
 /**
@@ -245,8 +250,7 @@ function addTexte() {
     containerText.appendChild(headerRow);
     containerText.appendChild(containerReponse);
 
-    document.getElementById("questions-container").appendChild(containerText);
-    affichemessage();
+    return containerText;
 }
 
 /**
@@ -310,8 +314,7 @@ function addRatingScale() {
     container.appendChild(headerRow);
     container.appendChild(liSlider);
 
-    document.getElementById("questions-container").appendChild(container);
-    affichemessage();
+    return container;
 }
 
 /**
@@ -368,15 +371,27 @@ function initEventListeners() {
 
     // Écouteurs pour les boutons de types de questions
     if (btnQCM) {
-        btnQCM.addEventListener('click', addQCM);
+        btnQCM.addEventListener('click', () => {
+        const qcm = addQCM();
+        document.getElementById("questions-container").appendChild(qcm);
+        affichemessage();
+});
     }
 
     if (btnTexte) {
-        btnTexte.addEventListener('click', addTexte);
+        btnTexte.addEventListener('click', () => {
+        const txt = addTexte();
+        document.getElementById("questions-container").appendChild(txt);
+        affichemessage();
+});
     }
 
     if (btnEchelle) {
-        btnEchelle.addEventListener('click', addRatingScale);
+        btnEchelle.addEventListener('click', () => {
+        const scale = addRatingScale();
+        document.getElementById("questions-container").appendChild(scale);
+        affichemessage();
+});
     }
 
     // Écouteur pour le bouton d'envoi
