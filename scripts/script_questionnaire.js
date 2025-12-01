@@ -380,7 +380,7 @@ function initEventListeners() {
 
     if (btnTexte) {
         btnTexte.addEventListener('click', () => {
-        const txt = addQCM();
+        const txt = addTexte();
         document.getElementById("questions-container").appendChild(txt);
         affichemessage();
 });
@@ -388,7 +388,7 @@ function initEventListeners() {
 
     if (btnEchelle) {
         btnEchelle.addEventListener('click', () => {
-        const scale = addQCM();
+        const scale = addRatingScale();
         document.getElementById("questions-container").appendChild(scale);
         affichemessage();
 });
