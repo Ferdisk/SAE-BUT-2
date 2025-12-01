@@ -55,11 +55,11 @@ function addQCM() {
         textArea.classList.add("textAreaQuestion");
         textArea.value = `Choix ${optionIndex}`;
 
-        // Boutons +/- décoratifs (sans action, juste pour l'alignement)
+        // Boutons +/- 
         const btnAddPlaceholder = document.createElement("button");
         btnAddPlaceholder.type = "button";
         btnAddPlaceholder.classList.add("btn-option", "btn-placeholder");
-        btnAddPlaceholder.textContent = "+";
+        btnAddPlaceholder.textContent = ">";
         // TODO: faire le comportement pour le bouton +
 
         btnAddPlaceholder.addEventListener('click', () => {
@@ -104,11 +104,6 @@ function addQCM() {
             menu.appendChild(optionScale);
             
             li.appendChild(menu);
-
-
-            const ul = document.createElement("ul");
-            li.appendChild(ul); 
-
 
         })
 
