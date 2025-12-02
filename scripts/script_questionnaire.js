@@ -4,6 +4,7 @@
  * et de la prévisualisation.
  */
 
+
 const ajoutQuestionBtn = document.getElementById('ajout-question-btn');
 const formActionsContainer = document.querySelector('.form-actions');
 const formActionButtons = formActionsContainer ? formActionsContainer.querySelectorAll('button') : [];
@@ -60,7 +61,6 @@ function addQCM() {
         btnAddPlaceholder.type = "button";
         btnAddPlaceholder.classList.add("btn-option", "btn-placeholder");
         btnAddPlaceholder.textContent = ">";
-        // TODO: faire le comportement pour le bouton +
 
         btnAddPlaceholder.addEventListener('click', () => {
             const existinMenu = li.querySelector('.dropdown');
@@ -250,17 +250,19 @@ function addTexte() {
 
 /**
  * Ajoute une question de type Échelle de Notation.
+ * @returns {HTMLElement} Le conteneur de la question
  */
 function addRatingScale() {
     const uniqueId = Date.now();
+    let currentMax = 10; 
 
     // 1. Conteneur principal
     const container = document.createElement('ul');
     container.classList.add('containerRating');
 
     // 2. Header avec titre + bouton supprimer
-    const headerRow = document.createElement('li');
-    headerRow.classList.add('header-row');
+    const headerTitleRow = document.createElement('li');
+    headerTitleRow.classList.add('header-row');
 
     const titreRating = document.createElement('textarea');
     titreRating.classList.add('titreRating');
@@ -276,38 +278,105 @@ function addRatingScale() {
         affichemessage();
     });
 
-    // Assemblage du header
-    headerRow.appendChild(titreRating);
-    headerRow.appendChild(btnDelete);
+    headerTitleRow.appendChild(titreRating);
+    headerTitleRow.appendChild(btnDelete);
 
-    // 3. Le Slider (Range)
-    const liSlider = document.createElement('li');
-    liSlider.classList.add('slider-container');
+    // 3. Header avec sélection de l'échelle
+    const headerScaleRow = document.createElement('li');
+    headerScaleRow.classList.add('header-row');
+
+    const labelScale = document.createElement('label');
+    labelScale.textContent = 'Notation sur : ';
+    labelScale.htmlFor = `select-scale-${uniqueId}`;
+
+    const selectScale = document.createElement('select');
+    selectScale.id = `select-scale-${uniqueId}`;
+    selectScale.classList.add('select-scale');
+
+    // Options du select (sans option vide par défaut)
+    [5, 10, 20, 50, 100].forEach((value, index) => {
+        const opt = document.createElement('option');
+        opt.value = value;
+        opt.textContent = value;
+        if (value === 10) opt.selected = true; 
+        selectScale.appendChild(opt);
+    });
+
+    headerScaleRow.appendChild(labelScale);
+    headerScaleRow.appendChild(selectScale);
+
+    // 4. Conteneur du slider
+    const sliderRow = document.createElement('li');
+    sliderRow.classList.add('slider-container');
 
     const slider = document.createElement('input');
     slider.type = 'range';
     slider.id = `slider-${uniqueId}`;
     slider.min = 0;
-    slider.max = 10;
-    slider.value = 5;
+    slider.max = currentMax;
+    slider.value = Math.floor(currentMax / 2);
     slider.classList.add('rating-slider');
 
-    liSlider.appendChild(slider);
+    const sliderValueLabel = document.createElement("label");
+    sliderValueLabel.classList.add('slider-value');
+    sliderValueLabel.textContent = slider.value;
 
-    // 4. Conteneur des numéros
+    slider.addEventListener('input', (e) => {
+        sliderValueLabel.textContent = e.target.value;
+    }
+    )
+
+
+    // 5. Conteneur des numéros (labels visuels)
     const numbersContainer = document.createElement('div');
     numbersContainer.classList.add('slider-numbers');
 
-    for (let i = 0; i <= 10; i++) {
-        const span = document.createElement('span');
-        span.textContent = i;
-        numbersContainer.appendChild(span);
-    }
+    /**
+     * Génère les labels numériques sous le slider
+     * @param {number} max - Valeur maximale de l'échelle
+     */
+    const generateSliderNumbers = (max) => {
+        numbersContainer.innerHTML = ''; // Vider les anciens numéros
+        
+        // Calculer le pas pour afficher ~11 étiquettes max
+        const step = max <= 10 ? 1 : Math.ceil(max / 10);
+        
+        for (let i = 0; i <= max; i += step) {
+            const span = document.createElement('span');
+            span.textContent = i;
+            numbersContainer.appendChild(span);
+        }
+        
+        // Toujours afficher la valeur max si pas déjà affichée
+        const lastValue = (max % step === 0) ? null : max;
+        if (lastValue !== null) {
+            const span = document.createElement('span');
+            span.textContent = max;
+            numbersContainer.appendChild(span);
+        }
+    };
 
-    // 5. Assemblage final
-    liSlider.appendChild(numbersContainer);
-    container.appendChild(headerRow);
-    container.appendChild(liSlider);
+    // Génération initiale des numéros
+    generateSliderNumbers(currentMax);
+
+    // 6. Listener pour mettre à jour le slider quand le select change
+    selectScale.addEventListener('change', (e) => {
+        currentMax = parseInt(e.target.value, 10);
+        slider.max = currentMax;
+        slider.value = Math.floor(currentMax / 2); // Recentrer le curseur
+        generateSliderNumbers(currentMax);
+    });
+
+    // 7. Assemblage du sliderRow
+    sliderRow.appendChild(slider);
+    sliderRow.appendChild(numbersContainer);
+    sliderRow.appendChild(sliderValueLabel);
+
+
+    // 8. Assemblage final du container
+    container.appendChild(headerTitleRow);
+    container.appendChild(headerScaleRow);
+    container.appendChild(sliderRow);
 
     return container;
 }
@@ -408,5 +477,18 @@ document.addEventListener('DOMContentLoaded', initEventListeners);
  * Sauvegarde la structure du formulaire au format JSON pour l'expoter vers la BDD
  */
 function getFormStructure() {
-    //TODO
+    const container = document.getElementById('questions-container');
+    const questions = [];
+
+    // Parcourir chaque enfant direct du container
+    container.querySelectorAll('.question-wrapper, .containerText, .containerRating').forEach(element => {
+        // TODO: Identifier le type de question
+        // TODO: Extraire les données
+        // TODO: Ajouter à questions[]
+    });
+
+    return {
+        dateCreation: new Date().toISOString(),
+        questions: questions
+    };
 }

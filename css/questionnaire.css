@@ -152,3 +152,22 @@ ul {
     margin: 0;
     padding: 0;
 }
+
+.slider-container {
+    display: flex;
+    flex-direction: column;
+    max-width: 240px;
+}
+
+.rating-slider {
+    width: 100%;
+}
+
+.slider-numbers {
+    display: flex;
+    justify-content: space-between;
+    padding: 0 8px; 
+    font-size: 0.85rem;
+    color: #666;
+}
+
