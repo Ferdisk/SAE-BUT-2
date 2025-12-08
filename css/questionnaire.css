@@ -98,6 +98,7 @@ body {
     min-height: 500px;
 }
 
+
 .title-box {
     background: var(--main-red);
 
@@ -170,8 +171,11 @@ ul {
     align-items: center;     
     width: 100%;
     max-width: 350px;
-    margin: 0 auto;
-    gap: 12px;               
+    margin: 5% 0;
+    gap: 12px;
+    border-radius: 6px;
+    padding: 15px;    
+    background-color: #fff;
 }
 
 .containerRating li {
@@ -196,7 +200,7 @@ ul {
     width: 100%;
     margin-top: 4px;
     font-size: 0.75rem;
-    color: white;
+    color: black;
 }
 .slider-numbers span {
     position: absolute;
@@ -249,4 +253,27 @@ textarea.titreRating, .titreQuestion, .reponseQuestion, .titreQCM, .textAreaQues
   padding: 0.4rem 0.6rem;
   cursor: pointer;
   border-radius: 6px;
+}
+
+.question-wrapper {
+    margin: 5% 0;
+    padding: 15px; 
+    background-color: #fff;
+    border-radius: 6px;
+}
+
+.containerText {
+    margin: 5% 0;
+    padding: 15px; 
+    background-color: #fff;
+    border-radius: 6px;
+}
+
+#questions-container textarea{
+        border: solid grey;
+        border-radius: 6px;
+}
+
+label {
+    color: black;
 }
