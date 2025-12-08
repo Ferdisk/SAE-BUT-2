@@ -323,22 +323,26 @@ function addRatingScale() {
      * @param {number} max - Valeur maximale de l'échelle
      */
     const generateSliderNumbers = (max) => {
-        numbersContainer.innerHTML = ''; // Vider les anciens numéros
-        
-        // Calculer le pas pour afficher ~11 étiquettes max
+        numbersContainer.innerHTML = '';
+        numbersContainer.style.position = 'relative';
+
         const step = max <= 10 ? 1 : Math.ceil(max / 10);
-        
+
         for (let i = 0; i <= max; i += step) {
             const span = document.createElement('span');
             span.textContent = i;
+            span.style.position = 'absolute';
+            span.style.left = `${(i / max) * 100}%`;
+            span.style.transform = 'translateX(-50%)';
             numbersContainer.appendChild(span);
         }
-        
-        // Toujours afficher la valeur max si pas déjà affichée
-        const lastValue = (max % step === 0) ? null : max;
-        if (lastValue !== null) {
+
+        if (max % step !== 0) {
             const span = document.createElement('span');
             span.textContent = max;
+            span.style.position = 'absolute';
+            span.style.left = '100%';
+            span.style.transform = 'translateX(-50%)';
             numbersContainer.appendChild(span);
         }
     };
