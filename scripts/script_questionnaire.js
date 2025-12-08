@@ -9,18 +9,6 @@ const ajoutQuestionBtn = document.getElementById('ajout-question-btn');
 const formActionsContainer = document.querySelector('.form-actions');
 const formActionButtons = formActionsContainer ? formActionsContainer.querySelectorAll('button') : [];
 
-let isBuilderPanelHidden = true;
-
-/**
- * Bascule l'affichage du panneau de construction de questions.
- */
-function displayQuestions() {
-    const container = document.getElementById("builder-questions-container");
-    if (!container) return;
-
-    container.style.display = isBuilderPanelHidden ? 'block' : 'none';
-    isBuilderPanelHidden = !isBuilderPanelHidden;
-}
 
 /**
  * Ajoute une nouvelle question de type QCM au formulaire.
@@ -323,8 +311,7 @@ function addRatingScale() {
 
     slider.addEventListener('input', (e) => {
         sliderValueLabel.textContent = e.target.value;
-    }
-    )
+    });
 
 
     // 5. Conteneur des numéros (labels visuels)
