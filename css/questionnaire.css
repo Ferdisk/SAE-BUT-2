@@ -171,3 +171,33 @@ ul {
     color: #666;
 }
 
+.containerRating {
+    display: flex;
+    flex-direction: column;
+    align-items: center;     
+    width: 100%;
+    max-width: 350px;
+    margin: 0 auto;
+    gap: 12px;               
+}
+
+.containerRating li {
+    width: 100%;
+    display: flex;
+    flex-direction: column;   
+    align-items: center;
+}
+
+.header-row  {
+    display: flex;
+    gap: 8px;
+    width: 100%;
+    justify-content: center;  
+}
+
+.slider-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+}
