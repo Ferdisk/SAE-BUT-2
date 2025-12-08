@@ -385,7 +385,7 @@ function hasQuestions() {
  * Met à jour le message d'indication selon la présence de questions.
  */
 function affichemessage() {
-    // Utilise querySelector pour obtenir UN élément, pas une collection
+
     const hint = document.querySelector(".hint");
 
     if (!hint) return;
@@ -401,13 +401,39 @@ function affichemessage() {
  * Gestionnaire de validation avant envoi.
  */
 function handleSubmitAttempt() {
+    // Récupère l'élément du titre et sa valeur (si présent)
+    const titleElement = document.querySelector(".title-box");
+    const titleBox = titleElement ? titleElement.value : "";
+
     if (!hasQuestions()) {
+        // Pas de questions insérées
         alert("Vous devez insérer des questions pour envoyer");
+    } else if (!answersValidation()) {
+        // Certaines zones de configuration sont vides
+        alert("Certaines zones de texte sont vides, veuillez les remplir.");
+    } else if (titleBox.trim().length === 0) {
+        // Titre vide
+        alert("Votre titre ne doit pas être vide");
     } else {
-        console.log("Formulaire valide, prêt à être envoyé");
-        // TODO: Implémenter l'envoi fetch() ici
-        //TODO Utiliser 
+        // Tout est valide
+        alert("Formulaire valide, prêt à être envoyé");
+        // TODO: Implémenter l'envoi fetch() ici 
     }
+}
+
+function answersValidation() {
+    //  Sélectionne uniquement les champs de CONFIGURATION de la question
+    const textAreasToValidate = document.querySelectorAll(".titreQCM, .titreQuestion, .titreRating, .textAreaQuestion");
+
+    for (const element of textAreasToValidate) {
+        if (element.value.trim().length === 0) {
+            element.style.border = "1px solid red";
+            return false;
+        } else {
+            element.style.border = "";
+        }
+    }
+    return true;
 }
 
 /**
