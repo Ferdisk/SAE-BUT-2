@@ -10,33 +10,6 @@ body{
     background-color: rgb(255, 255, 255);
     font-family: var(--text-font);
 }
-.site-header{
-    background-color: var(--primary-color);
-    color: var(--text-color);
-    display: flex;
-    align-items: center;
-    gap: 1rem;
-    padding: 1rem 2rem;
-    justify-content: center;
-}
-.logo-container img{
-    height: 60px;
-    width: auto;
-}
-.text-header{
-    display: flex;
-    flex-direction: column;
-    gap: 0.25rem;
-}
-.app-title{
-    margin: 0;
-    font-size: 1.5rem;
-}
-.app-subtitle{
-    margin: 0;
-    color: #555;
-    font-size: 0.95rem;
-}
 .login-btn,
 add-option-btn{
     background-color: var(--btn-color);
@@ -167,15 +140,6 @@ form {
     text-align: center;
     margin-top: 5%;
 }
-.card-header{
-    text-align: center;
-    margin-bottom: 1.5rem;
-}
-.section-description{
-    margin: 0.5rem 0 0;
-    color: #555;
-    font-size: 0.95rem;
-}
 
 .section-title {
     font-size: 1.8rem;
@@ -190,4 +154,27 @@ form {
     color: #e40202;
     text-decoration: none;
     font-family: var(--text-font);
+}
+.btn-submit{
+     display: block;
+    margin: 0 auto;
+    background-color: #e40202;
+    color: #ffffff;
+    padding: 0.8rem 2rem;
+    font-size: 0.8rem;
+    width: 100%;
+    max-width: 450px;
+    border-radius: 5px;
+    border: 1px solid #e40202;
+    font-family: var(--text-font);
+    cursor: pointer;
+    text-align: center;
+    margin-top: 5%;
+}
+.btn-submit:hover{
+    transition-duration: .2s;
+    background-color: #e33d3d;
+}
+.link-secondary:hover{
+    opacity: 75%;
 }
