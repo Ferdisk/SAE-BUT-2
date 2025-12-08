@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gestionnaire de Questionnaires - 2FA</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="../../css/login.css">
+</head>
+<body>
+
+    <header class="site-header">
+        <div class="logo-container">
+            <img src="../../images/media/logoUnilimAvecTexte.png" alt="Logo IUT Limousin" id="main-logo" width="150">
+        </div>
+
+        <div class="text-header">
+            <h1 class="app-title">Gestionnaire de Questionnaires</h1>
+            <p class="app-subtitle">Vérification en deux étapes</p>
+        </div>
+    </header>
+
+    <main class="main-container">
+        <section class="login-card">
+            <div class="card-header">
+                <h2 class="section-title">Code de vérification</h2>
+                <p class="section-description">Entrez le code à 6 chiffres envoyé à votre adresse email.</p>
+            </div>
+
+            <form id="twofa-form">
+                <div class="form-group">
+                    <label for="twofa-code" class="form-label">Code à 6 chiffres</label>
+                    <input type="text" id="twofa-code" name="code" class="form-input" inputmode="numeric" pattern="\\d{6}" maxlength="6" placeholder="000000" required>
+                </div>
+
+                <button type="submit" class="btn-submit" id="twofa-submit-btn">Vérifier</button>
+
+                <p id="twofa-feedback"></p>
+
+                <a href="#" class="link-secondary" id="twofa-resend">Renvoyer le code</a>
+                <a href="login.html" class="link-secondary">Retour à la connexion</a>
+            </form>
+        </section>
+    </main>
+
+</body>
+</html>
