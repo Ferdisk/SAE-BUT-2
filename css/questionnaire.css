@@ -240,3 +240,13 @@ textarea.titreRating, .titreQuestion, .reponseQuestion, .titreQCM, .textAreaQues
   cursor: pointer;
   border-radius: 6px;
 }
+
+.btn-add {
+  background-color: #fff;
+  border: 1px solid #ccc;
+  color: #00e229;
+  font-size: 1.2rem;
+  padding: 0.4rem 0.6rem;
+  cursor: pointer;
+  border-radius: 6px;
+}
