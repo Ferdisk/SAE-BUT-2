@@ -21,7 +21,7 @@ add-option-btn{
 .login-btn:hover,
 add-option-btn:hover{
     background-color: #e40202 var(--btn-hover-color);
-    
+   
 }
 
 header {
@@ -155,6 +155,7 @@ form {
     text-decoration: none;
     font-family: var(--text-font);
 }
+/* 2FA */
 .btn-submit{
      display: block;
     margin: 0 auto;
@@ -177,4 +178,10 @@ form {
 }
 .link-secondary:hover{
     opacity: 75%;
+}
+
+.container-text-center-text-muted-my-4 {
+    display: flex;
+    justify-content: center;
+    padding-bottom: 10px;
 }
