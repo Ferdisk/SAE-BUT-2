@@ -1,0 +1,123 @@
+:root {
+  --primary-red: #e2001a;
+  --primary-blue: #0082c8;
+  --hover-red: #b80015;
+  --hover-blue: #005a8c;
+  --gray: #666;
+  --white: #fff;
+  --shadow: 0 2px 8px rgba(0,0,0,0.04);
+}
+body {
+  margin: 0;
+  font-family: 'Segoe UI', Arial, sans-serif;
+  background: var(--white);
+  color: var(--gray);
+}
+.header {
+  background: var(--primary-red);
+  color: var(--white);
+  display: flex;
+  align-items: center;
+  padding: 0 3%;
+  height: 10vh;
+  min-height: 60px;
+  box-shadow: var(--shadow);
+}
+
+.logo {
+  height: 7vh;
+  max-height: 50px;
+  margin-right: 2vw;
+}
+.title {
+  font-size: 1.8vw;
+  font-weight: 600;
+  flex: 1;
+  letter-spacing: 0.5px;
+}
+.header-right {
+  display: flex;
+  align-items: center;
+  gap: 2vw;
+}
+.notif {
+  position: relative;
+}
+.notif-dot {
+  position: absolute;
+  top: 2px;
+  right: 2px;
+  width: 0.7vw;
+  height: 0.7vw;
+  min-width: 7px;
+  min-height: 7px;
+  background: #2bb3f6;
+  border-radius: 50%;
+}
+.logout {
+  color: var(--white);
+  text-decoration: none;
+  font-size: 1em;
+  display: flex;
+  align-items: center;
+  gap: 0.5em;
+  transition: opacity 0.2s;
+}
+.logout:hover {
+  opacity: 0.7;
+}
+.mid-container{
+    display: flex;
+    flex-wrap: nowrap;
+    gap: 1em;    
+    padding: 10px;
+    padding-left: 10px;
+
+
+}
+.stat-card-students,
+.stat-card-completions,
+.stat-card-average,
+.stat-card-completion-rate  {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-direction: row; /* texte à gauche, icône à droite */
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 0.75rem 1rem;
+    box-shadow: var(--shadow);
+    gap: .75em;
+    flex: 1 1 260px;
+    width: 100%;
+    font-size:10px;
+    
+}
+.stat-card-students,
+.stat-card-completions,
+.stat-card-average,
+.stat-card-completion-rate .stat-value, .stat-card-completion-rate .stat-title {
+      
+}
+.stat-text {
+    display: flex;
+    flex-direction: column;
+    gap: 0.15rem;
+}
+
+/* Icônes des cartes de statistiques (en bas) */
+.icon-students,
+.icon-completions,
+.icon-average,
+.icon-rate {    
+  align-items: right;
+  width: 32px;
+  height: 32px;
+}
+.body{
+    padding-left: 10px;
+}
+.top-container,
+.mid-container{
+    padding-left: 10px;
+}
