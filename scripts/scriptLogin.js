@@ -28,7 +28,7 @@ document.addEventListener("DOMContentLoaded", () => {
             return;
         }
 
-                if (role == 'Prof' && !email.includes("@unilim.fr")) {
+        if (role == 'Prof' && !email.includes("@unilim.fr")) {
             feedback.textContent = "Veuillez entrer votre mail professionnel (prenom.nom@unilim.fr).";
             return;
         }
@@ -46,16 +46,16 @@ document.addEventListener("DOMContentLoaded", () => {
             feedback.textContent = "Connexion réussie !";
             switch (role) {
                 case ('Etudiant'):
-                        window.location.replace("http://164");
+                        window.location.replace("http://164.81.120.71/SAE-BUT-2/site/page/studentview.html");
                     break;
                 case ('Prof'):
-                        window.location.replace("http://164");
+                        window.location.replace("http://164.81.120.71/SAE-BUT-2/site/profview.html");
                     break;
                 case ('Admin'):
-                        window.location.replace("http://164");
+                        window.location.replace("http://164.81.120.71/SAE-BUT-2/site/Admin/adminUtilisateurs.html");
                     break;
             }
-                        
+
         } else {
             feedback.style.color = "red";
             feedback.textContent = data.message;
