@@ -124,9 +124,7 @@ function addQCM() {
 
         li.appendChild(checkbox);
         li.appendChild(textContainer);
-        // Les boutons sub/remove restent à côté de l'option (interne) ou externe ? 
-        // Le screenshot montre +/- à droite de CHAQUE option.
-        // Donc on les ajoute à la ligne
+
         li.appendChild(btnSubOption);
         li.appendChild(btnRemoveOption);
 
@@ -181,8 +179,8 @@ function addQCM() {
         affichemessage();
     });
 
-    actionPanel.appendChild(btnDeleteQCM); // Le delete est souvent en haut
-    actionPanel.appendChild(btnAddOption); // L'ajout d'option en dessous ou au niveau des options
+    actionPanel.appendChild(btnDeleteQCM);
+    actionPanel.appendChild(btnAddOption);
 
 
     // 8. Initialisation
@@ -365,7 +363,6 @@ function addRatingScale() {
 
     sliderRow.appendChild(slider);
     sliderRow.appendChild(numbersContainer);
-    // sliderRow.appendChild(sliderValueLabel); // Optionnel si on veut la valeur courante affichée
 
     // Assemblage contenu blanc
     questionContent.appendChild(headerTitleRow);
