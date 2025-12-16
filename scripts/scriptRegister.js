@@ -8,6 +8,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
         const email = document.getElementById("user-email").value;
         const password = document.getElementById("user-password").value;
+        const passwordConfirm = document.getElementById("user-password-confirm").value;
         const url = window.location.href;
         let role = '';
         if (url.includes("Prof")) {
@@ -18,6 +19,11 @@ document.addEventListener("DOMContentLoaded", () => {
 
         if (!email || !password) {
             feedback.textContent = "Veuillez remplir tous les champs.";
+            return;
+        }
+
+        if (password !== passwordConfirm) {
+            feedback.textContent = "Les mots de passe ne correspondent pas.";
             return;
         }
 
