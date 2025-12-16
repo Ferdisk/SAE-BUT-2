@@ -21,8 +21,7 @@ document.addEventListener("DOMContentLoaded", () => {
             feedback.textContent = "Veuillez remplir tous les champs.";
             return;
         }
-
-        if (password !== passwordConfirm) {
+        if (password != passwordConfirm) {
             feedback.textContent = "Les mots de passe ne correspondent pas.";
             return;
         }
