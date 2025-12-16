@@ -1,50 +1,74 @@
 <!DOCTYPE html>
 <html lang="fr">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Création de Questionnaire</title>
     <link rel="stylesheet" href="../../css/questionnaire.css">
 </head>
+
 <body>
 
-<header class="topbar">
-    <div class="logo">
-        <img src="../../images/media/logoUnilimBlancAvecTexte.png">
-        <span>Création de Questionnaire</span>
-    </div>
+    <header class="topbar">
+        <div class="logo">
+            <img src="../../images/media/logoUnilimBlancAvecTexte.png">
+            <span>Création de Questionnaire</span>
+        </div>
 
-    <div class="top-actions">
-        <a href="profview.html" class="small-link">Retour</a>
-        <span class="icon">🔔</span> 
-        <a href="../../login/loginProf.html" class="small-link">Déconnexion</a>
-    </div>
-</header>
+        <div class="top-actions">
+            <a href="profview.html" class="small-link">Retour</a>
+            <span class="icon">🔔</span>
+            <a href="../login/loginProf.html" class="small-link">Déconnexion</a>
+        </div>
+    </header>
 
-<main class="container">
-    <aside class="left-panel">
-        <h3>Ajout Questions</h3>
+    <main class="container">
+        <aside class="left-panel">
 
-        <button id="btn-qcm" class="btn white-btn">+ QCM</button>
-        <button id="btn-texte" class="btn white-btn">+ Texte</button>
-        <button id="btn-echelle" class="btn white-btn">+ Échelle de notation</button>
+            <!-- Carte 1: Ajout Questions -->
+            <div class="sidebar-card card-red">
+                <h3>Ajout Questions</h3>
+                <button id="btn-qcm" class="btn white-btn">+ QCM</button>
+                <button id="btn-texte" class="btn white-btn">+ Texte</button>
+                <button id="btn-echelle" class="btn white-btn">+ Échelle de notation</button>
+            </div>
 
-        <h3 class="desc-title">Description</h3>
-        <textarea class="desc-box" placeholder="Ajoutez une description pour ce questionnaire..."></textarea>
-    </aside>
+            <!-- Carte 2: Description -->
+            <div class="sidebar-card card-red">
+                <h3 class="desc-title">Description</h3>
+                <textarea class="desc-box" placeholder="Ajoutez une description pour ce questionnaire..."></textarea>
+            </div>
 
-    <section class="questionnaire-panel">
-        <input class="title-box" type="text" value="Questionnaire" />
-        <p class="hint">Cliquez sur un type de question pour commencer</p>
-        <div id="questions-container"></div>
-    </section>
-</main>
+            <!-- Carte 3: Limite de Temps -->
+            <div class="sidebar-card card-blue">
+                <div class="time-limit-header">
+                    <h3>🕒 Limite de Temps</h3>
+                    <label class="switch">
+                        <input type="checkbox">
+                        <span class="slider round"></span>
+                    </label>
+                </div>
+                <p class="time-limit-desc">
+                    Aucune limite de temps. Les étudiants pourront compléter le questionnaire à leur rythme.
+                </p>
+            </div>
 
-<footer class="footer-actions">
-    <button id="submit-btn" class="btn red-btn">Envoyer</button>
-    <button class="btn blue-btn">Exporter</button>
-</footer>
+        </aside>
 
-<script src="../../scripts/script_questionnaire.js"></script>
+        <section class="questionnaire-panel">
+            <input class="title-box" type="text" value="Questionnaire" />
+            <p class="hint">Cliquez sur un type de question pour commencer</p>
+            <div id="questions-container"></div>
+        </section>
+    </main>
+
+    <footer class="footer-actions">
+        <button id="submit-btn" class="btn red-btn">Envoyer</button>
+        <button class="btn blue-btn">Exporter</button>
+    </footer>
+
+    <script src="../../scripts/script_questionnaire.js"></script>
 </body>
+
 </html>

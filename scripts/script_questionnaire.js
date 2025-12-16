@@ -16,19 +16,31 @@ const formActionButtons = formActionsContainer ? formActionsContainer.querySelec
 function addQCM() {
     let localOptionCounter = 1;
 
-    // 1. Conteneur principal 
-    const div = document.createElement("div");
-    div.classList.add("question-wrapper", "container-question");
+    // 1. Conteneur principal (Flex wrapper)
+    const wrapper = document.createElement("div");
+    wrapper.classList.add("question-wrapper-flex");
 
-    // 2. Conteneur du QCM (ul)
-    const containerQCM = document.createElement("ul");
-    containerQCM.classList.add("containerQCM");
+    // 2. Zone blanche de contenu
+    const questionContent = document.createElement("div");
+    questionContent.classList.add("question-content-white");
 
-    // 3. Liste des options QCM 
+    // 3. Zone d'actions latérale
+    const actionPanel = document.createElement("div");
+    actionPanel.classList.add("question-actions-side");
+
+
+    // 4. Header (Titre) - Désormais dans la zone blanche
+    // (On ne garde que le titre ici, les boutons vont à côté)
+    const titreQCM = document.createElement("textarea");
+    titreQCM.classList.add("titreQCM");
+    titreQCM.placeholder = "[Titre du QCM]";
+
+
+    // 5. Liste des options QCM
     const listQCM = document.createElement("ul");
     listQCM.classList.add("listQCM");
 
-    // Helper interne pour créer une ligne d'option (avec boutons +/- visuels)
+    // Helper interne pour créer une ligne d'option
     const createOptionElement = (optionIndex) => {
         const li = document.createElement("li");
         li.classList.add("elementQCM");
@@ -42,15 +54,15 @@ function addQCM() {
 
         const textArea = document.createElement("textarea");
         textArea.classList.add("textAreaQuestion");
-        textArea.value = `Choix ${optionIndex}`;
+        textArea.placeholder = `[Choix ${optionIndex}]`;
 
-        // Boutons +/- 
-        const btnAddPlaceholder = document.createElement("button");
-        btnAddPlaceholder.type = "button";
-        btnAddPlaceholder.classList.add("btn-option", "btn-placeholder");
-        btnAddPlaceholder.textContent = ">";
+        // Bouton "+" (Sous-question)
+        const btnSubOption = document.createElement("button");
+        btnSubOption.type = "button";
+        btnSubOption.classList.add("btn-option-flat", "btn-sub");
+        btnSubOption.textContent = ">"; // Peut être remplacé par une icône
 
-        btnAddPlaceholder.addEventListener('click', () => {
+        btnSubOption.addEventListener('click', () => {
             const existinMenu = li.querySelector('.dropdown');
             if (existinMenu) {
                 existinMenu.remove();
@@ -64,176 +76,183 @@ function addQCM() {
             optionQCM.textContent = "Sous-question QCM";
 
             optionQCM.addEventListener('click', () => {
-            const subQCM = addQCM();
-            li.appendChild(subQCM);  
-            menu.remove();
+                const subQCM = addQCM();
+                li.appendChild(subQCM);
+                menu.remove();
             });
 
             const optionTxt = document.createElement("button");
             optionTxt.textContent = "Sous-question Texte";
 
             optionTxt.addEventListener('click', () => {
-                const subTxt = addTexte();    
-                li.appendChild(subTxt);      
-                menu.remove();               
+                const subTxt = addTexte();
+                li.appendChild(subTxt);
+                menu.remove();
             });
 
             const optionScale = document.createElement("button");
             optionScale.textContent = "Sous-question Échelle de notation";
 
             optionScale.addEventListener('click', () => {
-                const subScale = addRatingScale();   
-                li.appendChild(subScale);     
-                menu.remove();               
+                const subScale = addRatingScale();
+                li.appendChild(subScale);
+                menu.remove();
             });
 
             menu.appendChild(optionQCM);
             menu.appendChild(optionTxt);
             menu.appendChild(optionScale);
-            
+
             li.appendChild(menu);
+        });
 
-        })
+        // Bouton "-" (Supprimer l'option)
+        const btnRemoveOption = document.createElement("button");
+        btnRemoveOption.type = "button";
+        btnRemoveOption.classList.add("btn-option-flat", "btn-remove");
+        btnRemoveOption.textContent = "-";
 
-        
-
-        const btnRemovePlaceholder = document.createElement("button");
-        btnRemovePlaceholder.type = "button";
-        btnRemovePlaceholder.classList.add("btn-option", "btn-placeholder");
-        btnRemovePlaceholder.textContent = "-";
-
-        btnRemovePlaceholder.addEventListener('click', () => {
+        btnRemoveOption.addEventListener('click', () => {
             if (listQCM.children.length > 1) {
-                localOptionCounter--;
                 li.remove();
             } else {
                 alert("Un QCM doit avoir au moins une option.");
             }
         });
-        
+
         textContainer.appendChild(textArea);
-        textContainer.appendChild(btnAddPlaceholder);
-        textContainer.appendChild(btnRemovePlaceholder);
 
         li.appendChild(checkbox);
         li.appendChild(textContainer);
+        // Les boutons sub/remove restent à côté de l'option (interne) ou externe ? 
+        // Le screenshot montre +/- à droite de CHAQUE option.
+        // Donc on les ajoute à la ligne
+        li.appendChild(btnSubOption);
+        li.appendChild(btnRemoveOption);
 
         return { li, textContainer };
     };
 
-    // 4. Header avec titre et boutons +/x 
-    const headerRow = document.createElement("li");
-    headerRow.classList.add("header-row");
 
-    const titreQCM = document.createElement("textarea");
-    titreQCM.classList.add("titreQCM");
-    titreQCM.placeholder = "Titre du QCM";
+    // 6. Section "Autre choix"
+    const otheroptiondiv = document.createElement("div");
+    otheroptiondiv.classList.add("other-option"); // Css pour alignement
 
-    // Bouton + du header 
-    const btnAddHeader = document.createElement("button");
-    btnAddHeader.type = "button";
-    btnAddHeader.classList.add("btn-option", "btn-add");
-    btnAddHeader.textContent = "+";
+    const optionCheckbox = document.createElement("input");
+    optionCheckbox.type = "checkbox";
+    optionCheckbox.id = `other-option-${Date.now()}`;
 
-    btnAddHeader.addEventListener('click', () => {
+    const optionLabel = document.createElement("label");
+    optionLabel.textContent = "Ajouter l'option \"Autre (à préciser)\"";
+    optionLabel.htmlFor = optionCheckbox.id;
+
+    otheroptiondiv.appendChild(optionCheckbox);
+    otheroptiondiv.appendChild(optionLabel);
+
+
+    // Assemblage contenu blanc
+    questionContent.appendChild(titreQCM);
+    questionContent.appendChild(listQCM);
+    questionContent.appendChild(otheroptiondiv);
+
+
+    // 7. Boutons d'actions GLOBALES (Côté droit)
+
+    // Bouton "+" (Ajouter une option au QCM)
+    const btnAddOption = document.createElement("button");
+    btnAddOption.type = "button";
+    btnAddOption.classList.add("side-btn", "side-btn-add");
+    btnAddOption.textContent = "+";
+
+    btnAddOption.addEventListener('click', () => {
         localOptionCounter++;
         const { li: newOption } = createOptionElement(localOptionCounter);
         listQCM.appendChild(newOption);
     });
 
-    // Bouton × du header 
-    const btnDelete = document.createElement("button");
-    btnDelete.type = "button";
-    btnDelete.classList.add("btn-delete");
-    btnDelete.textContent = "×";
+    // Bouton "x" (Supprimer le QCM entier)
+    const btnDeleteQCM = document.createElement("button");
+    btnDeleteQCM.type = "button";
+    btnDeleteQCM.classList.add("side-btn", "side-btn-delete");
+    btnDeleteQCM.textContent = "-"; // Le screenshot montre un tiret rouge (-)
 
-    btnDelete.addEventListener('click', () => {
-        div.remove();  
+    btnDeleteQCM.addEventListener('click', () => {
+        wrapper.remove();
         affichemessage();
     });
 
-    // Assemblage du header (titre + boutons côte à côte)
-    headerRow.appendChild(titreQCM);
-    headerRow.appendChild(btnAddHeader);
-    headerRow.appendChild(btnDelete);
+    actionPanel.appendChild(btnDeleteQCM); // Le delete est souvent en haut
+    actionPanel.appendChild(btnAddOption); // L'ajout d'option en dessous ou au niveau des options
 
-    // 5. Création de la première option par défaut
+
+    // 8. Initialisation
     const { li: firstOption } = createOptionElement(localOptionCounter);
-
-    // 6. Assemblage du containerQCM
     listQCM.appendChild(firstOption);
-    containerQCM.appendChild(headerRow);
-    containerQCM.appendChild(listQCM);
 
-    // 7. Section "Autre choix"
-    const otheroptiondiv = document.createElement("div");
-    otheroptiondiv.classList.add("other-option");
+    // Assemblage final
+    wrapper.appendChild(questionContent);
+    wrapper.appendChild(actionPanel);
 
-    const separator = document.createElement("hr");
-
-    const optionCheckbox = document.createElement("input");
-    optionCheckbox.type = "checkbox";
-    optionCheckbox.id = `other-option-${Date.now()}`;  // ID unique
-
-    const optionLabel = document.createElement("label");
-    optionLabel.textContent = "Autre choix";
-    optionLabel.htmlFor = optionCheckbox.id;
-
-    otheroptiondiv.appendChild(separator);
-    otheroptiondiv.appendChild(optionCheckbox);
-    otheroptiondiv.appendChild(optionLabel);
-
-    // 8. Assemblage final
-    div.appendChild(containerQCM);
-    div.appendChild(otheroptiondiv);
-
-    return div;
+    return wrapper;
 }
 
 /**
  * Ajoute une nouvelle question de type Texte Libre.
  */
+/**
+ * Ajoute une nouvelle question de type Texte Libre.
+ */
 function addTexte() {
-    // 1. Conteneur principal
-    const containerText = document.createElement("ul");
-    containerText.classList.add("containerText", "container-question");
+    // 1. Conteneur principal (Flex wrapper)
+    const wrapper = document.createElement("div");
+    wrapper.classList.add("question-wrapper-flex");
 
-    // 2. Header avec titre + bouton supprimer
-    const headerRow = document.createElement("li");
-    headerRow.classList.add("header-row");
+    // 2. Zone blanche de contenu
+    const questionContent = document.createElement("div");
+    questionContent.classList.add("question-content-white");
 
+    // 3. Zone d'actions latérale
+    const actionPanel = document.createElement("div");
+    actionPanel.classList.add("question-actions-side");
+
+    // 4. Titre de la question à l'intérieur
     const titreQuestion = document.createElement("textarea");
     titreQuestion.classList.add("titreQuestion");
-    titreQuestion.placeholder = "Titre de la question texte";
+    titreQuestion.placeholder = "[Question Texte]";
 
-    const btnDelete = document.createElement("button");
-    btnDelete.type = "button";
-    btnDelete.classList.add("btn-delete");
-    btnDelete.textContent = "×";
-
-    btnDelete.addEventListener('click', () => {
-        containerText.remove();
-        affichemessage();
-    });
-
-    // Assemblage du header
-    headerRow.appendChild(titreQuestion);
-    headerRow.appendChild(btnDelete);
-
-    // 3. Zone de réponse
-    const containerReponse = document.createElement("li");
+    // 5. Zone de réponse à l'intérieur
+    const containerReponse = document.createElement("div");
     containerReponse.classList.add("containerReponse");
 
     const reponseQuestion = document.createElement("textarea");
     reponseQuestion.classList.add("reponseQuestion");
-    reponseQuestion.placeholder = "Écrivez votre réponse ici...";
+    reponseQuestion.placeholder = "[Réponse]";
 
-    // 4. Assemblage final
     containerReponse.appendChild(reponseQuestion);
-    containerText.appendChild(headerRow);
-    containerText.appendChild(containerReponse);
 
-    return containerText;
+    // Assemblage contenu blanc
+    questionContent.appendChild(titreQuestion);
+    questionContent.appendChild(containerReponse);
+
+
+    // 6. Bouton "x" (Supprimer) dans le panneau latéral
+    const btnDelete = document.createElement("button");
+    btnDelete.type = "button";
+    btnDelete.classList.add("side-btn", "side-btn-delete");
+    btnDelete.textContent = "-";
+
+    btnDelete.addEventListener('click', () => {
+        wrapper.remove();
+        affichemessage();
+    });
+
+    actionPanel.appendChild(btnDelete);
+
+    // 7. Assemblage final
+    wrapper.appendChild(questionContent);
+    wrapper.appendChild(actionPanel);
+
+    return wrapper;
 }
 
 /**
@@ -242,35 +261,33 @@ function addTexte() {
  */
 function addRatingScale() {
     const uniqueId = Date.now();
-    let currentMax = 10; 
+    let currentMax = 10;
 
-    // 1. Conteneur principal
-    const container = document.createElement('ul');
-    container.classList.add('containerRating', "container-question");
+    // 1. Conteneur principal (Flex wrapper)
+    const wrapper = document.createElement("div");
+    wrapper.classList.add("question-wrapper-flex");
 
-    // 2. Header avec titre + bouton supprimer
-    const headerTitleRow = document.createElement('li');
-    headerTitleRow.classList.add('header-row');
+    // 2. Zone blanche de contenu
+    const questionContent = document.createElement("div");
+    questionContent.classList.add("question-content-white");
+
+    // 3. Zone d'actions latérale
+    const actionPanel = document.createElement("div");
+    actionPanel.classList.add("question-actions-side");
+
+
+    // 4. Titre + Select (Header interne)
+    const headerTitleRow = document.createElement('div');
+    headerTitleRow.classList.add('header-row', 'rating-header');
 
     const titreRating = document.createElement('textarea');
     titreRating.classList.add('titreRating');
-    titreRating.placeholder = "Titre de l'échelle de notation";
-
-    const btnDelete = document.createElement('button');
-    btnDelete.type = 'button';
-    btnDelete.classList.add('btn-delete');
-    btnDelete.textContent = '×';
-
-    btnDelete.addEventListener('click', () => {
-        container.remove();
-        affichemessage();
-    });
+    titreRating.placeholder = "[Question échelle de notation]";
 
     headerTitleRow.appendChild(titreRating);
-    headerTitleRow.appendChild(btnDelete);
 
-    // 3. Header avec sélection de l'échelle
-    const headerScaleRow = document.createElement('li');
+    // Select Scale 
+    const headerScaleRow = document.createElement('div');
     headerScaleRow.classList.add('header-row');
 
     const labelScale = document.createElement('label');
@@ -281,20 +298,20 @@ function addRatingScale() {
     selectScale.id = `select-scale-${uniqueId}`;
     selectScale.classList.add('select-scale');
 
-    // Options du select (sans option vide par défaut)
     [5, 10, 20, 50, 100].forEach((value, index) => {
         const opt = document.createElement('option');
         opt.value = value;
         opt.textContent = value;
-        if (value === 10) opt.selected = true; 
+        if (value === 10) opt.selected = true;
         selectScale.appendChild(opt);
     });
 
     headerScaleRow.appendChild(labelScale);
     headerScaleRow.appendChild(selectScale);
 
-    // 4. Conteneur du slider
-    const sliderRow = document.createElement('li');
+
+    // 5. Conteneur du slider
+    const sliderRow = document.createElement('div');
     sliderRow.classList.add('slider-container');
 
     const slider = document.createElement('input');
@@ -313,21 +330,13 @@ function addRatingScale() {
         sliderValueLabel.textContent = e.target.value;
     });
 
-
-    // 5. Conteneur des numéros (labels visuels)
     const numbersContainer = document.createElement('div');
     numbersContainer.classList.add('slider-numbers');
 
-    /**
-     * Génère les labels numériques sous le slider
-     * @param {number} max - Valeur maximale de l'échelle
-     */
     const generateSliderNumbers = (max) => {
         numbersContainer.innerHTML = '';
         numbersContainer.style.position = 'relative';
-
         const step = max <= 10 ? 1 : Math.ceil(max / 10);
-
         for (let i = 0; i <= max; i += step) {
             const span = document.createElement('span');
             span.textContent = i;
@@ -336,7 +345,6 @@ function addRatingScale() {
             span.style.transform = 'translateX(-50%)';
             numbersContainer.appendChild(span);
         }
-
         if (max % step !== 0) {
             const span = document.createElement('span');
             span.textContent = max;
@@ -346,30 +354,43 @@ function addRatingScale() {
             numbersContainer.appendChild(span);
         }
     };
-
-    // Génération initiale des numéros
     generateSliderNumbers(currentMax);
 
-    // 6. Listener pour mettre à jour le slider quand le select change
     selectScale.addEventListener('change', (e) => {
         currentMax = parseInt(e.target.value, 10);
         slider.max = currentMax;
-        slider.value = Math.floor(currentMax / 2); // Recentrer le curseur
+        slider.value = Math.floor(currentMax / 2);
         generateSliderNumbers(currentMax);
     });
 
-    // 7. Assemblage du sliderRow
     sliderRow.appendChild(slider);
     sliderRow.appendChild(numbersContainer);
-    sliderRow.appendChild(sliderValueLabel);
+    // sliderRow.appendChild(sliderValueLabel); // Optionnel si on veut la valeur courante affichée
+
+    // Assemblage contenu blanc
+    questionContent.appendChild(headerTitleRow);
+    questionContent.appendChild(headerScaleRow);
+    questionContent.appendChild(sliderRow);
 
 
-    // 8. Assemblage final du container
-    container.appendChild(headerTitleRow);
-    container.appendChild(headerScaleRow);
-    container.appendChild(sliderRow);
+    // 6. Bouton "x" (Supprimer) latéral
+    const btnDelete = document.createElement('button');
+    btnDelete.type = 'button';
+    btnDelete.classList.add('side-btn', 'side-btn-delete');
+    btnDelete.textContent = '-';
 
-    return container;
+    btnDelete.addEventListener('click', () => {
+        wrapper.remove();
+        affichemessage();
+    });
+
+    actionPanel.appendChild(btnDelete);
+
+    // 7. Assemblage final
+    wrapper.appendChild(questionContent);
+    wrapper.appendChild(actionPanel);
+
+    return wrapper;
 }
 
 /**
@@ -453,26 +474,26 @@ function initEventListeners() {
     // Écouteurs pour les boutons de types de questions
     if (btnQCM) {
         btnQCM.addEventListener('click', () => {
-        const qcm = addQCM();
-        document.getElementById("questions-container").appendChild(qcm);
-        affichemessage();
-});
+            const qcm = addQCM();
+            document.getElementById("questions-container").appendChild(qcm);
+            affichemessage();
+        });
     }
 
     if (btnTexte) {
         btnTexte.addEventListener('click', () => {
-        const txt = addTexte();
-        document.getElementById("questions-container").appendChild(txt);
-        affichemessage();
-});
+            const txt = addTexte();
+            document.getElementById("questions-container").appendChild(txt);
+            affichemessage();
+        });
     }
 
     if (btnEchelle) {
         btnEchelle.addEventListener('click', () => {
-        const scale = addRatingScale();
-        document.getElementById("questions-container").appendChild(scale);
-        affichemessage();
-});
+            const scale = addRatingScale();
+            document.getElementById("questions-container").appendChild(scale);
+            affichemessage();
+        });
     }
 
     // Écouteur pour le bouton d'envoi
