@@ -47,17 +47,96 @@ body {
     gap: 40px;
 }
 
+
 .left-panel {
     width: 300px;
-    background: var(--main-red);
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.sidebar-card {
     padding: 20px;
     border-radius: 6px;
     color: white;
 }
 
-.left-panel h3 {
-    margin-bottom: 10px;
+.card-red {
+    background: var(--main-red);
 }
+
+.card-blue {
+    background: #007bba;
+}
+
+.left-panel h3 {
+    margin-top: 0;
+    margin-bottom: 15px;
+    font-size: 16px;
+}
+
+/* Time Limit Section */
+.time-limit-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.time-limit-desc {
+    font-size: 0.85rem;
+    margin-top: 10px;
+    margin-bottom: 0;
+    line-height: 1.4;
+    opacity: 0.9;
+}
+
+/* Toggle Switch */
+.switch {
+    position: relative;
+    display: inline-block;
+    width: 40px;
+    height: 20px;
+}
+
+.switch input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+.slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #ccc;
+    transition: .4s;
+    border-radius: 20px;
+}
+
+.slider:before {
+    position: absolute;
+    content: "";
+    height: 14px;
+    width: 14px;
+    left: 3px;
+    bottom: 3px;
+    background-color: white;
+    transition: .4s;
+    border-radius: 50%;
+}
+
+input:checked+.slider {
+    background-color: white;
+}
+
+input:checked+.slider:before {
+    transform: translateX(20px);
+    background-color: #007bba;
+}
+
 
 .btn {
     width: 100%;
@@ -74,8 +153,9 @@ body {
     color: var(--main-red);
 }
 
+
 .desc-title {
-    margin-top: 25px;
+    margin-top: 0;
 }
 
 .desc-box {
@@ -99,9 +179,13 @@ body {
 }
 
 
+
+* {
+    box-sizing: border-box;
+}
+
 .title-box {
     background: var(--main-red);
-
     padding: 12px;
     border-radius: 4px;
     width: 90%;
@@ -111,6 +195,7 @@ body {
     text-align: center;
     color: white;
 }
+
 
 .hint {
     margin-top: 80px;
@@ -154,36 +239,12 @@ ul {
     padding: 0;
 }
 
-.slider-container {
-    display: flex;
-    flex-direction: column;
-    max-width: 300px;
-}
-
-.rating-slider {
-    width: 95%;
-}
-
-
-.containerRating {
-    display: flex;
-    flex-direction: column;
-    align-items: center;     
-    width: 100%;
-    margin: 5% 0;
-    gap: 12px;
-    border-radius: 6px;
-    padding: 15px;    
-    background-color: #fff;
-}
-
 .containerRating li {
     width: 100%;
     display: flex;
-    flex-direction: column;   
+    flex-direction: column;
     align-items: center;
 }
-
 
 .slider-container {
     display: flex;
@@ -201,6 +262,7 @@ ul {
     font-size: 0.75rem;
     color: black;
 }
+
 .slider-numbers span {
     position: absolute;
     top: 0;
@@ -212,76 +274,177 @@ ul {
     margin: 0px 10;
 }
 
-textarea.titreRating, .titreQuestion, .reponseQuestion, .titreQCM, .textAreaQuestion{
+textarea.titreRating,
+.titreQuestion,
+.reponseQuestion,
+.titreQCM,
+.textAreaQuestion {
     width: 180px;
     height: 42px;
     border-radius: 6px;
     border: none;
     resize: none;
-};
+}
 
 .header-row {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 8px;
-  width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+    width: 100%;
 }
 
 .titreRating {
-  flex: 1;
-  resize: vertical;
-  min-height: 40px;
+    flex: 1;
+    resize: vertical;
+    min-height: 40px;
 }
 
 .btn-delete {
-  background-color: #fff;
-  border: 1px solid #ccc;
-  color: #e2001a;
-  font-size: 1.2rem;
-  padding: 0.4rem 0.6rem;
-  cursor: pointer;
-  border-radius: 6px;
+    background-color: #fff;
+    border: 1px solid #ccc;
+    color: #e2001a;
+    font-size: 1.2rem;
+    padding: 0.4rem 0.6rem;
+    cursor: pointer;
+    border-radius: 6px;
 }
 
 .btn-add {
-  background-color: #fff;
-  border: 1px solid #ccc;
-  color: #00e229;
-  font-size: 1.2rem;
-  padding: 0.4rem 0.6rem;
-  cursor: pointer;
-  border-radius: 6px;
-}
-
-.question-wrapper {
-    margin: 5% 0;
-    padding: 15px; 
     background-color: #fff;
+    border: 1px solid #ccc;
+    color: #00e229;
+    font-size: 1.2rem;
+    padding: 0.4rem 0.6rem;
+    cursor: pointer;
     border-radius: 6px;
 }
 
-.containerText {
-    margin: 5% 0;
-    padding: 15px; 
-    background-color: #fff;
+#questions-container textarea {
+    border: solid grey;
     border-radius: 6px;
-}
-
-#questions-container textarea{
-        border: solid grey;
-        border-radius: 6px;
 }
 
 label {
     color: black;
 }
 
-.container-question {
-    border: 2px solid #ccc;
-    border-radius: 6px;
-    padding: 15px;
-    background-color: #fff;
-    width: 1087px;
 
+/* New Question Layout */
+.question-wrapper-flex {
+    display: flex;
+    align-items: flex-start;
+    gap: 15px;
+    width: 90%;
+    margin: 20px auto;
+}
+
+.question-content-white {
+    background: white;
+    border-radius: 6px;
+    padding: 20px;
+    flex: 1;
+    /* Takes remaining width */
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.question-actions-side {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-top: 5px;
+}
+
+/* Side Buttons */
+.side-btn {
+    width: 30px;
+    height: 30px;
+    border: none;
+    cursor: pointer;
+    font-size: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: transparent;
+    font-weight: bold;
+    padding: 0;
+}
+
+.side-btn-add {
+    color: #007bba;
+    /* Blue + */
+}
+
+.side-btn-delete {
+    color: var(--main-red);
+    /* Red - */
+    font-size: 28px;
+    /* Slightly larger for the minus/dash */
+}
+
+.btn-option-flat {
+    background: transparent;
+    border: none;
+    font-size: 18px;
+    cursor: pointer;
+    margin-left: 5px;
+}
+
+.btn-sub {
+    color: #999;
+}
+
+.btn-remove {
+    color: var(--main-red);
+}
+
+/* Inputs styling in new layout */
+.titreQCM,
+.titreQuestion,
+.titreRating {
+    width: 100%;
+    border: 1px solid #ddd;
+    background: #fdfdfd;
+    padding: 10px;
+    border-radius: 4px;
+    font-family: inherit;
+    resize: none;
+    height: auto;
+    min-height: 45px;
+}
+
+.textAreaQuestion {
+    border: 1px solid #eee;
+    padding: 5px;
+    width: 100%;
+    max-width: 400px;
+}
+
+.elementQCM {
+    margin-bottom: 8px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.textQuestionContainer {
+    flex: 1;
+}
+
+/* Override/Clean old styles */
+.container-question {
+    /* Keep for backward compat if JS not fully refreshed, or remove if confident */
+    display: none;
+}
+
+.other-option {
+    margin-top: 10px;
+    color: #666;
+    font-size: 0.9rem;
+    display: flex;
+    gap: 10px;
+    align-items: center;
 }
