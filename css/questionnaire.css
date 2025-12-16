@@ -321,36 +321,45 @@ textarea.titreRating,
 }
 
 #questions-container textarea {
-    border: solid grey;
+    border: solid gray;
     border-radius: 6px;
+}
+
+#questions-container .side-btn {
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+    display: flex;
 }
 
 label {
     color: black;
 }
 
-
-/* New Question Layout */
 .question-wrapper-flex {
-    display: flex;
-    align-items: flex-start;
     gap: 15px;
+    padding: 20px;
     width: 90%;
     margin: 20px auto;
 }
 
 .question-content-white {
+    display: flex;
+    gap: 15px;
     background: white;
     border-radius: 6px;
     padding: 20px;
     flex: 1;
-    /* Takes remaining width */
     box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
     display: flex;
     flex-direction: column;
     gap: 15px;
 }
 
+.listQCM{
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+
+}
 .question-actions-side {
     display: flex;
     flex-direction: column;
@@ -358,7 +367,6 @@ label {
     margin-top: 5px;
 }
 
-/* Side Buttons */
 .side-btn {
     width: 30px;
     height: 30px;
@@ -368,21 +376,18 @@ label {
     display: flex;
     justify-content: center;
     align-items: center;
-    background: transparent;
-    font-weight: bold;
+    background: white;
+    border-radius: 6px;
     padding: 0;
 }
 
 .side-btn-add {
     color: #007bba;
-    /* Blue + */
 }
 
 .side-btn-delete {
     color: var(--main-red);
-    /* Red - */
-    font-size: 28px;
-    /* Slightly larger for the minus/dash */
+    font-size: 30px;
 }
 
 .btn-option-flat {
@@ -401,7 +406,6 @@ label {
     color: var(--main-red);
 }
 
-/* Inputs styling in new layout */
 .titreQCM,
 .titreQuestion,
 .titreRating {
@@ -425,18 +429,15 @@ label {
 
 .elementQCM {
     margin-bottom: 8px;
-    display: flex;
-    align-items: center;
-    gap: 10px;
+    display: block;
+    width: 100%; /* Ajouté pour forcer la largeur */
 }
 
 .textQuestionContainer {
     flex: 1;
 }
 
-/* Override/Clean old styles */
 .container-question {
-    /* Keep for backward compat if JS not fully refreshed, or remove if confident */
     display: none;
 }
 
