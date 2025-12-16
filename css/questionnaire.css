@@ -170,7 +170,6 @@ ul {
     flex-direction: column;
     align-items: center;     
     width: 100%;
-    max-width: 350px;
     margin: 5% 0;
     gap: 12px;
     border-radius: 6px;
@@ -276,4 +275,13 @@ textarea.titreRating, .titreQuestion, .reponseQuestion, .titreQCM, .textAreaQues
 
 label {
     color: black;
+}
+
+.container-question {
+    border: 2px solid #ccc;
+    border-radius: 6px;
+    padding: 15px;
+    background-color: #fff;
+    width: 1087px;
+
 }

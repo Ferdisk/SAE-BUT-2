@@ -18,7 +18,7 @@ function addQCM() {
 
     // 1. Conteneur principal 
     const div = document.createElement("div");
-    div.classList.add("question-wrapper");
+    div.classList.add("question-wrapper", "container-question");
 
     // 2. Conteneur du QCM (ul)
     const containerQCM = document.createElement("ul");
@@ -196,7 +196,7 @@ function addQCM() {
 function addTexte() {
     // 1. Conteneur principal
     const containerText = document.createElement("ul");
-    containerText.classList.add("containerText");
+    containerText.classList.add("containerText", "container-question");
 
     // 2. Header avec titre + bouton supprimer
     const headerRow = document.createElement("li");
@@ -246,7 +246,7 @@ function addRatingScale() {
 
     // 1. Conteneur principal
     const container = document.createElement('ul');
-    container.classList.add('containerRating');
+    container.classList.add('containerRating', "container-question");
 
     // 2. Header avec titre + bouton supprimer
     const headerTitleRow = document.createElement('li');
