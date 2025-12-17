@@ -17,8 +17,8 @@
         </div>
     </header>
   
-    
-    <body class="body">
+<!--body + chargement des scores "onload"-->    
+    <body class="body" onload="move()">
         <div class="top-container">
             <div class="main-title">Satisfaction du Questionnaire</div>
             <div class="desc">Analysez les résultats de vos questionnaires</div>
@@ -73,7 +73,7 @@
         <div class="individual-result">
             <div class="result-title">Résultat Individuels</div>
             <table class="result-table">
-                <tbody>
+                <tbody >
                     <tr>
                         <th>Étudiant</th>
                         <th>Score</th>
@@ -83,7 +83,7 @@
                     <tr>
                         <td>Nom 1</td>
                         <td><div id="myProgress">
-                          <div id="myBar" move()>
+                          <div id="myBar">
                         </div></td>
                         <td>Temps 1 en min</td>
                         <td id="result-statut">Terminé ou Pas Terminé</td>

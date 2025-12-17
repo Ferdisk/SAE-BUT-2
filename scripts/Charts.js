@@ -26,6 +26,10 @@ new Chart(document.getElementById('completionRateChart'), {
         }]
     }
 });
+
+//TODO fonction convertir le score obtenu /20 en %  
+//fonction move qui prendra des valeur en paramèètre les valeur du score 
+//  pour afficher le score en % (width)
 var i = 0;
 function move() {
   if (i == 0) {
