@@ -54,13 +54,40 @@
                 <img src="../../images/media/rate_icon.ico" alt="Icône Taux de Complétion" class="icon-rate">
             </div>
 
-
-
-
+<!---ici les charts(digramme en barre) qui proviennent de ../../scripts/Chart.js -->
         </div>
-        <canvas id="myChart"></canvas>
-        
-        <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-        <script src="../../scripts/Charts.js"></script>
+        <div class="chart-container">
+            <div class="chart-left">
+                <div class="chart-title">Distribution des Étudiants par Note</div>
+                <canvas class="nbStudentChart" id="nbStudentChart"></canvas>
+                <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+                <script src="../../scripts/Charts.js"></script>
+            </div>
+            <div class="chart-right">
+                <div class="chart-title">Performance par Question</div>
+                <canvas class="completionRateChart" id="completionRateChart"></canvas>
+                <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+                <script src="../../scripts/Charts.js"></script>
+            </div>
+        </div>
+        <div class="individual-result">
+            <div class="result-title">Résultat Individuels</div>
+            <table class="result-table">
+                <thead>
+                    <tr>
+                        <th>Étudiant</th>
+                        <th>Score</th>
+                        <th>Temps de Complétion</th>
+                        <th>Statut</th>
+                    </tr>
+                </thead>
+                <tbody id="student-results">
+                    <!-- Généré dynamiquement par JS -->
+                </tbody>
+            </table>
+            <p id="result-display"></p>
+        </div>
+
+        <script src="../../scripts/studentResults.js"></script>
     </body>
 </html>
