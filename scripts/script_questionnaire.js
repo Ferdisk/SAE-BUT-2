@@ -29,8 +29,8 @@ function addQCM(isSubQuestion = false) {
     actionPanel.classList.add("question-actions-side");
 
 
-    // 4. Header (Titre) - Désormais dans la zone blanche
-    let titreQCM
+    // 4. Header (Titre) 
+    let titreQCM; 
     if (!isSubQuestion) {
         titreQCM = document.createElement("textarea");
         titreQCM.classList.add("titreQCM");
@@ -175,15 +175,16 @@ function addQCM(isSubQuestion = false) {
     const btnDeleteQCM = document.createElement("button");
     btnDeleteQCM.type = "button";
     btnDeleteQCM.classList.add("side-btn", "side-btn-delete");
-    btnDeleteQCM.textContent = "-"; // Le screenshot montre un tiret rouge (-)
+    btnDeleteQCM.textContent = "-";
 
     btnDeleteQCM.addEventListener('click', () => {
         wrapper.remove();
         affichemessage();
     });
 
-    actionPanel.appendChild(btnDeleteQCM);
     actionPanel.appendChild(btnAddOption);
+    actionPanel.appendChild(btnDeleteQCM);
+    
 
 
     // 8. Initialisation
@@ -219,12 +220,12 @@ function addTexte(isSubQuestion = false) {
 
     // 4. Titre de la question à l'intérieur
     let titreQuestion;
-    if (!isSubQuestion){
+    if (!isSubQuestion) {
         titreQuestion = document.createElement("textarea");
         titreQuestion.classList.add("titreQuestion");
         titreQuestion.placeholder = "[Question Texte]";
     }
-    
+
 
     // 5. Zone de réponse à l'intérieur
     const containerReponse = document.createElement("div");
@@ -237,7 +238,7 @@ function addTexte(isSubQuestion = false) {
     containerReponse.appendChild(reponseQuestion);
 
     // Assemblage contenu blanc
-    if (!isSubQuestion){
+    if (!isSubQuestion) {
         questionContent.appendChild(titreQuestion);
     }
     questionContent.appendChild(containerReponse);
@@ -300,9 +301,6 @@ function addRatingScale(isSubQuestion = false) {
 
     }
 
-    
-
-    // Select Scale 
     const headerScaleRow = document.createElement('div');
     headerScaleRow.classList.add('header-row');
 
@@ -338,12 +336,20 @@ function addRatingScale(isSubQuestion = false) {
     slider.value = Math.floor(currentMax / 2);
     slider.classList.add('rating-slider');
 
+    const updateSliderFill = () => {
+        const percent = (slider.value / slider.max) * 100;
+        slider.style.backgroundImage = `linear-gradient(to right, #007bba ${percent}%, #ccc ${percent}%)`;
+    };
+
+    updateSliderFill();
+
     const sliderValueLabel = document.createElement("label");
     sliderValueLabel.classList.add('slider-value');
     sliderValueLabel.textContent = slider.value;
 
     slider.addEventListener('input', (e) => {
         sliderValueLabel.textContent = e.target.value;
+        updateSliderFill(); 
     });
 
     const numbersContainer = document.createElement('div');
@@ -357,7 +363,7 @@ function addRatingScale(isSubQuestion = false) {
             const span = document.createElement('span');
             span.textContent = i;
             span.style.position = 'absolute';
-            span.style.left = `${(i / max) * 100}%`;
+            span.style.left = `calc(8px + (100% - 16px) * ${i / max})`;
             span.style.transform = 'translateX(-50%)';
             numbersContainer.appendChild(span);
         }
@@ -365,7 +371,7 @@ function addRatingScale(isSubQuestion = false) {
             const span = document.createElement('span');
             span.textContent = max;
             span.style.position = 'absolute';
-            span.style.left = '100%';
+            span.style.left = `calc(100% - 8px)`;
             span.style.transform = 'translateX(-50%)';
             numbersContainer.appendChild(span);
         }
@@ -376,13 +382,15 @@ function addRatingScale(isSubQuestion = false) {
         currentMax = parseInt(e.target.value, 10);
         slider.max = currentMax;
         slider.value = Math.floor(currentMax / 2);
+        sliderValueLabel.textContent = slider.value; 
+        updateSliderFill(); 
         generateSliderNumbers(currentMax);
     });
 
     sliderRow.appendChild(slider);
     sliderRow.appendChild(numbersContainer);
+    sliderRow.appendChild(sliderValueLabel); 
 
-    // Assemblage contenu blanc
     if (!isSubQuestion) {
         questionContent.appendChild(headerTitleRow);
     }
@@ -488,6 +496,39 @@ function initEventListeners() {
     const btnEchelle = document.getElementById("btn-echelle");
     const submitBtn = document.getElementById("submit-btn");
 
+    const timeLimitToggle = document.getElementById("time-limit-toggle");
+    const timeLimitContent = document.getElementById("time-limit-content");
+    const timeLimitDesc = document.getElementById("time-limit-desc-text");
+
+    if (timeLimitToggle) {
+        timeLimitToggle.addEventListener("change", (e) => {
+            if (e.target.checked) {
+                timeLimitContent.style.display = "flex";
+                const val = document.querySelector(".time-input").value;
+                timeLimitDesc.textContent = `Les étudiants auront ${val} heures pour compléter ce questionnaire à partir de son envoi.`;
+            } else {
+                timeLimitContent.style.display = "none";
+                timeLimitDesc.textContent = "Aucune limite de temps. Les étudiants pourront compléter le questionnaire à leur rythme.";
+            }
+        });
+
+        const timeInput = document.querySelector(".time-input");
+        if (timeInput) {
+            timeInput.addEventListener("input", (e) => {
+                let val = parseInt(e.target.value, 10);
+
+                if (val > 24) val = 24;
+                if (val < 1) val = 1;
+
+                if (val !== parseInt(e.target.value, 10)) {
+                    e.target.value = val;
+                }
+
+                timeLimitDesc.textContent = `Les étudiants auront ${val} heures pour compléter ce questionnaire à partir de son envoi.`;
+            });
+        }
+    }
+
     // Écouteurs pour les boutons de types de questions
     if (btnQCM) {
         btnQCM.addEventListener('click', () => {
@@ -521,7 +562,19 @@ function initEventListeners() {
         });
     }
 
-    // Affichage initial du message
+    document.addEventListener('click', (e) => {
+        if (e.target && e.target.id === 'btn-reset') {
+            e.preventDefault(); 
+            if (confirm("Êtes-vous sûr de vouloir tout effacer ? Cette action est irréversible.")) {
+                const container = document.getElementById('questions-container');
+                if (container) {
+                    container.innerHTML = '';
+                    affichemessage(); // Update empty state message
+                }
+            }
+        }
+    });
+
     affichemessage();
 }
 
