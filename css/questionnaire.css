@@ -366,6 +366,12 @@ ul {
     border: none;
 }
 
+.rating-slider::-moz-range-progress {
+    background-color: #007bba;
+    height: 6px;
+    border-radius: 3px;
+}
+
 .rating-slider::-moz-range-thumb {
     border: none;
     background-color: #007bba;
