@@ -467,7 +467,8 @@ function handleSubmitAttempt() {
     } else {
         // Tout est valide
         alert("Formulaire valide, prêt à être envoyé");
-        // TODO: Implémenter l'envoi fetch() ici 
+	const formReady = getFormStructure();
+    	sendFormToBDD(formReady);
     }
 }
 
@@ -588,15 +589,88 @@ function getFormStructure() {
     const container = document.getElementById('questions-container');
     const questions = [];
 
-    // Parcourir chaque enfant direct du container
-    container.querySelectorAll('.question-wrapper, .containerText, .containerRating').forEach(element => {
-        // TODO: Identifier le type de question
-        // TODO: Extraire les données
-        // TODO: Ajouter à questions[]
+    container.querySelectorAll('.question-wrapper-flex').forEach(wrapper => {
+
+        const titreQCM = wrapper.querySelector('.titreQCM');
+        if (titreQCM) {
+            const contenu = titreQCM.value.trim();
+            const choix = [];
+
+            wrapper.querySelectorAll('.textAreaQuestion').forEach(opt => {
+                if (opt.value.trim()) {
+                    choix.push(opt.value.trim());
+                }
+            });
+
+            questions.push({
+                contenu,
+                obligatoire: true,
+                type_question_id: 2,
+                choix
+            });
+            return;
+        }
+
+        const titreTexte = wrapper.querySelector('.titreQuestion');
+        if (titreTexte) {
+            questions.push({
+                contenu: titreTexte.value.trim(),
+                obligatoire: true,
+                type_question_id: 1
+            });
+            return;
+        }
+
+        const titreRating = wrapper.querySelector('.titreRating');
+        if (titreRating) {
+            questions.push({
+                contenu: titreRating.value.trim(),
+                obligatoire: true,
+                type_question_id: 3
+            });
+        }
     });
 
-    return {
-        dateCreation: new Date().toISOString(),
-        questions: questions
+    return { questions };
+}
+
+
+
+async function sendFormToBDD(formReady) {
+
+    const titre = document.querySelector(".title-box").value.trim();
+    const description = document.querySelector(".description-box")?.value || null;
+
+    const timeToggle = document.getElementById("time-limit-toggle");
+    const timeValue = document.querySelector(".time-input")?.value;
+
+    const temps_limite = timeToggle && timeToggle.checked ? parseInt(timeValue, 10) : null;
+
+    const payload = {
+        titre,
+        description,
+        temps_limite,
+        questions: form.questions
     };
+
+    try {
+        const response = await fetch("http://164.81.120.71:3000/form", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(payload)
+        });
+
+        const data = await response.json();
+
+        if (data.success) {
+            alert("Formulaire enregistré avec succès !");
+            window.location.href = "164.81.120.71/SAE-BUT-2/site/page/profview.html";
+        } else {
+            alert("Erreur : " + data.message);
+        }
+
+    } catch (err) {
+        console.error(err);
+        alert("Erreur SQL.");
+    }
 }

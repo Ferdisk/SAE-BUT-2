@@ -46,13 +46,13 @@ document.addEventListener("DOMContentLoaded", () => {
             feedback.textContent = "Connexion réussie !";
             switch (role) {
                 case ('Etudiant'):
-                        window.location.replace("http://164.81.120.71/SAE-BUT-2/site/page/studentview.html");
+                        window.location.href("http://164.81.120.71/SAE-BUT-2/site/page/studentview.html");
                     break;
                 case ('Prof'):
-                        window.location.replace("http://164.81.120.71/SAE-BUT-2/site/profview.html");
+                        window.location.href("http://164.81.120.71/SAE-BUT-2/site/page/profview.html");
                     break;
                 case ('Admin'):
-                        window.location.replace("http://164.81.120.71/SAE-BUT-2/site/Admin/adminUtilisateurs.html");
+                        window.location.href("http://164.81.120.71/SAE-BUT-2/site/Admin/adminUtilisateurs.html");
                     break;
             }
 
