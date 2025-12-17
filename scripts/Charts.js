@@ -6,7 +6,7 @@
       datasets: [{ //les données à mettre provenant de la base de données 
         label: "Nombre d'étudiants", 
         data: [1, 3, 9, 10], // juste ici
-        backgroundColor: '#d32f2f'
+        backgroundColor: '#e2001a'
       }]
     }
   });
@@ -18,7 +18,7 @@ new Chart(document.getElementById('completionRateChart'), {
         datasets: [{ //première bar
             label: "Score moyen",
             data: [4, 8, 3],
-            backgroundColor: '#4472C4'
+            backgroundColor: '#0082c8'
         }, { //deuxième barre
             label: "Score maximum",
             data: [5, 10, 5],
@@ -26,3 +26,25 @@ new Chart(document.getElementById('completionRateChart'), {
         }]
     }
 });
+
+//TODO fonction convertir le score obtenu /20 en %  
+//fonction move qui prendra des valeur en paramèètre les valeur du score 
+//  pour afficher le score en % (width)
+var i = 0;
+function move() {
+  if (i == 0) {
+    i = 1;
+    var elem = document.getElementById("myBar");
+    var width = 1;
+    var id = setInterval(frame, 10);
+    function frame() {
+      if (width >= 100) {
+        clearInterval(id);
+        i = 0;
+      } else {
+        width++;
+        elem.style.width = width + "%";
+      }
+    }
+  }
+}

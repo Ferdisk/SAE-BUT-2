@@ -17,8 +17,8 @@
         </div>
     </header>
   
-    
-    <body class="body">
+<!--body + chargement des scores "onload"-->    
+    <body class="body" onload="move()">
         <div class="top-container">
             <div class="main-title">Satisfaction du Questionnaire</div>
             <div class="desc">Analysez les résultats de vos questionnaires</div>
@@ -59,35 +59,62 @@
         <div class="chart-container">
             <div class="chart-left">
                 <div class="chart-title">Distribution des Étudiants par Note</div>
-                <canvas class="nbStudentChart" id="nbStudentChart"></canvas>
+ <!--CHART NOTE--><canvas class="nbStudentChart" id="nbStudentChart"></canvas>
                 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
                 <script src="../../scripts/Charts.js"></script>
             </div>
             <div class="chart-right">
                 <div class="chart-title">Performance par Question</div>
-                <canvas class="completionRateChart" id="completionRateChart"></canvas>
+<!--CHART RATE--><canvas class="completionRateChart" id="completionRateChart"></canvas>
                 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
                 <script src="../../scripts/Charts.js"></script>
             </div>
         </div>
+<!-- Tableau des résultats individuels -->
         <div class="individual-result">
             <div class="result-title">Résultat Individuels</div>
             <table class="result-table">
-                <thead>
+                <tbody >
                     <tr>
                         <th>Étudiant</th>
                         <th>Score</th>
                         <th>Temps de Complétion</th>
                         <th>Statut</th>
                     </tr>
-                </thead>
-                <tbody id="student-results">
-                    <!-- Généré dynamiquement par JS -->
+                    <tr>
+                        <td>Nom 1</td>
+                        <td>
+                            <div id="myProgress">
+                            <div id="myBar">
+                            </div>
+                        </td>
+                        <td>Temps 1 en min</td>
+                        <td id="result-statut">Terminé ou Pas Terminé</td>
+                    </tr>
+                    <tr>
+                        <td>Nom 2</td>
+                        <td>
+                            <div id="myProgress">
+                            <div id="myBar">
+                            </div>
+                        </td>
+                        <td>Temps 1 en min</td>
+                        <td id="result-statut2">Terminé ou Pas Terminé</td>
+                    </tr>
+                    <tr>
+                        <td>Nom 3</td>
+                        <td>
+                            <div id="myProgress">
+                            <div id="myBar">
+                            </div>
+                        </td>
+                        <td>Temps 1 en min</td>
+                        <td id="result-statut3">Terminé ou Pas Terminé</td>
+                    </tr>
                 </tbody>
             </table>
-            <p id="result-display"></p>
-        </div>
+            <p id="result-display">Affichage de 3 résultats sur NBRESULT</p>
 
-        <script src="../../scripts/studentResults.js"></script>
+        </div>
     </body>
 </html>

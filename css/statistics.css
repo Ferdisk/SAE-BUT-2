@@ -226,43 +226,15 @@ body {
   margin: 0.75rem auto 0;
   width: fit-content;
 }
-
-.score-cell {
-  display: flex;
-  align-items: center;
-  gap: 0.6rem;
-}
-.score-text {
-  white-space: nowrap;
-  min-width: 50px;
-  font-weight: 500;
-  color: #333;
-}
-.score-bar {
-  flex: 1;
-  height: 10px;
-  background: #f6c9c9;
-  border-radius: 999px;
-  overflow: hidden;
-}
-.score-fill {
-  height: 100%;
-  background: var(--primary-red);
-  border-radius: 999px;
-  transition: width 0.3s ease;
+#myProgress {
+  width: 100%;
+  background-color: grey;
+  
 }
 
-.status-pill {
-  display: inline-block;
-  padding: 0.25rem 0.6rem;
-  border-radius: 12px;
-  font-size: 0.85rem;
-  font-weight: 600;
-  color: #fff;
-}
-.status-done {
-  background: #4caf50;
-}
-.status-pending {
-  background: #ff9800;
+#myBar {
+  width: 0%;
+  height: 30px;
+  background-color: green;
+  
 }

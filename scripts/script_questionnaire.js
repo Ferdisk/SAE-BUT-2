@@ -30,7 +30,7 @@ function addQCM(isSubQuestion = false) {
 
 
     // 4. Header (Titre) 
-    let titreQCM; 
+    let titreQCM;
     if (!isSubQuestion) {
         titreQCM = document.createElement("textarea");
         titreQCM.classList.add("titreQCM");
@@ -134,27 +134,34 @@ function addQCM(isSubQuestion = false) {
 
 
     // 6. Section "Autre choix"
-    const otheroptiondiv = document.createElement("div");
-    otheroptiondiv.classList.add("other-option"); // Css pour alignement
+    let otherOption;
+    let otherOptionCheckbox;
+    let otherOptionLabel;
 
-    const optionCheckbox = document.createElement("input");
-    optionCheckbox.type = "checkbox";
-    optionCheckbox.id = `other-option-${Date.now()}`;
+    if (!isSubQuestion) {
+        otherOption = document.createElement("div");
+        otherOption.classList.add("other-option");
 
-    const optionLabel = document.createElement("label");
-    optionLabel.textContent = "Ajouter l'option \"Autre (à préciser)\"";
-    optionLabel.htmlFor = optionCheckbox.id;
+        otherOptionCheckbox = document.createElement("input");
+        otherOptionCheckbox.type = "checkbox";
+        otherOptionCheckbox.id = `other-option-${Date.now()}`;
 
-    otheroptiondiv.appendChild(optionCheckbox);
-    otheroptiondiv.appendChild(optionLabel);
+        otherOptionLabel = document.createElement("label");
+        otherOptionLabel.textContent = "Ajouter l'option \"Autre (à préciser)\"";
+        otherOptionLabel.htmlFor = otherOptionCheckbox.id;
 
+        otherOption.appendChild(otherOptionCheckbox);
+        otherOption.appendChild(otherOptionLabel);
+    }
 
     // Assemblage contenu blanc
     if (!isSubQuestion) {
         questionContent.appendChild(titreQCM);
     }
     questionContent.appendChild(listQCM);
-    questionContent.appendChild(otheroptiondiv);
+    if (!isSubQuestion) {
+        questionContent.appendChild(otherOption);
+    }
 
 
     // 7. Boutons d'actions GLOBALES (Côté droit)
@@ -184,7 +191,7 @@ function addQCM(isSubQuestion = false) {
 
     actionPanel.appendChild(btnAddOption);
     actionPanel.appendChild(btnDeleteQCM);
-    
+
 
 
     // 8. Initialisation
@@ -349,7 +356,7 @@ function addRatingScale(isSubQuestion = false) {
 
     slider.addEventListener('input', (e) => {
         sliderValueLabel.textContent = e.target.value;
-        updateSliderFill(); 
+        updateSliderFill();
     });
 
     const numbersContainer = document.createElement('div');
@@ -382,14 +389,14 @@ function addRatingScale(isSubQuestion = false) {
         currentMax = parseInt(e.target.value, 10);
         slider.max = currentMax;
         slider.value = Math.floor(currentMax / 2);
-        sliderValueLabel.textContent = slider.value; 
-        updateSliderFill(); 
+        sliderValueLabel.textContent = slider.value;
+        updateSliderFill();
         generateSliderNumbers(currentMax);
     });
 
     sliderRow.appendChild(slider);
     sliderRow.appendChild(numbersContainer);
-    sliderRow.appendChild(sliderValueLabel); 
+    sliderRow.appendChild(sliderValueLabel);
 
     if (!isSubQuestion) {
         questionContent.appendChild(headerTitleRow);
@@ -565,7 +572,7 @@ function initEventListeners() {
 
     document.addEventListener('click', (e) => {
         if (e.target && e.target.id === 'btn-reset') {
-            e.preventDefault(); 
+            e.preventDefault();
             if (confirm("Êtes-vous sûr de vouloir tout effacer ? Cette action est irréversible.")) {
                 const container = document.getElementById('questions-container');
                 if (container) {
