@@ -13,7 +13,7 @@ const formActionButtons = formActionsContainer ? formActionsContainer.querySelec
 /**
  * Ajoute une nouvelle question de type QCM au formulaire.
  */
-function addQCM() {
+function addQCM(isSubQuestion = false) {
     let localOptionCounter = 1;
 
     // 1. Conteneur principal (Flex wrapper)
@@ -30,11 +30,12 @@ function addQCM() {
 
 
     // 4. Header (Titre) - Désormais dans la zone blanche
-    // (On ne garde que le titre ici, les boutons vont à côté)
-    const titreQCM = document.createElement("textarea");
-    titreQCM.classList.add("titreQCM");
-    titreQCM.placeholder = "[Titre du QCM]";
-
+    let titreQCM
+    if (!isSubQuestion) {
+        titreQCM = document.createElement("textarea");
+        titreQCM.classList.add("titreQCM");
+        titreQCM.placeholder = "[Titre du QCM]";
+    }
 
     // 5. Liste des options QCM
     const listQCM = document.createElement("ul");
@@ -60,7 +61,7 @@ function addQCM() {
         const btnSubOption = document.createElement("button");
         btnSubOption.type = "button";
         btnSubOption.classList.add("btn-option-flat", "btn-sub");
-        btnSubOption.textContent = ">"; // Peut être remplacé par une icône
+        btnSubOption.textContent = ">";
 
         btnSubOption.addEventListener('click', () => {
             const existinMenu = li.querySelector('.dropdown');
@@ -76,7 +77,7 @@ function addQCM() {
             optionQCM.textContent = "Sous-question QCM";
 
             optionQCM.addEventListener('click', () => {
-                const subQCM = addQCM();
+                const subQCM = addQCM(true);
                 li.appendChild(subQCM);
                 menu.remove();
             });
@@ -85,7 +86,7 @@ function addQCM() {
             optionTxt.textContent = "Sous-question Texte";
 
             optionTxt.addEventListener('click', () => {
-                const subTxt = addTexte();
+                const subTxt = addTexte(true);
                 li.appendChild(subTxt);
                 menu.remove();
             });
@@ -94,7 +95,7 @@ function addQCM() {
             optionScale.textContent = "Sous-question Échelle de notation";
 
             optionScale.addEventListener('click', () => {
-                const subScale = addRatingScale();
+                const subScale = addRatingScale(true);
                 li.appendChild(subScale);
                 menu.remove();
             });
@@ -149,7 +150,9 @@ function addQCM() {
 
 
     // Assemblage contenu blanc
-    questionContent.appendChild(titreQCM);
+    if (!isSubQuestion) {
+        questionContent.appendChild(titreQCM);
+    }
     questionContent.appendChild(listQCM);
     questionContent.appendChild(otheroptiondiv);
 
@@ -200,7 +203,8 @@ function addQCM() {
 /**
  * Ajoute une nouvelle question de type Texte Libre.
  */
-function addTexte() {
+function addTexte(isSubQuestion = false) {
+
     // 1. Conteneur principal (Flex wrapper)
     const wrapper = document.createElement("div");
     wrapper.classList.add("question-wrapper-flex");
@@ -214,9 +218,13 @@ function addTexte() {
     actionPanel.classList.add("question-actions-side");
 
     // 4. Titre de la question à l'intérieur
-    const titreQuestion = document.createElement("textarea");
-    titreQuestion.classList.add("titreQuestion");
-    titreQuestion.placeholder = "[Question Texte]";
+    let titreQuestion;
+    if (!isSubQuestion){
+        titreQuestion = document.createElement("textarea");
+        titreQuestion.classList.add("titreQuestion");
+        titreQuestion.placeholder = "[Question Texte]";
+    }
+    
 
     // 5. Zone de réponse à l'intérieur
     const containerReponse = document.createElement("div");
@@ -229,7 +237,9 @@ function addTexte() {
     containerReponse.appendChild(reponseQuestion);
 
     // Assemblage contenu blanc
-    questionContent.appendChild(titreQuestion);
+    if (!isSubQuestion){
+        questionContent.appendChild(titreQuestion);
+    }
     questionContent.appendChild(containerReponse);
 
 
@@ -257,7 +267,7 @@ function addTexte() {
  * Ajoute une question de type Échelle de Notation.
  * @returns {HTMLElement} Le conteneur de la question
  */
-function addRatingScale() {
+function addRatingScale(isSubQuestion = false) {
     const uniqueId = Date.now();
     let currentMax = 10;
 
@@ -275,14 +285,22 @@ function addRatingScale() {
 
 
     // 4. Titre + Select (Header interne)
-    const headerTitleRow = document.createElement('div');
-    headerTitleRow.classList.add('header-row', 'rating-header');
+    let headerTitleRow;
+    let titreRating;
 
-    const titreRating = document.createElement('textarea');
-    titreRating.classList.add('titreRating');
-    titreRating.placeholder = "[Question échelle de notation]";
+    if (!isSubQuestion) {
+        headerTitleRow = document.createElement('div');
+        headerTitleRow.classList.add('header-row', 'rating-header');
 
-    headerTitleRow.appendChild(titreRating);
+        titreRating = document.createElement('textarea');
+        titreRating.classList.add('titreRating');
+        titreRating.placeholder = "[Question échelle de notation]";
+
+        headerTitleRow.appendChild(titreRating);
+
+    }
+
+    
 
     // Select Scale 
     const headerScaleRow = document.createElement('div');
@@ -365,7 +383,9 @@ function addRatingScale() {
     sliderRow.appendChild(numbersContainer);
 
     // Assemblage contenu blanc
-    questionContent.appendChild(headerTitleRow);
+    if (!isSubQuestion) {
+        questionContent.appendChild(headerTitleRow);
+    }
     questionContent.appendChild(headerScaleRow);
     questionContent.appendChild(sliderRow);
 
