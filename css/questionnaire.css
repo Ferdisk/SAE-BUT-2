@@ -323,6 +323,13 @@ textarea.titreRating,
 #questions-container textarea {
     border: solid gray;
     border-radius: 6px;
+    padding: 20px;
+    flex: 1;
+    /* Takes remaining width */
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
 }
 
 #questions-container .side-btn {
@@ -330,8 +337,19 @@ textarea.titreRating,
     display: flex;
 }
 
-label {
-    color: black;
+/* Side Buttons */
+.side-btn {
+    width: 30px;
+    height: 30px;
+    border: none;
+    cursor: pointer;
+    font-size: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: transparent;
+    font-weight: bold;
+    padding: 0;
 }
 
 .question-wrapper-flex {
