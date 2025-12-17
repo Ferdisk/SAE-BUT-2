@@ -1,10 +1,10 @@
-<head>
+<html lang="fr">
+      <head>
     <meta charset="UTF-8">
     <title>Statistics</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="../../css/statistics.css">
-</head>
-<html lang="fr">
+    </head>
     <header class="header">
         <img src="../../images/media/logoUnilimBlancAvecTexte.png" alt="Université de Limoges" class="logo">
         <div class="title">Gestionnaire de Questionnaires</div>
@@ -16,11 +16,13 @@
             <a href="../login/loginProf.html" class="logout"><i class="fa-solid fa-right-from-bracket"></i> Déconnexion</a>
         </div>
     </header>
-    <body>
+  
+    
+    <body class="body">
         <div class="top-container">
-            <div class="main-title">Statistiques du Questionnaire</div>
+            <div class="main-title">Satisfaction du Questionnaire</div>
             <div class="desc">Analysez les résultats de vos questionnaires</div>
-            <button class="btn-blue"><i class="fa-regular fa-file-export"></i> Exporter les statistiques</button>
+            <button class="btn-blue"><img src="../../images/media/download.ico" alt="Exporter en PDF"> Exporter en PDF</button>
         </div>
         <div class="mid-container">
             <div class="stat-card-students">
@@ -51,6 +53,14 @@
                 </div>
                 <img src="../../images/media/rate_icon.ico" alt="Icône Taux de Complétion" class="icon-rate">
             </div>
+
+
+
+
         </div>
+        <canvas id="myChart"></canvas>
+        
+        <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+        <script src="../../scripts/Charts.js"></script>
     </body>
 </html>
