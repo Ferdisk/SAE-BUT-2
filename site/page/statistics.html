@@ -73,21 +73,37 @@
         <div class="individual-result">
             <div class="result-title">Résultat Individuels</div>
             <table class="result-table">
-                <thead>
+                <tbody>
                     <tr>
                         <th>Étudiant</th>
                         <th>Score</th>
                         <th>Temps de Complétion</th>
                         <th>Statut</th>
                     </tr>
-                </thead>
-                <tbody id="student-results">
-                    <!-- Généré dynamiquement par JS -->
+                    <tr>
+                        <td>Nom 1</td>
+                        <td><div id="myProgress">
+                          <div id="myBar" move()>
+                        </div></td>
+                        <td>Temps 1 en min</td>
+                        <td id="result-statut">Terminé ou Pas Terminé</td>
+                    </tr>
+                    <tr>
+                        <td>Nom 2</td>
+                        <canva id="score2"></canva>
+                        <td>Temps 1 en min</td>
+                        <td id="result-statut2">Terminé ou Pas Terminé</td>
+                    </tr>
+                    <tr>
+                        <td>Nom 3</td>
+                        <canva id="score3"></canva>
+                        <td>Temps 1 en min</td>
+                        <td id="result-statut3">Terminé ou Pas Terminé</td>
+                    </tr>
                 </tbody>
             </table>
-            <p id="result-display"></p>
-        </div>
+            <p id="result-display">Affichage de 3 résultats sur NBRESULT</p>
 
-        <script src="../../scripts/studentResults.js"></script>
+        </div>
     </body>
 </html>
