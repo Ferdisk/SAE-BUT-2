@@ -17,7 +17,6 @@ document.addEventListener("DOMContentLoaded", () => {
         } else {
             role = 'Etudiant';
         }
-
         if (!email || !password) {
             feedback.textContent = "Veuillez remplir tous les champs.";
             return;
@@ -36,6 +35,7 @@ document.addEventListener("DOMContentLoaded", () => {
         const response = await fetch("http://164.81.120.71:3000/login", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
+	    credentials: "include",
             body: JSON.stringify({ email, password, role })
         });
 
@@ -45,14 +45,14 @@ document.addEventListener("DOMContentLoaded", () => {
             feedback.style.color = "green";
             feedback.textContent = "Connexion réussie !";
             switch (role) {
-                case ('Etudiant'):
-                        window.location.href("http://164.81.120.71/SAE-BUT-2/site/page/studentview.html");
-                    break;
+               case ('Etudiant'):
+                        window.location.replace("http://164.81.120.71/SAE-BUT-2/site/page/studentview.html");
+               	    break;
                 case ('Prof'):
-                        window.location.href("http://164.81.120.71/SAE-BUT-2/site/page/profview.html");
+                        window.location.replace("http://164.81.120.71/SAE-BUT-2/site/page/profview.html");
                     break;
                 case ('Admin'):
-                        window.location.href("http://164.81.120.71/SAE-BUT-2/site/Admin/adminUtilisateurs.html");
+                        window.location.replace("http://164.81.120.71/SAE-BUT-2/site/Admin/adminUtilisateurs.html");
                     break;
             }
 

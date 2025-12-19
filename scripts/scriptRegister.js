@@ -36,10 +36,11 @@ document.addEventListener("DOMContentLoaded", () => {
             return;
 
                 }
-
+        window.location.replace("http://164.81.120.71/SAE-BUT-2/site/login/login2fa.html");
         const response = await fetch("/register", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
+	    credentials: "include",
             body: JSON.stringify({ email, password, role})
         });
 
