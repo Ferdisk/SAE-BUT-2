@@ -31,7 +31,7 @@
             <form id="twofa-form">
                 <div class="form-group">
                     <label for="twofa-code" class="form-label">Code à 6 caractères</label>
-                    <input type="text" id="twofa-code" name="code" class="form-input" inputmode="numeric" pattern="\\d{6}" maxlength="6" placeholder="000000" required>
+                    <input type="text" id="twofa-code" name="code" class="form-input" placeholder="A0B1C2" required>
                 </div>
 
                 <button type="submit" class="btn-submit" id="twofa-submit-btn">Vérifier</button>
@@ -39,7 +39,7 @@
                 <p id="twofa-feedback"></p>
 
                 <a href="#" class="link-secondary" id="twofa-resend">Renvoyer le code</a>
-                <p id="sendcode-feedback">Le code à été renvoyer</p>
+                <p id="sendcode-feedback"></p>
                 <a href="login.html" class="link-secondary">Retour à la connexion</a>
             </form>
         </section>

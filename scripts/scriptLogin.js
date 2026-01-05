@@ -26,6 +26,9 @@ document.addEventListener("DOMContentLoaded", () => {
             const data = await response.json();
             console.log("Réponse serveur :", data);
 
+	    const API_BASE = "http://164.81.120.71:3000";
+	    const PROJECT_BASE = "/SAE-BUT-2";
+
             if (!data.success) {
                 feedback.textContent = data.message || "Erreur de connexion.";
                 feedback.style.color = "red";
@@ -37,21 +40,15 @@ document.addEventListener("DOMContentLoaded", () => {
 
             switch (data.role) {
                 case "Etudiant":
-                    window.location.replace(
-                        "http://164.81.120.71/SAE-BUT-2/site/page/studentview.html"
-                    );
+                    window.location.href = `${API_BASE}${PROJECT_BASE}/student`;
                     break;
 
                 case "Prof":
-                    window.location.replace(
-                        "http://164.81.120.71/SAE-BUT-2/site/page/profview.html"
-                    );
+                    window.location.href = `${API_BASE}${PROJECT_BASE}/prof`;
                     break;
 
                 case "Admin":
-                    window.location.replace(
-                        "http://164.81.120.71/SAE-BUT-2/site/Admin/adminUtilisateurs.html"
-                    );
+                    window.location.href = `${API_BASE}${PROJECT_BASE}/admin`;
                     break;
 
                 default:
