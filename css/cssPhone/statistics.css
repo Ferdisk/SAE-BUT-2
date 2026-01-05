@@ -39,8 +39,8 @@
     margin-right: 2vw;
     }
     .title {
-    font-size: 1.8vw;
-    font-weight: 400;
+    font-size: 2.8vw;
+    font-weight: 600;
     flex: 1;
     letter-spacing: 0.5px;
     }
@@ -66,7 +66,7 @@
     .logout {
     color: var(--white);
     text-decoration: none;
-    font-size: .5em;
+    font-size: 1em;
     display: flex;
     align-items: center;
     gap: 0.5em;

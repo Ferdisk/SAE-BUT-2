@@ -1,3 +1,5 @@
+@media(min-width: 728px ) {
+
 :root {
   --primary-red: #e2001a;
   --primary-blue: #0082c8;
@@ -17,10 +19,11 @@ body {
   background: var(--primary-red);
   color: var(--white);
   display: flex;
+  flex-direction: row;
   align-items: center;
   padding: 0 3%;
   height: 10vh;
-  min-height: 60px;
+  min-height: 160px;
   box-shadow: var(--shadow);
 }
 .logo {
@@ -130,4 +133,5 @@ body {
   .main-title { font-size: 6vw; }
   .desc { font-size: 3vw; }
   .btn-red, .btn-blue { font-size: 2vw; padding: 2vw 4vw; }
+}
 }
