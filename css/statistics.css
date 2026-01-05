@@ -1,3 +1,4 @@
+@media (min-width: 768px) {
 :root {
   --primary-red: #e2001a;
   --primary-blue: #0082c8;
@@ -232,9 +233,10 @@ body {
   
 }
 
-#myBar {
+#myBar1, #mybar2, #mybar3 {
   width: 0%;
   height: 30px;
   background-color: green;
   
+}
 }

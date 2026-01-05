@@ -31,16 +31,53 @@ new Chart(document.getElementById('completionRateChart'), {
 //fonction move qui prendra des valeur en paramèètre les valeur du score 
 //  pour afficher le score en % (width)
 var i = 0;
-function move() {
+function move_first_bar() {
   if (i == 0) {
     i = 1;
-    var elem = document.getElementById("myBar");
+    var elem = document.getElementById("myBar1");
     var width = 1;
     var id = setInterval(frame, 10);
     function frame() {
       if (width >= 100) {
         clearInterval(id);
         i = 0;
+      } else {
+        width++;
+        elem.style.width = width + "%";
+      }
+    }
+  }
+}
+
+var j = 0;
+function move_second_bar() {
+  if (j == 0) {
+    j = 1;
+    var elem = document.getElementById("myBar2");
+    var width = 1;
+    var id = setInterval(frame, 10);
+    function frame() {
+      if (width >= 100) {
+        clearInterval(id);
+        j = 0;
+      } else {
+        width++;
+        elem.style.width = width + "%";
+      }
+    }
+  }
+}
+var k = 0;
+function move_third_bar() {
+  if (k == 0) {
+    k = 1;
+    var elem = document.getElementById("myBar3");
+    var width = 1;
+    var id = setInterval(frame, 10);
+    function frame() {
+      if (width >= 100) {
+        clearInterval(id);
+        k = 0;
       } else {
         width++;
         elem.style.width = width + "%";
