@@ -336,7 +336,6 @@ function addRatingScale(isSubQuestion = false) {
     headerScaleRow.appendChild(labelScale);
     headerScaleRow.appendChild(selectScale);
 
-
     // 5. Conteneur du slider
     const sliderRow = document.createElement('div');
     sliderRow.classList.add('slider-container');
@@ -431,58 +430,6 @@ function addRatingScale(isSubQuestion = false) {
     return wrapper;
 }
 
-function extractQuestion(wrapper) {
-    const obligatoireCheckbox = wrapper.querySelector(".question-obligatoire");
-    const obligatoire = obligatoireCheckbox ? obligatoireCheckbox.checked : false;
-
-    const titreQCM = wrapper.querySelector(":scope > .question-content-white > .titreQCM");
-    if (titreQCM) {
-        const choix = [];
-
-        wrapper.querySelectorAll(".listQCM > li").forEach(li => {
-            const textarea = li.querySelector(".textAreaQuestion");
-            if (!textarea || !textarea.value.trim()) return;
-
-            const sous_questions = [];
-            li.querySelectorAll(":scope > .question-wrapper-flex").forEach(sub => {
-                sous_questions.push(extractQuestion(sub));
-            });
-
-            choix.push({
-                contenu: textarea.value.trim(),
-                sous_questions
-            });
-        });
-
-        return {
-            contenu: titreQCM.value.trim(),
-            obligatoire,
-            type_question_id: 2,
-            choix
-        };
-    }
-
-    const titreTexte = wrapper.querySelector(":scope > .question-content-white > .titreQuestion");
-    if (titreTexte) {
-        return {
-            contenu: titreTexte.value.trim(),
-            obligatoire: false, // 🔴 IMPORTANT
-            type_question_id: 1
-        };
-    }
-
-    const titreRating = wrapper.querySelector(":scope > .question-content-white > .titreRating");
-    if (titreRating) {
-        return {
-            contenu: titreRating.value.trim(),
-            obligatoire: false,
-            type_question_id: 3
-        };
-    }
-
-    return null;
-}
-
 
 
 /**
@@ -534,7 +481,7 @@ function handleSubmitAttempt() {
     } else {
         // Tout est valide
         alert("Formulaire valide, prêt à être envoyé");
-	const formReady = getFormStructure();
+	const formReady = getFullForm();
     	sendFormToBDD(formReady);
     }
 }
@@ -667,72 +614,75 @@ function initEventListeners() {
 document.addEventListener('DOMContentLoaded', initEventListeners);
 
 
-/**
- * Sauvegarde la structure du formulaire au format JSON pour l'expoter vers la BDD
- */
-function getFormStructure() {
-    const container = document.getElementById("questions-container");
+
+function getFullForm() {
+    const container = document.getElementById('questions-container');
     const questions = [];
 
-    container.querySelectorAll(".question-wrapper-flex").forEach(wrapper => {
-
-        // QCM
-        if (wrapper.querySelector(".titreQCM")) {
-            const q = {
-                type: "QCM",
-                contenu: wrapper.querySelector(".titreQCM").value,
-                obligatoire: true,
-                choix: []
-            };
-
-            wrapper.querySelectorAll(".elementQCM").forEach(li => {
-                const choix = {
-                    contenu: li.querySelector(".textAreaQuestion").value,
-                    subQuestions: []
-                };
-
-                li.querySelectorAll(":scope > .question-wrapper-flex").forEach(sub => {
-                    if (sub.querySelector(".titreQuestion")) {
-                        choix.subQuestions.push({
-                            type: "TEXTE",
-                            contenu: sub.querySelector(".titreQuestion").value,
-                            obligatoire: true
-                        });
-                    }
-                });
-
-                q.choix.push(choix);
-            });
-
-            questions.push(q);
-        }
-
-        // TEXTE
-        if (wrapper.querySelector(".titreQuestion")) {
-            questions.push({
-                type: "TEXTE",
-                contenu: wrapper.querySelector(".titreQuestion").value,
-                obligatoire: true
-            });
-        }
-
-        // ÉCHELLE
-        if (wrapper.querySelector(".titreRating")) {
-            questions.push({
-                type: "ECHELLE",
-                contenu: wrapper.querySelector(".titreRating").value,
-                obligatoire: true
-            });
-        }
+    container.querySelectorAll(':scope > .question-wrapper-flex').forEach(wrapper => {
+        const result = extractQuestion(wrapper);
+        if (result) questions.push(result);
     });
 
     return {
-        titre: document.querySelector(".title-box").value,
-        description: document.querySelector(".desc-box").value,
-        temps_limite: null,
-        questions
+        titre: document.getElementById('form-titre')?.value || "Sans titre",
+        questions: questions
     };
 }
+
+function extractQuestion(wrapper) {
+    const obligatoireCheckbox = wrapper.querySelector(".question-obligatoire");
+    const obligatoire = obligatoireCheckbox ? (obligatoireCheckbox.checked ? 1 : 0) : 1;
+
+    const titreQCM = wrapper.querySelector(":scope > .question-content-white > .titreQCM");
+    const titreTexte = wrapper.querySelector(":scope > .question-content-white > .titreQuestion");
+    const titreRating = wrapper.querySelector(":scope > .question-content-white > .header-row > .titreRating");
+
+    if (titreQCM) {
+        const choix = [];
+        wrapper.querySelectorAll(".listQCM > li").forEach(li => {
+            const textarea = li.querySelector(".textAreaQuestion");
+            if (!textarea || !textarea.value.trim()) return;
+
+            const sous_questions = [];
+            li.querySelectorAll(":scope > .question-wrapper-flex").forEach(sub => {
+                const subQ = extractQuestion(sub);
+                if (subQ) sous_questions.push(subQ);
+            });
+
+            choix.push({
+                contenu: textarea.value.trim(),
+                sous_questions: sous_questions
+            });
+        });
+
+        return {
+            contenu: titreQCM.value.trim(),
+            obligatoire: obligatoire,
+            type_question_id: 2, 
+            choix: choix
+        };
+    }
+
+    if (titreTexte) {
+        return {
+            contenu: titreTexte.value.trim(),
+            obligatoire: obligatoire,
+            type_question_id: 1 
+        };
+    }
+
+    if (titreRating) {
+        return {
+            contenu: titreRating.value.trim(),
+            obligatoire: obligatoire,
+            type_question_id: 3 
+        };
+    }
+
+    return null;
+}
+
 
 async function sendFormToBDD(formReady) {
     const titre = document.querySelector(".title-box").value.trim();
