@@ -432,22 +432,18 @@ function addRatingScale(isSubQuestion = false) {
 }
 
 function extractQuestion(wrapper) {
-
     const obligatoireCheckbox = wrapper.querySelector(".question-obligatoire");
-    const obligatoire = obligatoireCheckbox ? obligatoireCheckbox.checked : true;
+    const obligatoire = obligatoireCheckbox ? obligatoireCheckbox.checked : false;
 
     const titreQCM = wrapper.querySelector(":scope > .question-content-white > .titreQCM");
     if (titreQCM) {
-
         const choix = [];
 
         wrapper.querySelectorAll(".listQCM > li").forEach(li => {
-
             const textarea = li.querySelector(".textAreaQuestion");
             if (!textarea || !textarea.value.trim()) return;
 
             const sous_questions = [];
-
             li.querySelectorAll(":scope > .question-wrapper-flex").forEach(sub => {
                 sous_questions.push(extractQuestion(sub));
             });
@@ -470,7 +466,7 @@ function extractQuestion(wrapper) {
     if (titreTexte) {
         return {
             contenu: titreTexte.value.trim(),
-            obligatoire,
+            obligatoire: false, // 🔴 IMPORTANT
             type_question_id: 1
         };
     }
@@ -479,13 +475,14 @@ function extractQuestion(wrapper) {
     if (titreRating) {
         return {
             contenu: titreRating.value.trim(),
-            obligatoire,
+            obligatoire: false,
             type_question_id: 3
         };
     }
 
     return null;
 }
+
 
 
 /**
@@ -674,99 +671,72 @@ document.addEventListener('DOMContentLoaded', initEventListeners);
  * Sauvegarde la structure du formulaire au format JSON pour l'expoter vers la BDD
  */
 function getFormStructure() {
-    const container = document.getElementById('questions-container');
+    const container = document.getElementById("questions-container");
     const questions = [];
 
-    function getSubQuestions(parentElement) {
-        const subs = [];
+    container.querySelectorAll(".question-wrapper-flex").forEach(wrapper => {
 
-        parentElement.querySelectorAll(':scope > .sub-question').forEach(subWrapper => {
-            let q = null;
+        // QCM
+        if (wrapper.querySelector(".titreQCM")) {
+            const q = {
+                type: "QCM",
+                contenu: wrapper.querySelector(".titreQCM").value,
+                obligatoire: true,
+                choix: []
+            };
 
-            const titreQCM = subWrapper.querySelector('.titreQCM');
-            const titreTexte = subWrapper.querySelector('.titreQuestion');
-            const titreRating = subWrapper.querySelector('.titreRating');
+            wrapper.querySelectorAll(".elementQCM").forEach(li => {
+                const choix = {
+                    contenu: li.querySelector(".textAreaQuestion").value,
+                    subQuestions: []
+                };
 
-            if (titreQCM) {
-                const choix = Array.from(subWrapper.querySelectorAll(':scope > .listQCM > .elementQCM')).map(optLi => {
-                    return {
-                        contenu: optLi.querySelector('.textAreaQuestion')?.value.trim() || '',
-                        sous_questions: getSubQuestions(optLi)
-                    };
+                li.querySelectorAll(":scope > .question-wrapper-flex").forEach(sub => {
+                    if (sub.querySelector(".titreQuestion")) {
+                        choix.subQuestions.push({
+                            type: "TEXTE",
+                            contenu: sub.querySelector(".titreQuestion").value,
+                            obligatoire: true
+                        });
+                    }
                 });
 
-                q = {
-                    contenu: titreQCM.value.trim(),
-                    obligatoire: true,
-                    type_question_id: 2,
-                    choix
-                };
-            } else if (titreTexte) {
-                q = {
-                    contenu: titreTexte.value.trim(),
-                    obligatoire: true,
-                    type_question_id: 1
-                };
-            } else if (titreRating) {
-                q = {
-                    contenu: titreRating.value.trim(),
-                    obligatoire: true,
-                    type_question_id: 3
-                };
-            }
-
-            if (q) subs.push(q);
-        });
-
-        return subs;
-    }
-
-    container.querySelectorAll(':scope > .question-wrapper-flex').forEach(wrapper => {
-        let q = null;
-
-        const titreQCM = wrapper.querySelector('.titreQCM');
-        const titreTexte = wrapper.querySelector('.titreQuestion');
-        const titreRating = wrapper.querySelector('.titreRating');
-
-        if (titreQCM) {
-            const choix = Array.from(wrapper.querySelectorAll(':scope > .question-content-white > .listQCM > .elementQCM')).map(optLi => {
-                return {
-                    contenu: optLi.querySelector('.textAreaQuestion')?.value.trim() || '',
-                    sous_questions: getSubQuestions(optLi)
-                };
+                q.choix.push(choix);
             });
 
-            q = {
-                contenu: titreQCM.value.trim(),
-                obligatoire: true,
-                type_question_id: 2,
-                choix
-            };
-        } else if (titreTexte) {
-            q = {
-                contenu: titreTexte.value.trim(),
-                obligatoire: true,
-                type_question_id: 1
-            };
-        } else if (titreRating) {
-            q = {
-                contenu: titreRating.value.trim(),
-                obligatoire: true,
-                type_question_id: 3
-            };
+            questions.push(q);
         }
 
-        if (q) questions.push(q);
+        // TEXTE
+        if (wrapper.querySelector(".titreQuestion")) {
+            questions.push({
+                type: "TEXTE",
+                contenu: wrapper.querySelector(".titreQuestion").value,
+                obligatoire: true
+            });
+        }
+
+        // ÉCHELLE
+        if (wrapper.querySelector(".titreRating")) {
+            questions.push({
+                type: "ECHELLE",
+                contenu: wrapper.querySelector(".titreRating").value,
+                obligatoire: true
+            });
+        }
     });
 
-    return { questions };
+    return {
+        titre: document.querySelector(".title-box").value,
+        description: document.querySelector(".desc-box").value,
+        temps_limite: null,
+        questions
+    };
 }
-
-
 
 async function sendFormToBDD(formReady) {
     const titre = document.querySelector(".title-box").value.trim();
-    const description = document.querySelector(".description-box")?.value || null;
+    const description = document.querySelector(".desc-box")?.value || null;
 
     const timeToggle = document.getElementById("time-limit-toggle");
     const timeValue = document.querySelector(".time-input")?.value;
@@ -802,4 +772,35 @@ async function sendFormToBDD(formReady) {
     }
 }
 
+
+document.getElementById("logout-btn").addEventListener("click", async (e) => {
+    e.preventDefault();
+
+    try {
+        const res = await fetch("http://164.81.120.71:3000/logout", {
+            method: "POST",
+            credentials: "include"
+        });
+
+        const data = await res.json();
+
+        if (data.success) {
+            window.location.replace("http://164.81.120.71/SAE-BUT-2/site/login/login.html");
+        } else {
+            alert("Erreur lors de la déconnexion");
+        }
+    } catch (err) {
+        console.error(err);
+        alert("Erreur serveur");
+    }
+
+    fetch("http://164.81.120.71:3000/session", { credentials: "include" })
+        .then(res => res.json())
+        .then(data => {
+            if (!data.connected) {
+                window.location.replace("http://164.81.120.71/SAE-BUT-2/site/login/login.html");
+            }
+        });
+
+});
 
