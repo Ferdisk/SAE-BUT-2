@@ -481,7 +481,7 @@ function handleSubmitAttempt() {
     } else {
         // Tout est valide
         alert("Formulaire valide, prêt à être envoyé");
-	const formReady = getFormStructure();
+	const formReady = getFullForm();
     	sendFormToBDD(formReady);
     }
 }
