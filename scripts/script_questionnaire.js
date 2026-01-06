@@ -644,10 +644,11 @@ function extractQuestion(wrapper) {
             const textarea = li.querySelector(".textAreaQuestion");
             if (!textarea || !textarea.value.trim()) return;
 
+            // Récupère les sous-questions (s'il y en a)
             const sous_questions = [];
             li.querySelectorAll(":scope > .question-wrapper-flex").forEach(sub => {
-                const subQ = extractQuestion(sub);
-                if (subQ) sous_questions.push(subQ);
+                const subResult = extractQuestion(sub);
+                if (subResult) sous_questions.push(subResult);
             });
 
             choix.push({
@@ -659,7 +660,7 @@ function extractQuestion(wrapper) {
         return {
             contenu: titreQCM.value.trim(),
             obligatoire: obligatoire,
-            type_question_id: 2, 
+            type_question_id: 2,
             choix: choix
         };
     }
@@ -668,7 +669,7 @@ function extractQuestion(wrapper) {
         return {
             contenu: titreTexte.value.trim(),
             obligatoire: obligatoire,
-            type_question_id: 1 
+            type_question_id: 1
         };
     }
 
@@ -676,7 +677,7 @@ function extractQuestion(wrapper) {
         return {
             contenu: titreRating.value.trim(),
             obligatoire: obligatoire,
-            type_question_id: 3 
+            type_question_id: 3
         };
     }
 
@@ -699,7 +700,7 @@ async function sendFormToBDD(formReady) {
         titre: titre,
         description: description,
         temps_limite: temps_limite,
-        questions: formReady.questions 
+        questions: formReady.questions
     };
 
     try {
@@ -723,3 +724,33 @@ async function sendFormToBDD(formReady) {
     }
 }
 
+document.getElementById("logout-btn").addEventListener("click", async (e) => {
+    e.preventDefault();
+
+    try {
+        const res = await fetch("http://164.81.120.71:3000/logout", {
+            method: "POST",
+            credentials: "include"
+        });
+
+        const data = await res.json();
+
+        if (data.success) {
+            window.location.replace("http://164.81.120.71/SAE-BUT-2/site/login/login.html");
+        } else {
+            alert("Erreur lors de la déconnexion");
+        }
+    } catch (err) {
+        console.error(err);
+        alert("Erreur serveur");
+    }
+
+    fetch("http://164.81.120.71:3000/session", { credentials: "include" })
+        .then(res => res.json())
+        .then(data => {
+            if (!data.connected) {
+                window.location.replace("http://164.81.120.71/SAE-BUT-2/site/login/login.html");
+            }
+        });
+
+});
