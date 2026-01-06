@@ -685,18 +685,21 @@ function extractQuestion(wrapper) {
 
 
 async function sendFormToBDD(formReady) {
-    const titre = document.querySelector(".title-box").value.trim();
-    const description = document.querySelector(".desc-box")?.value || null;
+    const titreInput = document.getElementById("form-titre") || document.querySelector(".title-box");
+    const descInput = document.querySelector(".desc-box");
+    
+    const titre = titreInput ? titreInput.value.trim() : "Sans titre";
+    const description = descInput ? descInput.value.trim() : "";
 
     const timeToggle = document.getElementById("time-limit-toggle");
     const timeValue = document.querySelector(".time-input")?.value;
     const temps_limite = timeToggle && timeToggle.checked ? parseInt(timeValue, 10) : null;
 
     const payload = {
-        titre,
-        description,
-        temps_limite,
-        questions: formReady.questions
+        titre: titre,
+        description: description,
+        temps_limite: temps_limite,
+        questions: formReady.questions 
     };
 
     try {
@@ -708,49 +711,15 @@ async function sendFormToBDD(formReady) {
         });
 
         const data = await response.json();
-
         if (data.success) {
-            alert("Formulaire enregistré avec succès !");
+            alert("Formulaire et questions enregistrés avec succès !");
             window.location.href = "http://164.81.120.71/SAE-BUT-2/site/page/profview.html";
         } else {
-            alert("Erreur : " + data.message);
+            alert("Erreur technique : " + data.message);
         }
-
     } catch (err) {
-        console.error(err);
-        alert("Erreur lors de l'envoi au serveur.");
+        console.error("Erreur fetch:", err);
+        alert("Impossible de contacter le serveur.");
     }
 }
-
-
-document.getElementById("logout-btn").addEventListener("click", async (e) => {
-    e.preventDefault();
-
-    try {
-        const res = await fetch("http://164.81.120.71:3000/logout", {
-            method: "POST",
-            credentials: "include"
-        });
-
-        const data = await res.json();
-
-        if (data.success) {
-            window.location.replace("http://164.81.120.71/SAE-BUT-2/site/login/login.html");
-        } else {
-            alert("Erreur lors de la déconnexion");
-        }
-    } catch (err) {
-        console.error(err);
-        alert("Erreur serveur");
-    }
-
-    fetch("http://164.81.120.71:3000/session", { credentials: "include" })
-        .then(res => res.json())
-        .then(data => {
-            if (!data.connected) {
-                window.location.replace("http://164.81.120.71/SAE-BUT-2/site/login/login.html");
-            }
-        });
-
-});
 
