@@ -444,7 +444,6 @@ textarea.titreRating,
     display: flex;
 }
 
-/* Side Buttons */
 .side-btn {
     width: 30px;
     height: 30px;
@@ -590,4 +589,65 @@ textarea.titreRating,
     display: flex;
     gap: 10px;
     align-items: center;
+}
+
+@media (max-width: 780px) {
+  .container {
+    flex-direction: column;
+    gap: 20px;
+    padding: 12px 4px;
+    margin-left: 0;
+  }
+  .left-panel {
+    position: relative;
+    width: 100%;
+    top: unset;
+    left: unset;
+    height: auto;
+    padding: 12px 4px;
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 10px;
+    z-index: 1;
+  }
+  .sidebar-card {
+    width: 100%;
+    padding: 12px;
+    font-size: 15px;
+  }
+  .questionnaire-panel {
+    padding: 14px 4px;
+    min-height: 300px;
+    font-size: 1rem;
+  }
+  .title-box {
+    width: 100%;
+    font-size: 1rem;
+    padding: 8px;
+  }
+  .footer-actions {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 8px;
+    padding: 10px 4px;
+  }
+  .footer-actions .btn, .small-btn {
+    width: 100%;
+    font-size: 1rem;
+    padding: 10px 0;
+  }
+  .desc-box {
+    width: 100%;
+    height: 120px;
+    font-size: 0.95rem;
+  }
+  .question-wrapper-flex {
+    width: 100%;
+    padding: 0;
+    margin: 10px 0;
+  }
+  .question-content-white {
+    padding: 10px;
+    font-size: 0.95rem;
+  }
 }

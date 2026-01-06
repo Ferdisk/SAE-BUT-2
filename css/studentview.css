@@ -135,3 +135,45 @@ header {
 #label-link::placeholder{
     padding: 1%;
 }
+@media (max-width: 780px) {
+  .header-site {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 10px;
+    padding: 10px 0;
+  }
+  #header-logo {
+    margin: 10px 0 0 0;
+    gap: 8px;
+  }
+  #header-right {
+    flex-direction: column;
+    gap: 10px;
+    margin-right: 0;
+  }
+  #header-logout {
+    width: 100%;
+    justify-content: center;
+    margin-right: 0;
+    padding: 8px 0;
+  }
+  #notif {
+    width: 100%;
+    max-width: 40px;
+  }
+  #questionaire-link {
+    width: 95vw;
+    min-width: unset;
+    padding: 18px 8px;
+  }
+  #center-main-body {
+    gap: 24px;
+    padding-top: 10px;
+  }
+  #center-text #questionnaire-title {
+    font-size: 1.2rem;
+  }
+  #center-text #questionnaire-desc {
+    font-size: 0.95rem;
+  }
+}
