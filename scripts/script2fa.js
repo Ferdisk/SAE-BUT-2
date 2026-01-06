@@ -49,7 +49,7 @@ document.addEventListener("DOMContentLoaded", () => {
         if (data.success) {
             feedback.style.color = "green";
             feedback.textContent = data.message;
-            window.location.replace("http://164.81.120.71/SAE-BUT-2/site/page/studentview.html");
+            window.location.replace("/student"); //mettre /prof pour les profs
             //if data.role...
         } else {
             feedback.style.color = "red";

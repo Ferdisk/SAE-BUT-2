@@ -714,7 +714,7 @@ async function sendFormToBDD(formReady) {
         const data = await response.json();
         if (data.success) {
             alert("Formulaire et questions enregistrés avec succès !");
-            window.location.href = "http://164.81.120.71/SAE-BUT-2/site/page/profview.html";
+            window.location.href = "/prof";
         } else {
             alert("Erreur technique : " + data.message);
         }
@@ -736,7 +736,7 @@ document.getElementById("logout-btn").addEventListener("click", async (e) => {
         const data = await res.json();
 
         if (data.success) {
-            window.location.replace("http://164.81.120.71/SAE-BUT-2/site/login/login.html");
+            window.location.replace("/loginStudent");
         } else {
             alert("Erreur lors de la déconnexion");
         }
@@ -749,7 +749,7 @@ document.getElementById("logout-btn").addEventListener("click", async (e) => {
         .then(res => res.json())
         .then(data => {
             if (!data.connected) {
-                window.location.replace("http://164.81.120.71/SAE-BUT-2/site/login/login.html");
+                window.location.replace("/loginStudent");
             }
         });
 

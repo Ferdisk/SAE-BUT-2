@@ -50,7 +50,7 @@ document.addEventListener("DOMContentLoaded", () => {
         if (data.success) {
             feedback.style.color = "green";
             feedback.textContent = data.message;
-	    window.location.replace("http://164.81.120.71/SAE-BUT-2/site/login/login2fa.html");
+	    window.location.replace("/logina2f");
         } else {
             feedback.style.color = "red";
             feedback.textContent = data.message;
