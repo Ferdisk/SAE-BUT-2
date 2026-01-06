@@ -36,8 +36,9 @@ document.addEventListener("DOMContentLoaded", () => {
             return;
 
                 }
-        window.location.replace("http://164.81.120.71/SAE-BUT-2/site/login/login2fa.html");
-        const response = await fetch("/register", {
+
+
+        const response = await fetch("http://164.81.120.71:3000/register", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
 	    credentials: "include",
@@ -48,7 +49,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
         if (data.success) {
             feedback.style.color = "green";
-            feedback.textContent = "Inscription réussie !";
+            feedback.textContent = data.message;
+	    window.location.replace("http://164.81.120.71/SAE-BUT-2/site/login/login2fa.html");
         } else {
             feedback.style.color = "red";
             feedback.textContent = data.message;
