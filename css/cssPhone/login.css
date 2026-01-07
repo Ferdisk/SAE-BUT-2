@@ -1,4 +1,4 @@
-@media (min-width: 512px) {
+@media (max-width: 512px) {
 :root {
     --primary-color: #fefefe;
     --btn-color: #23e0e4;
@@ -68,13 +68,14 @@ form {
 }
 
 .role-selector {
-    background-color: #f4f4f4;
-    padding: .25rem;
-    border-radius: 8px;
+    background-color: #f4f4f400;
+    padding: .20rem;
+    border-radius: 5px;
     display: flex;
     justify-content: center;
     align-items: center;
-    gap: 0.1rem;
+    flex-direction: column;
+    gap: 0.35rem;
     width: 100%;
     max-width: 450px;
     margin: 0 auto;
@@ -91,6 +92,8 @@ form {
     border-radius: 6px;
     flex: 1;
     text-align: center;
+    min-width: 75%;
+    
 }
 
 .role-btn:hover {
@@ -131,7 +134,7 @@ form {
     background-color: #e40202;
     color: #ffffff;
     padding: 0.8rem 2rem;
-    font-size: 0.8rem;
+    font-size: 0.rem;
     width: 100%;
     max-width: 450px;
     border-radius: 5px;
@@ -140,6 +143,7 @@ form {
     cursor: pointer;
     text-align: center;
     margin-top: 5%;
+    max-width: 75%;
 }
 
 .section-title {
