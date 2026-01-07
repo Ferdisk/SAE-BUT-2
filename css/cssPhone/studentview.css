@@ -1,0 +1,183 @@
+@media (max-width: 768px) {
+  :root {
+    --text-font: Verdana, sans-serif;
+    --background-color: #e40202;
+  }
+
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+
+  header {
+    font-family: var(--text-font);
+    color: #fff;
+    background-color: var(--background-color);
+  }
+
+  .main-header {
+    background-color: var(--background-color);
+    width: 100%;
+    height: auto;
+    width: 100%;
+  }
+
+  .header-site {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    justify-content: space-between;
+    gap: 10px;
+    padding: 10px 0;
+  }
+
+  #header-logo {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    gap: 8px;
+    margin: 10px 0 0;
+  }
+
+  #red-line {
+    width: 0.4px;
+    background-color: #ec8686;
+    height: 30px;
+    border-radius: 2px;
+    display: none;
+  }
+
+  #header-right {
+    margin: 10px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    margin-right: 0;
+    padding: 0 10px;
+    width: 100%;
+  }
+
+  #header-logout {
+    margin: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 4px;
+    cursor: pointer;
+    padding: 8px 12px;
+    margin-right: 0;
+    margin-left: auto;
+    width: auto;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
+  }
+
+  #header-logout:hover {
+    background-color: rgba(227, 214, 214, 0.229);
+  }
+
+  #header-logout:hover #logout {
+    color: #000;
+  }
+
+  #header-logout:hover img {
+    filter: brightness(0);
+  }
+
+  #logout {
+    color: #fff;
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  #logout-btn,
+  .small-link {
+    color: #fff;
+    text-decoration: none;
+  }
+
+  #header-logout img {
+    filter: brightness(0) invert(1);
+  }
+
+  #notif {
+    width: 100%;
+    max-width: 40px;
+    filter: brightness(0) invert(1);
+  }
+
+  #header-notif:hover {
+    filter: brightness(1) invert(1);
+  }
+
+  .main-body {
+    font-family: var(--text-font);
+  }
+
+  #center-main-body {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 24px;
+    padding-top: 10px;
+    width: 100%;
+  }
+
+  #center-text {
+    text-align: center;
+  }
+
+  #center-text #questionnaire-title {
+    color: red;
+    font-size: 1.2rem;
+    
+  }
+
+  #center-text #questionnaire-desc {
+    filter: opacity(70%);
+    font-size: 0.95rem;
+    
+  }
+
+  #questionaire-link {
+    background-color: rgb(250, 250, 250);
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    border: 1px solid rgb(239, 239, 239);
+    border-radius: 5px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    width: 95vw;
+    min-width: unset;
+    padding: 18px 8px;
+    text-align: center;
+  }
+
+  #enter-link-desc {
+    font-size: 12px;
+  }
+
+  #questionnaire-access-button {
+    width: 50%;
+    background-color: var(--background-color);
+    color: #fff;
+    height: 3em;
+    border-radius: 5px;
+    border: none;
+    align-self: center;
+  }
+
+  #label-link {
+    height: 40px;
+  }
+
+  #label-link::placeholder {
+    padding: 1%;
+  }
+}

@@ -1,4 +1,5 @@
-:root{
+@media(min-width: 768px) {
+    :root{
     --text-font: Verdana, sans-serif;
     --background-color:#e40202;
 }
@@ -140,12 +141,14 @@ header {
 #label-link::placeholder{
     padding: 1%;
 }
+/* PARTIE EN MODE TÉLEPHONE */
 @media (max-width: 780px) {
   .header-site {
     flex-direction: column;
     align-items: stretch;
     gap: 10px;
     padding: 10px 0;
+    
   }
   #header-logo {
     margin: 10px 0 0 0;
@@ -181,4 +184,5 @@ header {
   #center-text #questionnaire-desc {
     font-size: 0.95rem;
   }
+}
 }

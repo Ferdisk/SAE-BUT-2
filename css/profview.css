@@ -115,6 +115,10 @@ body {
   background: var(--hover-blue);
   box-shadow: 0 4px 16px rgba(0,130,200,0.08);
 }
+#logout-btn{
+    color: white;
+    text-decoration: none;
+  }
 @media (max-width: 800px) {
   .header { flex-direction: column; height: auto; padding: 2vw 2vw; }
   .logo { height: 40px; margin-bottom: 1vw; }
@@ -176,5 +180,10 @@ body {
     width: 100%;
     justify-content: center;
     margin-top: 8px;
+    
+  }
+  #logout-btn{
+    color: white;
+    text-decoration: none;
   }
 }
