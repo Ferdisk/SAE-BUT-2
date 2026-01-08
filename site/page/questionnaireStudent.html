@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Création de Questionnaire</title>
+    <link rel="stylesheet" href="../../css/questionnaire.css">
+</head>
+
+<body>
+
+    <header class="topbar">
+        <div class="logo">
+            <img src="../../images/media/logoUnilimBlancAvecTexte.png">
+            <span>Création de Questionnaire</span>
+        </div>
+
+        <div class="top-actions">
+            <a href="/prof" class="small-link">Retour</a>
+	    <a href="#" id="logout-btn" class="small-link">Déconnexion</a>
+        </div>
+    </header>
+
+    <main class="container">
+        <aside class="left-panel">
+
+            <!-- Carte 1: Ajout Questions -->
+            <div class="sidebar-card card-red">
+                <h3>Ajout Questions</h3>
+                <button id="btn-qcm" class="btn white-btn">+ QCM</button>
+                <button id="btn-texte" class="btn white-btn">+ Texte</button>
+                <button id="btn-echelle" class="btn white-btn">+ Échelle de notation</button>
+                <div style="margin-top: 15px; border-top: 1px solid rgba(255,255,255,0.3); padding-top: 5px;">
+                    <button id="btn-reset" class="btn red-outline-btn">Tout effacer</button>
+                </div>
+            </div>
+
+            <!-- Carte 2: Description -->
+            <div class="sidebar-card card-red">
+                <h3 class="desc-title">Description</h3>
+                <input class="desc-box" placeholder="Ajoutez une description pour ce questionnaire..."></input>
+            </div>
+
+        <!-- Carte 3: Limite de Temps -->
+        <div class="sidebar-card card-blue">
+            <div class="time-limit-header">
+                <div class="time-limit-title">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-clock">
+                        <circle cx="12" cy="12" r="10"></circle>
+                        <polyline points="12 6 12 12 16 14"></polyline>
+                    </svg>
+                    <h3>Limite de Temps</h3>
+                </div>
+                <label class="switch">
+                    <input type="checkbox" id="time-limit-toggle">
+                    <span class="slider round"></span>
+                </label>
+            </div>
+
+            <div id="time-limit-content" style="display: none;">
+                <label class="time-label">Durée maximale (en heures)</label>
+                <input type="number" class="time-input" value="24" min="1" max="24">
+            </div>
+
+            <p class="time-limit-desc" id="time-limit-desc-text">
+                Aucune limite de temps. Les étudiants pourront compléter le questionnaire à leur rythme.
+            </p>
+        </div>
+
+        </aside>
+
+        <section class="questionnaire-panel">
+            <input class="title-box" type="text" value="Questionnaire" />
+            <p class="hint">Cliquez sur un type de question pour commencer</p>
+            <div id="questions-container"></div>
+        </section>
+    </main>
+
+    <footer class="footer-actions">
+        <button id="submit-btn" class="btn red-btn">Envoyer</button>
+        <button class="btn blue-btn">Exporter</button>
+    </footer>
+
+    <script src="../../scripts/script_questionnaire.js"></script>
+</body>
+
+</html>
