@@ -9,7 +9,6 @@ const ajoutQuestionBtn = document.getElementById('ajout-question-btn');
 const formActionsContainer = document.querySelector('.form-actions');
 const formActionButtons = formActionsContainer ? formActionsContainer.querySelectorAll('button') : [];
 
-
 /**
  * Ajoute une nouvelle question de type QCM au formulaire.
  */
@@ -30,12 +29,9 @@ function addQCM(isSubQuestion = false) {
 
 
     // 4. Header (Titre) 
-    let titreQCM;
-    if (!isSubQuestion) {
-        titreQCM = document.createElement("textarea");
-        titreQCM.classList.add("titreQCM");
-        titreQCM.placeholder = "[Titre du QCM]";
-    }
+    const titreQCM = document.createElement("textarea");
+    titreQCM.classList.add("titreQCM");
+    titreQCM.placeholder = isSubQuestion ? "[Sous-question QCM]" : "[Titre du QCM]";
 
     // 5. Liste des options QCM
     const listQCM = document.createElement("ul");
@@ -158,8 +154,8 @@ function addQCM(isSubQuestion = false) {
     }
 
     // Assemblage contenu blanc
+    questionContent.appendChild(titreQCM);
     if (!isSubQuestion) {
-        questionContent.appendChild(titreQCM);
 	questionContent.appendChild(createObligatoireToggle());
     }
     questionContent.appendChild(listQCM);
@@ -230,12 +226,9 @@ function addTexte(isSubQuestion = false) {
     actionPanel.classList.add("question-actions-side");
 
     // 4. Titre de la question à l'intérieur
-    let titreQuestion;
-    if (!isSubQuestion) {
-        titreQuestion = document.createElement("textarea");
-        titreQuestion.classList.add("titreQuestion");
-        titreQuestion.placeholder = "[Question Texte]";
-    }
+    const titreQuestion = document.createElement("textarea");
+    titreQuestion.classList.add("titreQuestion");
+    titreQuestion.placeholder = isSubQuestion ? "[Sous-question Texte]" : "[Question Texte]";
 
 
     // 5. Zone de réponse à l'intérieur
@@ -249,8 +242,8 @@ function addTexte(isSubQuestion = false) {
     containerReponse.appendChild(reponseQuestion);
 
     // Assemblage contenu blanc
+    questionContent.appendChild(titreQuestion);
     if (!isSubQuestion) {
-        questionContent.appendChild(titreQuestion);
 	questionContent.appendChild(createObligatoireToggle());
     }
     questionContent.appendChild(containerReponse);
@@ -298,20 +291,16 @@ function addRatingScale(isSubQuestion = false) {
 
 
     // 4. Titre + Select (Header interne)
-    let headerTitleRow;
-    let titreRating;
+    const headerTitleRow = document.createElement('div');
+    headerTitleRow.classList.add('header-row', 'rating-header');
 
+    const titreRating = document.createElement('textarea');
+    titreRating.classList.add('titreRating');
+    titreRating.placeholder = isSubQuestion ? "[Sous-question Échelle]" : "[Question échelle de notation]";
+
+    headerTitleRow.appendChild(titreRating);
     if (!isSubQuestion) {
-        headerTitleRow = document.createElement('div');
-        headerTitleRow.classList.add('header-row', 'rating-header');
-
-        titreRating = document.createElement('textarea');
-        titreRating.classList.add('titreRating');
-        titreRating.placeholder = "[Question échelle de notation]";
-
-        headerTitleRow.appendChild(titreRating);
-	headerTitleRow.appendChild(createObligatoireToggle());
-
+        headerTitleRow.appendChild(createObligatoireToggle());
     }
 
     const headerScaleRow = document.createElement('div');
@@ -403,9 +392,7 @@ function addRatingScale(isSubQuestion = false) {
     sliderRow.appendChild(numbersContainer);
     sliderRow.appendChild(sliderValueLabel);
 
-    if (!isSubQuestion) {
-        questionContent.appendChild(headerTitleRow);
-    }
+    questionContent.appendChild(headerTitleRow);
     questionContent.appendChild(headerScaleRow);
     questionContent.appendChild(sliderRow);
 
@@ -613,7 +600,14 @@ function initEventListeners() {
 
 document.addEventListener('DOMContentLoaded', initEventListeners);
 
+document.addEventListener("DOMContentLoaded", () => {
+    const parts = window.location.pathname.split("/");
+    const questionnaireId = parts[parts.length - 1];
 
+    if (questionnaireId && !isNaN(questionnaireId)) {
+        loadQuestionnaire(questionnaireId);
+    }
+});
 
 function getFullForm() {
     const container = document.getElementById('questions-container');
@@ -634,17 +628,19 @@ function extractQuestion(wrapper) {
     const obligatoireCheckbox = wrapper.querySelector(".question-obligatoire");
     const obligatoire = obligatoireCheckbox ? (obligatoireCheckbox.checked ? 1 : 0) : 1;
 
+    const isSubQuestion = wrapper.classList.contains('sub-question');
+
     const titreQCM = wrapper.querySelector(":scope > .question-content-white > .titreQCM");
     const titreTexte = wrapper.querySelector(":scope > .question-content-white > .titreQuestion");
     const titreRating = wrapper.querySelector(":scope > .question-content-white > .header-row > .titreRating");
 
+    // Détection QCM par présence du titre QCM
     if (titreQCM) {
         const choix = [];
-        wrapper.querySelectorAll(".listQCM > li").forEach(li => {
+        wrapper.querySelectorAll(":scope > .question-content-white > .listQCM > li").forEach(li => {
             const textarea = li.querySelector(".textAreaQuestion");
             if (!textarea || !textarea.value.trim()) return;
 
-            // Récupère les sous-questions (s'il y en a)
             const sous_questions = [];
             li.querySelectorAll(":scope > .question-wrapper-flex").forEach(sub => {
                 const subResult = extractQuestion(sub);
@@ -665,6 +661,7 @@ function extractQuestion(wrapper) {
         };
     }
 
+    // Détection Texte par présence du titre Texte
     if (titreTexte) {
         return {
             contenu: titreTexte.value.trim(),
@@ -673,6 +670,7 @@ function extractQuestion(wrapper) {
         };
     }
 
+    // Détection Rating par présence du titre Rating
     if (titreRating) {
         return {
             contenu: titreRating.value.trim(),
@@ -723,6 +721,207 @@ async function sendFormToBDD(formReady) {
         alert("Impossible de contacter le serveur.");
     }
 }
+
+document.addEventListener("DOMContentLoaded", () => {
+    const listContainer = document.getElementById("questionnaires-list");
+    if (!listContainer) return;
+
+    chargerQuestionnairesProf();
+});
+
+async function chargerQuestionnairesProf() {
+    try {
+        const res = await fetch("/listForms", {
+            credentials: "include"
+        });
+
+        const data = await res.json();
+
+        if (!data.success) {
+            alert("Erreur lors du chargement des questionnaires");
+            return;
+        }
+
+        afficherQuestionnairesProf(data.questionnaires);
+    } catch (err) {
+        console.error(err);
+        alert("Erreur serveur");
+    }
+}
+
+function afficherQuestionnairesProf(questionnaires) {
+    const container = document.getElementById("questionnaires-list");
+    container.innerHTML = "";
+
+    if (questionnaires.length === 0) {
+        container.innerHTML = "<p>Aucun questionnaire créé.</p>";
+        return;
+    }
+
+    questionnaires.forEach(q => {
+        const div = document.createElement("div");
+        div.className = "questionnaire-card";
+
+        div.innerHTML = `
+            <h3>${q.titre}</h3>
+            <p>${q.description || "Aucune description"}</p>
+            <small>Créé le : ${new Date(q.date_creation).toLocaleDateString()}</small>
+            <br>
+            <strong>État :</strong> ${q.etat}
+            <div class="actions">
+                <button class="btn-blue btn-view" data-id="${q.id}">Voir</button>
+                <button class="btn-red btn-delete" date-id="${q.id}">Supprimer</button>
+            </div>
+        `;
+
+	const btnDelete = div.querySelector(".btn-delete");
+
+	btnDelete.addEventListener("click", async () => {
+    	    const confirmDelete = confirm(`Voulez-vous vraiment supprimer le questionnaire "${q.titre}" ?`);
+
+    	    if (!confirmDelete) return;
+
+    	    try {
+                const res = await fetch(`/questionnaire/${q.id}`, {
+            	    method: "DELETE",
+            	    credentials: "include"
+                });
+
+                const data = await res.json();
+
+                if (!data.success) {
+                    alert(data.message || "Erreur lors de la suppression");
+                    return;
+                }
+
+                div.remove();
+            } catch (err) {
+                console.error(err);
+                alert("Erreur serveur");
+            }
+        });
+
+
+        const btnVoir = div.querySelector(".btn-view");
+
+        btnVoir.addEventListener("click", () => {
+            window.location.href = `/questionnaire/${q.id}`;
+        });
+
+        container.appendChild(div);
+    });
+
+}
+
+async function loadQuestionnaire(id) {
+    try {
+        const res = await fetch(`/api/questionnaire/${id}`, {
+            credentials: "include"
+        });
+
+        const data = await res.json();
+
+        if (!data.success) {
+            alert("Impossible de charger le questionnaire");
+            return;
+        }
+
+        fillForm(data.questionnaire);
+	const submitBtn = document.getElementById("submit-btn");
+	if (submitBtn) submitBtn.style.display = "none";
+
+        const saveBtn = document.getElementById("save-btn");
+        if (saveBtn) saveBtn.style.display = "none";
+
+    } catch (err) {
+        console.error(err);
+        alert("Erreur serveur");
+    }
+}
+
+function fillForm(questionnaire) {
+
+    const titleInput = document.querySelector(".title-box");
+    if (titleInput) {
+        titleInput.value = questionnaire.titre || "";
+        titleInput.disabled = true;
+    }
+
+    const descInput = document.querySelector(".desc-box");
+    if (descInput) {
+        descInput.value = questionnaire.description || "";
+        descInput.disabled = true;
+    }
+
+    const btnQCM = document.getElementById("btn-qcm");
+    if (btnQCM) {
+	btnQCM.disabled = true;
+    }
+
+    const btnTexte = document.getElementById("btn-texte");
+    if (btnTexte) {
+        btnTexte.disabled = true;
+    }
+
+    const btnEchelle = document.getElementById("btn-echelle");
+    if (btnEchelle) {
+        btnEchelle.disabled = true;
+    }
+
+    const btnReset = document.getElementById("btn-reset");
+    if (btnReset) {
+        btnReset.disabled = true;
+    }
+
+    const container = document.getElementById("questions-container");
+    if (!container) return;
+
+    container.innerHTML = "";
+
+    questionnaire.questions.forEach(q => {
+        let element = null;
+
+        if (q.type_question_id === 1) {
+            element = addTexte();
+            element.querySelector(".titreQuestion").value = q.contenu;
+        }
+
+        if (q.type_question_id === 2) {
+            element = addQCM();
+            element.querySelector(".titreQCM").value = q.contenu;
+
+            const list = element.querySelector(".listQCM");
+            list.innerHTML = "";
+
+            q.choix.forEach(c => {
+                const li = document.createElement("li");
+                li.classList.add("elementQCM");
+
+                const textarea = document.createElement("textarea");
+                textarea.classList.add("textAreaQuestion");
+                textarea.value = c.contenu;
+                textarea.disabled = true;
+
+                li.appendChild(textarea);
+                list.appendChild(li);
+            });
+        }
+
+        if (q.type_question_id === 3) {
+            element = addRatingScale();
+            element.querySelector(".titreRating").value = q.contenu;
+        }
+
+        if (element) {
+            element.querySelectorAll("input, textarea, button, span").forEach(el => {
+                el.disabled = true;
+            });
+
+            container.appendChild(element);
+        }
+    });
+}
+
 
 document.getElementById("logout-btn").addEventListener("click", async (e) => {
     e.preventDefault();

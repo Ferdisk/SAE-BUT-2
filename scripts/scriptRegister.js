@@ -31,11 +31,11 @@ document.addEventListener("DOMContentLoaded", () => {
             return;
         }
 
-        if (role == 'Prof' && !email.includes("@unilim.fr")) {
+        if (role == 'Prof' && (!email.includes("@unilim.fr") || !email.includes(".aff@unilim.fr"))) {
             feedback.textContent = "Veuillez entrer votre mail professionnel (prenom.nom@unilim.fr).";
             return;
 
-                }
+        }
 
 
         const response = await fetch("http://164.81.120.71:3000/register", {
