@@ -3,7 +3,7 @@
   --primary-blue: #0082c8;
   --hover-red: #b80015;
   --hover-blue: #005a8c;
-  --gray: #666;
+  --text-gray: #666;
   --white: #fff;
   --shadow: 0 2px 8px rgba(0,0,0,0.04);
 }
@@ -11,7 +11,7 @@ body {
   margin: 0;
   font-family: 'Segoe UI', Arial, sans-serif;
   background: var(--white);
-  color: var(--gray);
+  color: var(--text-gray);
 }
 .header {
   background: var(--primary-red);
@@ -78,7 +78,7 @@ body {
   font-weight: 500;
 }
 .desc {
-  color: var(--gray);
+  color: var(--text-gray);
   margin-bottom: 3vw;
   font-size: 1.2vw;
 }
