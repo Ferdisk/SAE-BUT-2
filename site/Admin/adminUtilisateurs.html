@@ -9,7 +9,6 @@
   <link href = "../../css/admin/adminutilisateurs.css" rel="stylesheet">
 </head>
 <body>
-  <!-- Barre supérieure -->
   <header class="topbar py-2 px-3 d-flex justify-content-between align-items-center">
     <div class="d-flex align-items-baseline gap-2 text-white">
       <img src="../../images/media/logoUnilimBlancAvecTexte.png" alt="Logo IUT Limousin" height="40"/>
@@ -49,7 +48,6 @@
     <small>© Université de Limoges</small>
   </footer>
 
-  <!-- Modal Ajouter un utilisateur -->
   <div class="modal fade" id="addUserModal" tabindex="-1" aria-labelledby="addUserModalLabel" aria-hidden="true">
     <div class="modal-dialog">
       <div class="modal-content">
@@ -60,14 +58,18 @@
         <div class="modal-body">
           <form id="addUserForm">
             <div class="mb-3">
-              <label for="studentName" class="form-label">Veuillez entrez le nom et le prénom de l'étudiant</label>
-              <input type="text" class="form-control" id="studentName" placeholder="Nom de l'étudiant" required>
+              <label for="newUserMail" class="form-label">Veuillez entrez le mail et le mot de passe de l'utilisateur à ajouter</label>
+              <input type="text" class="form-control" id="newUserMail" placeholder="Mail de l'utilisateur" required>
             </div>
             <div class="mb-3">
               
-              <input type="text" class="form-control" id="studentSurName" placeholder="Prénom de l'étudiant" required>
+              <input type="password" class="form-control" id="newUserPassword" placeholder="Mot de passe de l'utilisateur" required>
             </div>
-          </form>
+	    <div class="mb-3">
+	      <input type="password" class="form-control" id="newUserConfirm" placeholder="Confirmez le mot de passe" required>
+            </div>  
+          <p id="feedback"></p>
+	</form>
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>
@@ -77,10 +79,9 @@
     </div>
   </div>
 
-  <!-- Script Bootstrap -->
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
   <script src="../../scripts/script_questionnaire.js"></script>  
-  <!-- Script pour afficher la modal -->
+
   <script src="../../scripts/AddUser.js"></script>
   
 </body>
