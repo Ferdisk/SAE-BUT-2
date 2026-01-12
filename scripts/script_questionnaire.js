@@ -9,6 +9,9 @@ const ajoutQuestionBtn = document.getElementById('ajout-question-btn');
 const formActionsContainer = document.querySelector('.form-actions');
 const formActionButtons = formActionsContainer ? formActionsContainer.querySelectorAll('button') : [];
 
+let currentFormId = null;
+let currentFormEtat = null;
+
 /**
  * Ajoute une nouvelle question de type QCM au formulaire.
  */
@@ -29,9 +32,12 @@ function addQCM(isSubQuestion = false) {
 
 
     // 4. Header (Titre) 
-    const titreQCM = document.createElement("textarea");
-    titreQCM.classList.add("titreQCM");
-    titreQCM.placeholder = isSubQuestion ? "[Sous-question QCM]" : "[Titre du QCM]";
+    let titreQCM;
+    if (!isSubQuestion) {
+        titreQCM = document.createElement("textarea");
+        titreQCM.classList.add("titreQCM");
+        titreQCM.placeholder = "[Titre du QCM]";
+    }
 
     // 5. Liste des options QCM
     const listQCM = document.createElement("ul");
@@ -154,8 +160,8 @@ function addQCM(isSubQuestion = false) {
     }
 
     // Assemblage contenu blanc
-    questionContent.appendChild(titreQCM);
     if (!isSubQuestion) {
+        questionContent.appendChild(titreQCM);
 	questionContent.appendChild(createObligatoireToggle());
     }
     questionContent.appendChild(listQCM);
@@ -226,9 +232,12 @@ function addTexte(isSubQuestion = false) {
     actionPanel.classList.add("question-actions-side");
 
     // 4. Titre de la question à l'intérieur
-    const titreQuestion = document.createElement("textarea");
-    titreQuestion.classList.add("titreQuestion");
-    titreQuestion.placeholder = isSubQuestion ? "[Sous-question Texte]" : "[Question Texte]";
+    let titreQuestion;
+    if (!isSubQuestion) {
+        titreQuestion = document.createElement("textarea");
+        titreQuestion.classList.add("titreQuestion");
+        titreQuestion.placeholder = "[Question Texte]";
+    }
 
 
     // 5. Zone de réponse à l'intérieur
@@ -242,8 +251,8 @@ function addTexte(isSubQuestion = false) {
     containerReponse.appendChild(reponseQuestion);
 
     // Assemblage contenu blanc
-    questionContent.appendChild(titreQuestion);
     if (!isSubQuestion) {
+        questionContent.appendChild(titreQuestion);
 	questionContent.appendChild(createObligatoireToggle());
     }
     questionContent.appendChild(containerReponse);
@@ -291,16 +300,20 @@ function addRatingScale(isSubQuestion = false) {
 
 
     // 4. Titre + Select (Header interne)
-    const headerTitleRow = document.createElement('div');
-    headerTitleRow.classList.add('header-row', 'rating-header');
+    let headerTitleRow;
+    let titreRating;
 
-    const titreRating = document.createElement('textarea');
-    titreRating.classList.add('titreRating');
-    titreRating.placeholder = isSubQuestion ? "[Sous-question Échelle]" : "[Question échelle de notation]";
-
-    headerTitleRow.appendChild(titreRating);
     if (!isSubQuestion) {
-        headerTitleRow.appendChild(createObligatoireToggle());
+        headerTitleRow = document.createElement('div');
+        headerTitleRow.classList.add('header-row', 'rating-header');
+
+        titreRating = document.createElement('textarea');
+        titreRating.classList.add('titreRating');
+        titreRating.placeholder = "[Question échelle de notation]";
+
+        headerTitleRow.appendChild(titreRating);
+	headerTitleRow.appendChild(createObligatoireToggle());
+
     }
 
     const headerScaleRow = document.createElement('div');
@@ -392,7 +405,9 @@ function addRatingScale(isSubQuestion = false) {
     sliderRow.appendChild(numbersContainer);
     sliderRow.appendChild(sliderValueLabel);
 
-    questionContent.appendChild(headerTitleRow);
+    if (!isSubQuestion) {
+        questionContent.appendChild(headerTitleRow);
+    }
     questionContent.appendChild(headerScaleRow);
     questionContent.appendChild(sliderRow);
 
@@ -467,14 +482,13 @@ function handleSubmitAttempt() {
         alert("Votre titre ne doit pas être vide");
     } else {
         // Tout est valide
-        alert("Formulaire valide, prêt à être envoyé");
+        alert("Formulaire valide, prêt à être sauvegardé");
 	const formReady = getFullForm();
     	sendFormToBDD(formReady);
     }
 }
 
 function answersValidation() {
-    //  Sélectionne uniquement les champs de CONFIGURATION de la question
     const textAreasToValidate = document.querySelectorAll(".titreQCM, .titreQuestion, .titreRating, .textAreaQuestion");
 
     for (const element of textAreasToValidate) {
@@ -510,11 +524,11 @@ function createObligatoireToggle() {
  * Initialise les écouteurs d'événements globaux.
  */
 function initEventListeners() {
-    // Boutons de création de questions
     const btnQCM = document.getElementById("btn-qcm");
     const btnTexte = document.getElementById("btn-texte");
     const btnEchelle = document.getElementById("btn-echelle");
     const submitBtn = document.getElementById("submit-btn");
+    const saveBtn = document.getElementById("save-btn");
 
     const timeLimitToggle = document.getElementById("time-limit-toggle");
     const timeLimitContent = document.getElementById("time-limit-content");
@@ -549,7 +563,6 @@ function initEventListeners() {
         }
     }
 
-    // Écouteurs pour les boutons de types de questions
     if (btnQCM) {
         btnQCM.addEventListener('click', () => {
             const qcm = addQCM();
@@ -574,11 +587,48 @@ function initEventListeners() {
         });
     }
 
-    // Écouteur pour le bouton d'envoi
-    if (submitBtn) {
-        submitBtn.addEventListener('click', (event) => {
+    if (saveBtn) {
+        saveBtn.addEventListener('click', (event) => {
             event.preventDefault();
             handleSubmitAttempt();
+        });
+    }
+
+    if (submitBtn) {
+        submitBtn.addEventListener("click", async () => {
+            if (!currentFormId) return;
+
+            if (!confirm("Envoyer définitivement ce questionnaire ?")) return;
+
+            const res = await fetch(`/questionnaire/send/${currentFormId}`, {
+                method: "PUT",
+                credentials: "include"
+            });
+
+            const data = await res.json();
+
+            if (data.success) {
+                alert("Formulaire envoyé");
+                window.location.href = "/prof";
+            } else {
+                alert(data.message);
+            }
+        });
+    }
+
+    const updateBtn = document.getElementById("update-btn");
+
+    if (updateBtn) {
+        updateBtn.addEventListener("click", async () => {
+            if (!currentFormId) return;
+
+            if (!hasQuestions() || !answersValidation()) {
+                alert("Formulaire invalide");
+                return;
+            }
+
+            const formReady = getFullForm();
+            await updateFormInBDD(formReady);
         });
     }
 
@@ -589,7 +639,7 @@ function initEventListeners() {
                 const container = document.getElementById('questions-container');
                 if (container) {
                     container.innerHTML = '';
-                    affichemessage(); // Update empty state message
+                    affichemessage(); 
                 }
             }
         }
@@ -602,10 +652,11 @@ document.addEventListener('DOMContentLoaded', initEventListeners);
 
 document.addEventListener("DOMContentLoaded", () => {
     const parts = window.location.pathname.split("/");
-    const questionnaireId = parts[parts.length - 1];
+    const id = parts[parts.length - 1];
 
-    if (questionnaireId && !isNaN(questionnaireId)) {
-        loadQuestionnaire(questionnaireId);
+    if (id && !isNaN(id)) {
+	currentFormId = id;
+        loadQuestionnaire(id);
     }
 });
 
@@ -626,6 +677,7 @@ function getFullForm() {
 
 function extractQuestion(wrapper) {
     const obligatoireCheckbox = wrapper.querySelector(".question-obligatoire");
+    // Si obligatoireCheckbox existe : obligatoire = 1 si cochée, sinon 0 ; si elle n'existe pas : obligatoire = 1.
     const obligatoire = obligatoireCheckbox ? (obligatoireCheckbox.checked ? 1 : 0) : 1;
 
     const isSubQuestion = wrapper.classList.contains('sub-question');
@@ -634,8 +686,9 @@ function extractQuestion(wrapper) {
     const titreTexte = wrapper.querySelector(":scope > .question-content-white > .titreQuestion");
     const titreRating = wrapper.querySelector(":scope > .question-content-white > .header-row > .titreRating");
 
-    // Détection QCM par présence du titre QCM
-    if (titreQCM) {
+    const listQCM = wrapper.querySelector(":scope > .question-content-white > .listQCM");
+
+    if (titreQCM || (isSubQuestion && listQCM)) {
         const choix = [];
         wrapper.querySelectorAll(":scope > .question-content-white > .listQCM > li").forEach(li => {
             const textarea = li.querySelector(".textAreaQuestion");
@@ -654,26 +707,28 @@ function extractQuestion(wrapper) {
         });
 
         return {
-            contenu: titreQCM.value.trim(),
+            contenu: titreQCM ? titreQCM.value.trim() : "Sous-QCM",
             obligatoire: obligatoire,
             type_question_id: 2,
             choix: choix
         };
     }
 
-    // Détection Texte par présence du titre Texte
-    if (titreTexte) {
+    const containerReponse = wrapper.querySelector(":scope > .question-content-white > .containerReponse");
+
+    if (titreTexte || (isSubQuestion && containerReponse && !listQCM)) {
         return {
-            contenu: titreTexte.value.trim(),
+            contenu: titreTexte ? titreTexte.value.trim() : "Sous-question Texte",
             obligatoire: obligatoire,
             type_question_id: 1
         };
     }
 
-    // Détection Rating par présence du titre Rating
-    if (titreRating) {
+    const sliderContainer = wrapper.querySelector(":scope > .question-content-white > .slider-container");
+
+    if (titreRating || (isSubQuestion && sliderContainer)) {
         return {
-            contenu: titreRating.value.trim(),
+            contenu: titreRating ? titreRating.value.trim() : "Sous-question Échelle",
             obligatoire: obligatoire,
             type_question_id: 3
         };
@@ -711,13 +766,13 @@ async function sendFormToBDD(formReady) {
 
         const data = await response.json();
         if (data.success) {
-            alert("Formulaire et questions enregistrés avec succès !");
+            alert("Formulaire et questions sauvegardés avec succès !");
             window.location.href = "/prof";
         } else {
             alert("Erreur technique : " + data.message);
         }
     } catch (err) {
-        console.error("Erreur fetch:", err);
+        console.error("Erreur : ", err);
         alert("Impossible de contacter le serveur.");
     }
 }
@@ -819,23 +874,88 @@ async function loadQuestionnaire(id) {
             credentials: "include"
         });
 
+        if (!res.ok) {
+            throw new Error("Erreur HTTP");
+        }
+
         const data = await res.json();
 
-        if (!data.success) {
-            alert("Impossible de charger le questionnaire");
-            return;
+        if (!data || !data.questionnaire) {
+            throw new Error("questionnaire absent dans la réponse");
         }
 
         fillForm(data.questionnaire);
-	const submitBtn = document.getElementById("submit-btn");
-	if (submitBtn) submitBtn.style.display = "none";
+
+        currentFormEtat = data.questionnaire.etat;
 
         const saveBtn = document.getElementById("save-btn");
-        if (saveBtn) saveBtn.style.display = "none";
+        const updateBtn = document.getElementById("update-btn");
+        const submitBtn = document.getElementById("submit-btn");
+	const btnQCM = document.getElementById("btn-qcm");
+	const btnTexte = document.getElementById("btn-texte");
+	const btnEchelle = document.getElementById("btn-echelle");
+	const btnReset = document.getElementById("btn-reset");
+
+	document.querySelectorAll("input, textarea, select, button").forEach(el => {
+            el.disabled = false;
+        });
+
+        if (btnQCM) {
+            btnQCM.disabled = false;
+        }
+
+        if (btnTexte) {
+            btnQCM.disabled = false;
+        }
+
+        if (btnEchelle) {
+            btnQCM.disabled = false;
+        }
+
+        if (btnReset) {
+            btnQCM.disabled = false;
+        }
+
+        if (currentFormEtat === "brouillon") {
+	    if (saveBtn) {
+	        saveBtn.style.display = "none";
+	    }
+
+            updateBtn.style.display = "inline-block";
+
+            if (submitBtn) {
+                submitBtn.style.display = "inline-block";
+            }
+
+        } else if (currentFormEtat === "envoye") {
+            updateBtn.style.display = "none";
+	    saveBtn.style.display = "none";
+	    submitBtn.style.display = "none";
+
+            if (btnQCM) {
+                btnQCM.disabled = true;
+            }
+
+            if (btnTexte) {
+                btnQCM.disabled = true;
+            }
+
+            if (btnEchelle) {
+                btnQCM.disabled = true;
+            }
+
+            if (btnReset) {
+                btnQCM.disabled = true;
+            }
+
+            document.querySelectorAll("input, textarea, select, button").forEach(el => {
+                el.disabled = true;
+            });
+        }
 
     } catch (err) {
-        console.error(err);
-        alert("Erreur serveur");
+        console.error("loadQuestionnaire casser :", err);
+        alert("Impossible de charger le questionnaire");
     }
 }
 
@@ -851,26 +971,6 @@ function fillForm(questionnaire) {
     if (descInput) {
         descInput.value = questionnaire.description || "";
         descInput.disabled = true;
-    }
-
-    const btnQCM = document.getElementById("btn-qcm");
-    if (btnQCM) {
-	btnQCM.disabled = true;
-    }
-
-    const btnTexte = document.getElementById("btn-texte");
-    if (btnTexte) {
-        btnTexte.disabled = true;
-    }
-
-    const btnEchelle = document.getElementById("btn-echelle");
-    if (btnEchelle) {
-        btnEchelle.disabled = true;
-    }
-
-    const btnReset = document.getElementById("btn-reset");
-    if (btnReset) {
-        btnReset.disabled = true;
     }
 
     const container = document.getElementById("questions-container");
@@ -953,3 +1053,35 @@ document.getElementById("logout-btn").addEventListener("click", async (e) => {
         });
 
 });
+
+
+async function updateFormInBDD(formReady) {
+    const titre = document.querySelector(".title-box")?.value || "";
+    const description = document.querySelector(".desc-box")?.value || "";
+
+    const timeToggle = document.getElementById("time-limit-toggle");
+    const timeValue = document.querySelector(".time-input")?.value;
+    const temps_limite = timeToggle && timeToggle.checked ? parseInt(timeValue, 10) : null;
+
+    const payload = {
+        titre,
+        description,
+        temps_limite,
+        questions: formReady.questions
+    };
+
+    const res = await fetch(`/api/questionnaire/${currentFormId}`, {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        credentials: "include",
+        body: JSON.stringify(payload)
+    });
+
+    const data = await res.json();
+
+    if (data.success) {
+        alert("Formulaire mis à jour");
+    } else {
+        alert(data.message || "Modification impossible");
+    }
+}
