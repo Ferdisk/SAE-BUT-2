@@ -1051,7 +1051,8 @@ function fillFormStudent(questionnaire) {
             element.querySelector(".titreQuestion").disabled = true;
 
             const reponse = element.querySelector(".reponseQuestion");
-            if (reponse) reponse.disabled = false;
+            reponse.dataset.questionId = q.id;
+            reponse.disabled = false;
         }
 
         if (q.type_question_id === 2) {
@@ -1069,7 +1070,9 @@ function fillFormStudent(questionnaire) {
 
                 const checkbox = document.createElement("input");
                 checkbox.type = "checkbox";
-                checkbox.classList.add("reponseQCM");
+                checkbox.classList.add("qcm-checkbox");
+                checkbox.value = c.id;
+                checkbox.dataset.questionId = q.id;
 
                 const textarea = document.createElement("textarea");
                 textarea.classList.add("textAreaQuestion");
@@ -1088,8 +1091,9 @@ function fillFormStudent(questionnaire) {
             element.querySelector(".titreRating").value = q.contenu;
             element.querySelector(".titreRating").disabled = true;
 
-            element.querySelectorAll("input[type=range]")
-                .forEach(slider => slider.disabled = false);
+            const slider = element.querySelector(".rating-slider");
+            slider.dataset.questionId = q.id;
+            slider.disabled = false;
         }
 
         if (element) {
