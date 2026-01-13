@@ -119,6 +119,36 @@ body {
     color: white;
     text-decoration: none;
   }
+#questionnaires-list{
+    display: flex;
+    gap: 5vw;
+    flex-wrap: wrap;
+    padding: 5vw;
+    justify-content: center;
+}
+.questionnaire-card{
+    background: #ffffff;
+    border-radius: 8px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.08);
+    overflow: hidden;
+    width: 20vw;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.questionnaire-card:hover{
+  background: #cccbcb;
+  box-shadow: 0 4px 16px #0082C814;
+}
+
+.actions{
+  padding: 1vw;
+  display: flex;
+  gap: 2vw;
+}
+
 @media (max-width: 800px) {
   .header { flex-direction: column; height: auto; padding: 2vw 2vw; }
   .logo { height: 40px; margin-bottom: 1vw; }
@@ -127,6 +157,7 @@ body {
   .main-title { font-size: 4vw; }
   .desc { font-size: 2vw; }
   .btn-red, .btn-blue { font-size: 1.5vw; padding: 1.5vw 3vw; }
+  .questionnaires-list { flex-direction: row; }
 }
 @media (max-width: 500px) {
   .header { padding: 2vw 1vw; }
@@ -135,8 +166,9 @@ body {
   .main-title { font-size: 6vw; }
   .desc { font-size: 3vw; }
   .btn-red, .btn-blue { font-size: 2vw; padding: 2vw 4vw; }
+  .questionnaires-list { flex-direction: row; }
 }
-@media (max-width: 780px) {
+@media (max-width: 1080px) {
   .header {
     flex-direction: column;
     height: auto;
@@ -186,4 +218,17 @@ body {
     color: white;
     text-decoration: none;
   }
+  .questionnaires-list { 
+    flex-direction: column; 
+  }
+  .questionnaire-card{
+    width: 100%;
+  }
+  .actions{
+    
+  }
+  .btn-view{
+    width: 100%;
+  }
+
 }

@@ -1021,8 +1021,8 @@ function fillForm(questionnaire) {
     });
 }
 
-function fillFormStudent(questionnaire) {
-
+function fillFormEtudiant(questionnaire) {
+    // Titre et description du questionnaire (lecture seule)
     const titleInput = document.querySelector(".title-box");
     if (titleInput) {
         titleInput.value = questionnaire.titre || "";
@@ -1045,50 +1045,48 @@ function fillFormStudent(questionnaire) {
 
         if (q.type_question_id === 1) {
             element = addTexte();
-
-            element.querySelector(".titreQuestion").value = q.contenu;
-            element.querySelector(".titreQuestion").disabled = true;
+            const titre = element.querySelector(".titreQuestion");
+            if (titre) titre.value = q.contenu;
+            if (titre) titre.disabled = true;
 
             const reponse = element.querySelector(".reponseQuestion");
             if (reponse) reponse.disabled = false;
-        }
 
-        if (q.type_question_id === 2) {
+        } else if (q.type_question_id === 2) {
             element = addQCM();
-
-            element.querySelector(".titreQCM").value = q.contenu;
-            element.querySelector(".titreQCM").disabled = true;
+            const titreQCM = element.querySelector(".titreQCM");
+            if (titreQCM) titreQCM.value = q.contenu;
+            if (titreQCM) titreQCM.disabled = true;
 
             const list = element.querySelector(".listQCM");
-            list.innerHTML = "";
+            if (list) list.innerHTML = "";
 
             q.choix.forEach(c => {
                 const li = document.createElement("li");
                 li.classList.add("elementQCM");
-
-                const checkbox = document.createElement("input");
-                checkbox.type = "checkbox";
-                checkbox.classList.add("reponseQCM");
 
                 const textarea = document.createElement("textarea");
                 textarea.classList.add("textAreaQuestion");
                 textarea.value = c.contenu;
                 textarea.disabled = true;
 
+                const checkbox = document.createElement("input");
+                checkbox.type = "checkbox";
+                checkbox.classList.add("student-answer-checkbox");
+
                 li.appendChild(checkbox);
                 li.appendChild(textarea);
                 list.appendChild(li);
             });
-        }
 
-        if (q.type_question_id === 3) {
+        } else if (q.type_question_id === 3) {
             element = addRatingScale();
+            const titreRating = element.querySelector(".titreRating");
+            if (titreRating) titreRating.value = q.contenu;
+            if (titreRating) titreRating.disabled = true;
 
-            element.querySelector(".titreRating").value = q.contenu;
-            element.querySelector(".titreRating").disabled = true;
-
-            element.querySelectorAll("input[type=range]")
-                .forEach(slider => slider.disabled = false);
+            const sliders = element.querySelectorAll("input[type=range]");
+            sliders.forEach(slider => slider.disabled = false);
         }
 
         if (element) {

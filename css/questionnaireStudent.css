@@ -149,7 +149,7 @@ ul {
     border: 1px solid var(--grey-200);
     background: var(--grey-100);
     font-family: inherit;
-    resize: vertical;
+    resize: none;
 }
 
 .listQCM { display: flex; flex-direction: column; gap: 10px; }
@@ -173,7 +173,7 @@ ul {
     border: 1px solid var(--grey-200);
     background: white;
     font-family: inherit;
-    resize: vertical;
+    resize: none;
 }
 
 .btn-option-flat {
@@ -211,7 +211,7 @@ ul {
     border-radius: 6px;
     border: 1px solid var(--grey-200);
     background: var(--grey-100);
-    resize: vertical;
+    resize: none;
 }
 
 .header-row {
