@@ -138,10 +138,7 @@ function addQCM(isSubQuestion = false) {
     };
 
 
-<<<<<<< HEAD
-=======
     // 6. Section "Autre choix"
->>>>>>> cf37c22be58a9fee397ceebe1a30850ebdc08f5d
     let otherOption;
     let otherOptionCheckbox;
     let otherOptionLabel;
@@ -1020,6 +1017,82 @@ function fillForm(questionnaire) {
                 el.disabled = true;
             });
 
+            container.appendChild(element);
+        }
+    });
+}
+
+function fillFormStudent(questionnaire) {
+
+    const titleInput = document.querySelector(".title-box");
+    if (titleInput) {
+        titleInput.value = questionnaire.titre || "";
+        titleInput.disabled = true;
+    }
+
+    const descInput = document.querySelector(".desc-box");
+    if (descInput) {
+        descInput.value = questionnaire.description || "";
+        descInput.disabled = true;
+    }
+
+    const container = document.getElementById("questions-container");
+    if (!container) return;
+
+    container.innerHTML = "";
+
+    questionnaire.questions.forEach(q => {
+        let element = null;
+
+        if (q.type_question_id === 1) {
+            element = addTexte();
+
+            element.querySelector(".titreQuestion").value = q.contenu;
+            element.querySelector(".titreQuestion").disabled = true;
+
+            const reponse = element.querySelector(".reponseQuestion");
+            if (reponse) reponse.disabled = false;
+        }
+
+        if (q.type_question_id === 2) {
+            element = addQCM();
+
+            element.querySelector(".titreQCM").value = q.contenu;
+            element.querySelector(".titreQCM").disabled = true;
+
+            const list = element.querySelector(".listQCM");
+            list.innerHTML = "";
+
+            q.choix.forEach(c => {
+                const li = document.createElement("li");
+                li.classList.add("elementQCM");
+
+                const checkbox = document.createElement("input");
+                checkbox.type = "checkbox";
+                checkbox.classList.add("reponseQCM");
+
+                const textarea = document.createElement("textarea");
+                textarea.classList.add("textAreaQuestion");
+                textarea.value = c.contenu;
+                textarea.disabled = true;
+
+                li.appendChild(checkbox);
+                li.appendChild(textarea);
+                list.appendChild(li);
+            });
+        }
+
+        if (q.type_question_id === 3) {
+            element = addRatingScale();
+
+            element.querySelector(".titreRating").value = q.contenu;
+            element.querySelector(".titreRating").disabled = true;
+
+            element.querySelectorAll("input[type=range]")
+                .forEach(slider => slider.disabled = false);
+        }
+
+        if (element) {
             container.appendChild(element);
         }
     });
