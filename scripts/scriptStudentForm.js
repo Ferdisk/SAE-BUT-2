@@ -117,7 +117,7 @@ document.getElementById("submitStudent-btn").addEventListener("click", async () 
     try {
         const questionnaire = JSON.parse(sessionStorage.getItem("questionnaire"));
 
-        const res = await fetch("/api/reponses", {
+        const res = await fetch("/reponses", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             credentials: "include",

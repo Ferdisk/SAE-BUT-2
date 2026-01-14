@@ -49,8 +49,13 @@ document.addEventListener("DOMContentLoaded", () => {
         if (data.success) {
             feedback.style.color = "green";
             feedback.textContent = data.message;
-            window.location.replace("/student"); //mettre /prof pour les profs
-            //if data.role...
+
+            if (data.role == "Etudiant") {
+		window.location.replace("/student");
+	    } else {
+		window.location.replace("/prof");
+	    }
+
         } else {
             feedback.style.color = "red";
             feedback.textContent = data.message;

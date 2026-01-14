@@ -12,26 +12,18 @@ const formActionButtons = formActionsContainer ? formActionsContainer.querySelec
 let currentFormId = null;
 let currentFormEtat = null;
 
-/**
- * Ajoute une nouvelle question de type QCM au formulaire.
- */
 function addQCM(isSubQuestion = false) {
     let localOptionCounter = 1;
 
-    // 1. Conteneur principal (Flex wrapper)
     const wrapper = document.createElement("div");
     wrapper.classList.add("question-wrapper-flex");
 
-    // 2. Zone blanche de contenu
     const questionContent = document.createElement("div");
     questionContent.classList.add("question-content-white");
 
-    // 3. Zone d'actions latérale
     const actionPanel = document.createElement("div");
     actionPanel.classList.add("question-actions-side");
 
-
-    // 4. Header (Titre) 
     let titreQCM;
     if (!isSubQuestion) {
         titreQCM = document.createElement("textarea");
@@ -39,11 +31,9 @@ function addQCM(isSubQuestion = false) {
         titreQCM.placeholder = "[Titre du QCM]";
     }
 
-    // 5. Liste des options QCM
     const listQCM = document.createElement("ul");
     listQCM.classList.add("listQCM");
 
-    // Helper interne pour créer une ligne d'option
     const createOptionElement = (optionIndex) => {
         const li = document.createElement("li");
         li.classList.add("elementQCM");
@@ -59,7 +49,6 @@ function addQCM(isSubQuestion = false) {
         textArea.classList.add("textAreaQuestion");
         textArea.placeholder = `[Choix ${optionIndex}]`;
 
-        // Bouton "+" (Sous-question)
         const btnSubOption = document.createElement("button");
         btnSubOption.type = "button";
         btnSubOption.classList.add("btn-option-flat", "btn-sub");
@@ -112,7 +101,6 @@ function addQCM(isSubQuestion = false) {
             li.appendChild(menu);
         });
 
-        // Bouton "-" (Supprimer l'option)
         const btnRemoveOption = document.createElement("button");
         btnRemoveOption.type = "button";
         btnRemoveOption.classList.add("btn-option-flat", "btn-remove");
@@ -138,7 +126,6 @@ function addQCM(isSubQuestion = false) {
     };
 
 
-    // 6. Section "Autre choix"
     let otherOption;
     let otherOptionCheckbox;
     let otherOptionLabel;
@@ -159,7 +146,6 @@ function addQCM(isSubQuestion = false) {
         otherOption.appendChild(otherOptionLabel);
     }
 
-    // Assemblage contenu blanc
     if (!isSubQuestion) {
         questionContent.appendChild(titreQCM);
 	questionContent.appendChild(createObligatoireToggle());
@@ -169,10 +155,6 @@ function addQCM(isSubQuestion = false) {
         questionContent.appendChild(otherOption);
     }
 
-
-    // 7. Boutons d'actions GLOBALES (Côté droit)
-
-    // Bouton "+" (Ajouter une option au QCM)
     const btnAddOption = document.createElement("button");
     btnAddOption.type = "button";
     btnAddOption.classList.add("side-btn", "side-btn-add");
@@ -184,7 +166,6 @@ function addQCM(isSubQuestion = false) {
         listQCM.appendChild(newOption);
     });
 
-    // Bouton "x" (Supprimer le QCM entier)
     const btnDeleteQCM = document.createElement("button");
     btnDeleteQCM.type = "button";
     btnDeleteQCM.classList.add("side-btn", "side-btn-delete");
@@ -199,39 +180,26 @@ function addQCM(isSubQuestion = false) {
     actionPanel.appendChild(btnDeleteQCM);
 
 
-
-    // 8. Initialisation
     const { li: firstOption } = createOptionElement(localOptionCounter);
     listQCM.appendChild(firstOption);
 
-    // Assemblage final
     wrapper.appendChild(questionContent);
     wrapper.appendChild(actionPanel);
 
     return wrapper;
 }
 
-/**
- * Ajoute une nouvelle question de type Texte Libre.
- */
-/**
- * Ajoute une nouvelle question de type Texte Libre.
- */
 function addTexte(isSubQuestion = false) {
 
-    // 1. Conteneur principal (Flex wrapper)
     const wrapper = document.createElement("div");
     wrapper.classList.add("question-wrapper-flex");
 
-    // 2. Zone blanche de contenu
     const questionContent = document.createElement("div");
     questionContent.classList.add("question-content-white");
 
-    // 3. Zone d'actions latérale
     const actionPanel = document.createElement("div");
     actionPanel.classList.add("question-actions-side");
 
-    // 4. Titre de la question à l'intérieur
     let titreQuestion;
     if (!isSubQuestion) {
         titreQuestion = document.createElement("textarea");
@@ -240,7 +208,6 @@ function addTexte(isSubQuestion = false) {
     }
 
 
-    // 5. Zone de réponse à l'intérieur
     const containerReponse = document.createElement("div");
     containerReponse.classList.add("containerReponse");
 
@@ -250,15 +217,12 @@ function addTexte(isSubQuestion = false) {
 
     containerReponse.appendChild(reponseQuestion);
 
-    // Assemblage contenu blanc
     if (!isSubQuestion) {
         questionContent.appendChild(titreQuestion);
 	questionContent.appendChild(createObligatoireToggle());
     }
     questionContent.appendChild(containerReponse);
 
-
-    // 6. Bouton "x" (Supprimer) dans le panneau latéral
     const btnDelete = document.createElement("button");
     btnDelete.type = "button";
     btnDelete.classList.add("side-btn", "side-btn-delete");
@@ -271,35 +235,25 @@ function addTexte(isSubQuestion = false) {
 
     actionPanel.appendChild(btnDelete);
 
-    // 7. Assemblage final
     wrapper.appendChild(questionContent);
     wrapper.appendChild(actionPanel);
 
     return wrapper;
 }
 
-/**
- * Ajoute une question de type Échelle de Notation.
- * @returns {HTMLElement} Le conteneur de la question
- */
 function addRatingScale(isSubQuestion = false) {
     const uniqueId = Date.now();
     let currentMax = 10;
 
-    // 1. Conteneur principal (Flex wrapper)
     const wrapper = document.createElement("div");
     wrapper.classList.add("question-wrapper-flex");
 
-    // 2. Zone blanche de contenu
     const questionContent = document.createElement("div");
     questionContent.classList.add("question-content-white");
 
-    // 3. Zone d'actions latérale
     const actionPanel = document.createElement("div");
     actionPanel.classList.add("question-actions-side");
 
-
-    // 4. Titre + Select (Header interne)
     let headerTitleRow;
     let titreRating;
 
@@ -338,7 +292,6 @@ function addRatingScale(isSubQuestion = false) {
     headerScaleRow.appendChild(labelScale);
     headerScaleRow.appendChild(selectScale);
 
-    // 5. Conteneur du slider
     const sliderRow = document.createElement('div');
     sliderRow.classList.add('slider-container');
 
@@ -411,8 +364,6 @@ function addRatingScale(isSubQuestion = false) {
     questionContent.appendChild(headerScaleRow);
     questionContent.appendChild(sliderRow);
 
-
-    // 6. Bouton "x" (Supprimer) latéral
     const btnDelete = document.createElement('button');
     btnDelete.type = 'button';
     btnDelete.classList.add('side-btn', 'side-btn-delete');
@@ -425,19 +376,12 @@ function addRatingScale(isSubQuestion = false) {
 
     actionPanel.appendChild(btnDelete);
 
-    // 7. Assemblage final
     wrapper.appendChild(questionContent);
     wrapper.appendChild(actionPanel);
 
     return wrapper;
 }
 
-
-
-/**
- * Vérifie si le formulaire contient au moins une question.
- * @returns {boolean}
- */
 function hasQuestions() {
     const container = document.getElementById('questions-container');
 
@@ -447,9 +391,6 @@ function hasQuestions() {
     return false;
 }
 
-/**
- * Met à jour le message d'indication selon la présence de questions.
- */
 function affichemessage() {
 
     const hint = document.querySelector(".hint");
@@ -463,25 +404,17 @@ function affichemessage() {
     }
 }
 
-/**
- * Gestionnaire de validation avant envoi.
- */
 function handleSubmitAttempt() {
-    // Récupère l'élément du titre et sa valeur (si présent)
     const titleElement = document.querySelector(".title-box");
     const titleBox = titleElement ? titleElement.value : "";
 
     if (!hasQuestions()) {
-        // Pas de questions insérées
         alert("Vous devez insérer des questions pour envoyer");
     } else if (!answersValidation()) {
-        // Certaines zones de configuration sont vides
         alert("Certaines zones de texte sont vides, veuillez les remplir.");
     } else if (titleBox.trim().length === 0) {
-        // Titre vide
         alert("Votre titre ne doit pas être vide");
     } else {
-        // Tout est valide
         alert("Formulaire valide, prêt à être sauvegardé");
 	const formReady = getFullForm();
     	sendFormToBDD(formReady);
@@ -520,9 +453,6 @@ function createObligatoireToggle() {
     return div;
 }
 
-/**
- * Initialise les écouteurs d'événements globaux.
- */
 function initEventListeners() {
     const btnQCM = document.getElementById("btn-qcm");
     const btnTexte = document.getElementById("btn-texte");
@@ -682,6 +612,9 @@ function extractQuestion(wrapper) {
 
     const isSubQuestion = wrapper.classList.contains('sub-question');
 
+    // Récupérer l'ID de la question stocké dans le wrapper (si présent)
+    const questionId = wrapper.dataset.questionId ? parseInt(wrapper.dataset.questionId, 10) : null;
+
     const titreQCM = wrapper.querySelector(":scope > .question-content-white > .titreQCM");
     const titreTexte = wrapper.querySelector(":scope > .question-content-white > .titreQuestion");
     const titreRating = wrapper.querySelector(":scope > .question-content-white > .header-row > .titreRating");
@@ -694,44 +627,59 @@ function extractQuestion(wrapper) {
             const textarea = li.querySelector(".textAreaQuestion");
             if (!textarea || !textarea.value.trim()) return;
 
+            // Récupérer l'ID du choix stocké dans le li (si présent)
+            const choixId = li.dataset.choixId ? parseInt(li.dataset.choixId, 10) : null;
+
             const sous_questions = [];
             li.querySelectorAll(":scope > .question-wrapper-flex").forEach(sub => {
                 const subResult = extractQuestion(sub);
                 if (subResult) sous_questions.push(subResult);
             });
 
-            choix.push({
+            const choixObj = {
                 contenu: textarea.value.trim(),
                 sous_questions: sous_questions
-            });
+            };
+            if (choixId) choixObj.id = choixId;
+            choix.push(choixObj);
         });
 
-        return {
+        const result = {
             contenu: titreQCM ? titreQCM.value.trim() : "Sous-QCM",
             obligatoire: obligatoire,
             type_question_id: 2,
             choix: choix
         };
+        if (questionId) result.id = questionId;
+        return result;
     }
 
     const containerReponse = wrapper.querySelector(":scope > .question-content-white > .containerReponse");
 
     if (titreTexte || (isSubQuestion && containerReponse && !listQCM)) {
-        return {
+        const result = {
             contenu: titreTexte ? titreTexte.value.trim() : "Sous-question Texte",
             obligatoire: obligatoire,
             type_question_id: 1
         };
+        if (questionId) result.id = questionId;
+        return result;
     }
 
     const sliderContainer = wrapper.querySelector(":scope > .question-content-white > .slider-container");
 
     if (titreRating || (isSubQuestion && sliderContainer)) {
-        return {
+        const selectScale = wrapper.querySelector(".select-scale");
+        const echelleMax = selectScale ? parseInt(selectScale.value, 10) : 10;
+
+        const result = {
             contenu: titreRating ? titreRating.value.trim() : "Sous-question Échelle",
             obligatoire: obligatoire,
-            type_question_id: 3
+            type_question_id: 3,
+            echelle_max: echelleMax
         };
+        if (questionId) result.id = questionId;
+        return result;
     }
 
     return null;
@@ -870,7 +818,7 @@ function afficherQuestionnairesProf(questionnaires) {
 
 async function loadQuestionnaire(id) {
     try {
-        const res = await fetch(`/api/questionnaire/${id}`, {
+        const res = await fetch(`/questionnaireCharger/${id}`, {
             credentials: "include"
         });
 
@@ -973,6 +921,23 @@ function fillForm(questionnaire) {
         descInput.disabled = true;
     }
 
+    const timeLimitToggle = document.getElementById("time-limit-toggle");
+    const timeInput = document.querySelector(".time-input");
+    const timeLimitContent = document.getElementById("time-limit-content");
+    
+    if (questionnaire.temps_limite && timeLimitToggle && timeInput) {
+        timeLimitToggle.checked = true;
+        timeInput.value = questionnaire.temps_limite;
+        if (timeLimitContent) {
+            timeLimitContent.style.display = "flex";
+        }
+    } else if (timeLimitToggle) {
+        timeLimitToggle.checked = false;
+        if (timeLimitContent) {
+            timeLimitContent.style.display = "none";
+        }
+    }
+
     const container = document.getElementById("questions-container");
     if (!container) return;
 
@@ -996,6 +961,7 @@ function fillForm(questionnaire) {
             q.choix.forEach(c => {
                 const li = document.createElement("li");
                 li.classList.add("elementQCM");
+                if (c.id) li.dataset.choixId = c.id;
 
                 const textarea = document.createElement("textarea");
                 textarea.classList.add("textAreaQuestion");
@@ -1010,9 +976,28 @@ function fillForm(questionnaire) {
         if (q.type_question_id === 3) {
             element = addRatingScale();
             element.querySelector(".titreRating").value = q.contenu;
+
+            if (q.echelle_max) {
+                const selectScale = element.querySelector(".select-scale");
+                const slider = element.querySelector(".rating-slider");
+                const sliderValueLabel = element.querySelector(".slider-value");
+                const numbersContainer = element.querySelector(".slider-numbers");
+
+                if (selectScale) {
+                    selectScale.value = q.echelle_max;
+                    selectScale.dispatchEvent(new Event('change'));
+                }
+            }
         }
 
         if (element) {
+            if (q.id) element.dataset.questionId = q.id;
+
+            const obligatoireCheckbox = element.querySelector(".question-obligatoire");
+            if (obligatoireCheckbox) {
+                obligatoireCheckbox.checked = q.obligatoire === 1;
+            }
+
             element.querySelectorAll("input, textarea, button, span").forEach(el => {
                 el.disabled = true;
             });
@@ -1097,6 +1082,12 @@ function fillFormStudent(questionnaire) {
         }
 
         if (element) {
+
+            const obligatoireCheckbox = element.querySelector(".question-obligatoire");
+            if (obligatoireCheckbox) {
+                obligatoireCheckbox.checked = q.obligatoire === 1;
+            }
+
             container.appendChild(element);
         }
     });
@@ -1149,7 +1140,7 @@ async function updateFormInBDD(formReady) {
         questions: formReady.questions
     };
 
-    const res = await fetch(`/api/questionnaire/${currentFormId}`, {
+    const res = await fetch(`/questionnaireCharger/${currentFormId}`, {
         method: "PUT",
         headers: { "Content-Type": "application/json" },
         credentials: "include",

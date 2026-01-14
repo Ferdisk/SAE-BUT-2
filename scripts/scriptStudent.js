@@ -45,7 +45,7 @@ document.addEventListener("DOMContentLoaded", () => {
         }
 
         try {
-            const res = await fetch(`/api/questionnaire/code/${code}`, {
+            const res = await fetch(`/questionnaireCharger/code/${code}`, {
                 credentials: "include"
             });
 
