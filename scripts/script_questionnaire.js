@@ -12,6 +12,97 @@ const formActionButtons = formActionsContainer ? formActionsContainer.querySelec
 let currentFormId = null;
 let currentFormEtat = null;
 
+function createOptionElement(listQCM, optionIndex) {
+    const li = document.createElement("li");
+    li.classList.add("elementQCM");
+
+    const checkbox = document.createElement("input");
+    checkbox.type = "checkbox";
+    checkbox.classList.add("caseACocher");
+
+    const textContainer = document.createElement("span");
+    textContainer.classList.add("textQuestionContainer");
+
+    const textArea = document.createElement("textarea");
+    textArea.classList.add("textAreaQuestion");
+    textArea.placeholder = `[Choix ${optionIndex}]`;
+
+    const btnSubOption = document.createElement("button");
+    btnSubOption.type = "button";
+    btnSubOption.classList.add("btn-option-flat", "btn-sub");
+    btnSubOption.textContent = ">";
+
+    btnSubOption.addEventListener('click', () => {
+        const existinMenu = li.querySelector('.dropdown');
+        if (existinMenu) {
+            existinMenu.remove();
+            return;
+        }
+
+        const menu = document.createElement("div");
+        menu.classList.add('dropdown');
+
+        const optionQCM = document.createElement("button");
+        optionQCM.textContent = "Sous-question QCM";
+
+        optionQCM.addEventListener('click', () => {
+            const subQCM = addQCM(true);
+            subQCM.classList.add('sub-question');
+            li.appendChild(subQCM);
+            menu.remove();
+        });
+
+        const optionTxt = document.createElement("button");
+        optionTxt.textContent = "Sous-question Texte";
+
+        optionTxt.addEventListener('click', () => {
+            const subTxt = addTexte(true);
+            subTxt.classList.add('sub-question');
+            li.appendChild(subTxt);
+            menu.remove();
+        });
+
+        const optionScale = document.createElement("button");
+        optionScale.textContent = "Sous-question Échelle de notation";
+
+        optionScale.addEventListener('click', () => {
+            const subScale = addRatingScale(true);
+            subScale.classList.add('sub-question');
+            li.appendChild(subScale);
+            menu.remove();
+        });
+
+        menu.appendChild(optionQCM);
+        menu.appendChild(optionTxt);
+        menu.appendChild(optionScale);
+
+        li.appendChild(menu);
+    });
+
+    const btnRemoveOption = document.createElement("button");
+    btnRemoveOption.type = "button";
+    btnRemoveOption.classList.add("btn-option-flat", "btn-remove");
+    btnRemoveOption.textContent = "-";
+
+    btnRemoveOption.addEventListener('click', () => {
+        if (listQCM.children.length > 1) {
+            li.remove();
+        } else {
+            alert("Un QCM doit avoir au moins une option.");
+        }
+    });
+
+    textContainer.appendChild(textArea);
+
+    li.appendChild(checkbox);
+    li.appendChild(textContainer);
+
+    li.appendChild(btnSubOption);
+    li.appendChild(btnRemoveOption);
+
+    return { li, textContainer };
+}
+
 function addQCM(isSubQuestion = false) {
     let localOptionCounter = 1;
 
@@ -33,97 +124,6 @@ function addQCM(isSubQuestion = false) {
 
     const listQCM = document.createElement("ul");
     listQCM.classList.add("listQCM");
-
-    const createOptionElement = (optionIndex) => {
-        const li = document.createElement("li");
-        li.classList.add("elementQCM");
-
-        const checkbox = document.createElement("input");
-        checkbox.type = "checkbox";
-        checkbox.classList.add("caseACocher");
-
-        const textContainer = document.createElement("span");
-        textContainer.classList.add("textQuestionContainer");
-
-        const textArea = document.createElement("textarea");
-        textArea.classList.add("textAreaQuestion");
-        textArea.placeholder = `[Choix ${optionIndex}]`;
-
-        const btnSubOption = document.createElement("button");
-        btnSubOption.type = "button";
-        btnSubOption.classList.add("btn-option-flat", "btn-sub");
-        btnSubOption.textContent = ">";
-
-        btnSubOption.addEventListener('click', () => {
-            const existinMenu = li.querySelector('.dropdown');
-            if (existinMenu) {
-                existinMenu.remove();
-                return;
-            }
-
-            const menu = document.createElement("div");
-            menu.classList.add('dropdown');
-
-            const optionQCM = document.createElement("button");
-            optionQCM.textContent = "Sous-question QCM";
-
-            optionQCM.addEventListener('click', () => {
-                const subQCM = addQCM(true);
-		subQCM.classList.add('sub-question');
-                li.appendChild(subQCM);
-                menu.remove();
-            });
-
-            const optionTxt = document.createElement("button");
-            optionTxt.textContent = "Sous-question Texte";
-
-            optionTxt.addEventListener('click', () => {
-                const subTxt = addTexte(true);
-		subTxt.classList.add('sub-question');
-                li.appendChild(subTxt);
-                menu.remove();
-            });
-
-            const optionScale = document.createElement("button");
-            optionScale.textContent = "Sous-question Échelle de notation";
-
-            optionScale.addEventListener('click', () => {
-                const subScale = addRatingScale(true);
-		subScale.classList.add('sub-question');
-                li.appendChild(subScale);
-                menu.remove();
-            });
-
-            menu.appendChild(optionQCM);
-            menu.appendChild(optionTxt);
-            menu.appendChild(optionScale);
-
-            li.appendChild(menu);
-        });
-
-        const btnRemoveOption = document.createElement("button");
-        btnRemoveOption.type = "button";
-        btnRemoveOption.classList.add("btn-option-flat", "btn-remove");
-        btnRemoveOption.textContent = "-";
-
-        btnRemoveOption.addEventListener('click', () => {
-            if (listQCM.children.length > 1) {
-                li.remove();
-            } else {
-                alert("Un QCM doit avoir au moins une option.");
-            }
-        });
-
-        textContainer.appendChild(textArea);
-
-        li.appendChild(checkbox);
-        li.appendChild(textContainer);
-
-        li.appendChild(btnSubOption);
-        li.appendChild(btnRemoveOption);
-
-        return { li, textContainer };
-    };
 
 
     let otherOption;
@@ -162,7 +162,7 @@ function addQCM(isSubQuestion = false) {
 
     btnAddOption.addEventListener('click', () => {
         localOptionCounter++;
-        const { li: newOption } = createOptionElement(localOptionCounter);
+        const { li: newOption } = createOptionElement(listQCM, localOptionCounter);
         listQCM.appendChild(newOption);
     });
 
@@ -180,7 +180,7 @@ function addQCM(isSubQuestion = false) {
     actionPanel.appendChild(btnDeleteQCM);
 
 
-    const { li: firstOption } = createOptionElement(localOptionCounter);
+    const { li: firstOption } = createOptionElement(listQCM, localOptionCounter);
     listQCM.appendChild(firstOption);
 
     wrapper.appendChild(questionContent);
@@ -767,12 +767,14 @@ function afficherQuestionnairesProf(questionnaires) {
 
         div.innerHTML = `
             <h3>${q.titre}</h3>
+	    <p>Code formulaire : ${q.lien_formulaire || "Aucun code"}</p>
             <p>${q.description || "Aucune description"}</p>
             <small>Créé le : ${new Date(q.date_creation).toLocaleDateString()}</small>
             <br>
             <strong>État :</strong> ${q.etat}
             <div class="actions">
                 <button class="btn-blue btn-view" data-id="${q.id}">Voir</button>
+		<button class="btn-blue btn-export" data-id="${q.id}">Exporter les réponses</button>
                 <button class="btn-red btn-delete" date-id="${q.id}">Supprimer</button>
             </div>
         `;
@@ -811,6 +813,23 @@ function afficherQuestionnairesProf(questionnaires) {
             window.location.href = `/questionnaire/${q.id}`;
         });
 
+        const btnExport = div.querySelector(".btn-export");
+
+        btnExport.addEventListener("click", async () => {
+            const res = await fetch(`/exportReponses/${q.id}`, {
+                credentials: "include"
+            });
+
+	    const data = await res.json();
+
+            if (!data.success) {
+		throw new Error("Erreur lors de l'exportation des réponses");
+	    } else {
+		alert("Export des réponses réussis");
+	    }
+
+        });
+
         container.appendChild(div);
     });
 
@@ -843,6 +862,11 @@ async function loadQuestionnaire(id) {
 	const btnTexte = document.getElementById("btn-texte");
 	const btnEchelle = document.getElementById("btn-echelle");
 	const btnReset = document.getElementById("btn-reset");
+    const hint = document.querySelector(".hint");
+
+    if (hasQuestions() && hint) {
+        hint.remove();
+    }
 
 	document.querySelectorAll("input, textarea, select, button").forEach(el => {
             el.disabled = false;
@@ -853,15 +877,15 @@ async function loadQuestionnaire(id) {
         }
 
         if (btnTexte) {
-            btnQCM.disabled = false;
+            btnTexte.disabled = false;
         }
 
         if (btnEchelle) {
-            btnQCM.disabled = false;
+            btnEchelle.disabled = false;
         }
 
         if (btnReset) {
-            btnQCM.disabled = false;
+            btnReset.disabled = false;
         }
 
         if (currentFormEtat === "brouillon") {
@@ -885,15 +909,15 @@ async function loadQuestionnaire(id) {
             }
 
             if (btnTexte) {
-                btnQCM.disabled = true;
+                btnTexte.disabled = true;
             }
 
             if (btnEchelle) {
-                btnQCM.disabled = true;
+                btnEchelle.disabled = true;
             }
 
             if (btnReset) {
-                btnQCM.disabled = true;
+                btnReset.disabled = true;
             }
 
             document.querySelectorAll("input, textarea, select, button").forEach(el => {
@@ -943,52 +967,68 @@ function fillForm(questionnaire) {
 
     container.innerHTML = "";
 
-    questionnaire.questions.forEach(q => {
+    function createQuestionElement(q, isSubQuestion = false) {
         let element = null;
 
         if (q.type_question_id === 1) {
-            element = addTexte();
-            element.querySelector(".titreQuestion").value = q.contenu;
+            element = addTexte(isSubQuestion);
+            if (!isSubQuestion) {
+                element.querySelector(".titreQuestion").value = q.contenu;
+            }
         }
 
         if (q.type_question_id === 2) {
-            element = addQCM();
-            element.querySelector(".titreQCM").value = q.contenu;
+            element = addQCM(isSubQuestion);
+            if (!isSubQuestion) {
+                element.querySelector(".titreQCM").value = q.contenu;
+            }
 
             const list = element.querySelector(".listQCM");
             list.innerHTML = "";
 
-            q.choix.forEach(c => {
-                const li = document.createElement("li");
-                li.classList.add("elementQCM");
-                if (c.id) li.dataset.choixId = c.id;
+            if (q.choix) {
+                q.choix.forEach((c, index) => {
+                    const { li } = createOptionElement(list, index + 1);
+                    if (c.id) li.dataset.choixId = c.id;
+                    const textarea = li.querySelector(".textAreaQuestion");
+                    textarea.value = c.contenu;
 
-                const textarea = document.createElement("textarea");
-                textarea.classList.add("textAreaQuestion");
-                textarea.value = c.contenu;
-                textarea.disabled = true;
+                    if (c.sous_questions && c.sous_questions.length > 0) {
+                        c.sous_questions.forEach(sq => {
+                            const subElement = createQuestionElement(sq, true);
+                            if (subElement) {
+                                subElement.classList.add('sub-question');
+                                if (sq.id) subElement.dataset.questionId = sq.id;
+                                li.appendChild(subElement);
+                            }
+                        });
+                    }
 
-                li.appendChild(textarea);
-                list.appendChild(li);
-            });
+                    list.appendChild(li);
+                });
+            }
         }
 
         if (q.type_question_id === 3) {
-            element = addRatingScale();
-            element.querySelector(".titreRating").value = q.contenu;
+            element = addRatingScale(isSubQuestion);
+            if (!isSubQuestion) {
+                element.querySelector(".titreRating").value = q.contenu;
+            }
 
             if (q.echelle_max) {
                 const selectScale = element.querySelector(".select-scale");
-                const slider = element.querySelector(".rating-slider");
-                const sliderValueLabel = element.querySelector(".slider-value");
-                const numbersContainer = element.querySelector(".slider-numbers");
-
                 if (selectScale) {
                     selectScale.value = q.echelle_max;
                     selectScale.dispatchEvent(new Event('change'));
                 }
             }
         }
+
+        return element;
+    }
+
+    questionnaire.questions.forEach(q => {
+        const element = createQuestionElement(q, false);
 
         if (element) {
             if (q.id) element.dataset.questionId = q.id;
@@ -997,10 +1037,6 @@ function fillForm(questionnaire) {
             if (obligatoireCheckbox) {
                 obligatoireCheckbox.checked = q.obligatoire === 1;
             }
-
-            element.querySelectorAll("input, textarea, button, span").forEach(el => {
-                el.disabled = true;
-            });
 
             container.appendChild(element);
         }
