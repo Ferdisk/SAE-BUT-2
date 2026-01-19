@@ -29,6 +29,10 @@ header {
     gap: 15px;
     margin: 20px
 }
+
+footer{
+  text-align: center;
+}
 #red-line{
     width: .4px; 
     background-color: #ffacac; 

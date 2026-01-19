@@ -24,6 +24,10 @@ body {
   min-height: 60px;
   box-shadow: var(--shadow);
 }
+
+.h1 {
+  margin: 0;
+}
 .logo {
   height: 7vh;
   max-height: 50px;
@@ -40,6 +44,13 @@ body {
   align-items: center;
   gap: 2vw;
 }
+
+footer{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
 .notif {
   position: relative;
 }
@@ -144,9 +155,12 @@ body {
 }
 
 .actions{
-  padding: 1vw;
   display: flex;
-  gap: 2vw;
+  flex-direction: column;
+  gap: 1vw;
+  width: 100%;
+  align-items: center;
+  padding: 1vw;
 }
 
 @media (max-width: 800px) {

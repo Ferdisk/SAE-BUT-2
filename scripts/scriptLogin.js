@@ -38,11 +38,9 @@ document.addEventListener("DOMContentLoaded", () => {
                 return;
             }
 
-            // ✅ Connexion OK
             feedback.textContent = "Connexion réussie";
             feedback.style.color = "green";
 
-            // 🔐 Redirection sécurisée selon rôle (donné par le serveur)
             switch (data.role) {
                 case "Etudiant":
                     window.location.href = "http://164.81.120.71:3000/student";

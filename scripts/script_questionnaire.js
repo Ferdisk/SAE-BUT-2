@@ -133,12 +133,15 @@ function addQCM(isSubQuestion = false) {
     if (!isSubQuestion) {
         otherOption = document.createElement("div");
         otherOption.classList.add("other-option");
+        otherOption.style.display = "none";
 
         otherOptionCheckbox = document.createElement("input");
+        otherOptionCheckbox.style.display = "none";
         otherOptionCheckbox.type = "checkbox";
         otherOptionCheckbox.id = `other-option-${Date.now()}`;
 
         otherOptionLabel = document.createElement("label");
+	otherOptionLabel.style.display = "none";
         otherOptionLabel.textContent = "Ajouter l'option \"Autre (à préciser)\"";
         otherOptionLabel.htmlFor = otherOptionCheckbox.id;
 
@@ -816,7 +819,7 @@ function afficherQuestionnairesProf(questionnaires) {
         const btnExport = div.querySelector(".btn-export");
 
         btnExport.addEventListener("click", async () => {
-            const res = await fetch(`/exportReponses/${q.id}`, {
+            /*const res = await fetch(`/exportReponses/${q.id}`, {
                 credentials: "include"
             });
 
@@ -826,7 +829,8 @@ function afficherQuestionnairesProf(questionnaires) {
 		throw new Error("Erreur lors de l'exportation des réponses");
 	    } else {
 		alert("Export des réponses réussis");
-	    }
+	    }*/
+	    window.location.href = `/exportReponses/${q.id}`;
 
         });
 

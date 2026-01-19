@@ -241,6 +241,12 @@ input:checked+.slider:before {
     opacity: 0.9;
 }
 
+footer{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
 .footer-actions {
     display: flex;
     justify-content: flex-end;
