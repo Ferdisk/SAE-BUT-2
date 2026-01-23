@@ -732,12 +732,20 @@ document.addEventListener("DOMContentLoaded", () => {
     const listContainer = document.getElementById("questionnaires-list");
     if (!listContainer) return;
 
-    chargerQuestionnairesProf();
+    const urlParams = new URLSearchParams(window.location.search);
+    const authorId = urlParams.get('authorId');
+
+    chargerQuestionnairesProf(authorId);
 });
 
-async function chargerQuestionnairesProf() {
+async function chargerQuestionnairesProf(authorId = null) {
     try {
-        const res = await fetch("/listForms", {
+        let url = "/listForms";
+        if (authorId) {
+            url = `/listForms?authorId=${authorId}`;
+        }
+
+        const res = await fetch(url, {
             credentials: "include"
         });
 
@@ -925,7 +933,9 @@ async function loadQuestionnaire(id) {
             }
 
             document.querySelectorAll("input, textarea, select, button").forEach(el => {
-                el.disabled = true;
+		if (el.id !== "btn-back") {
+                    el.disabled = true;
+		}
             });
         }
 
@@ -1195,3 +1205,44 @@ async function updateFormInBDD(formReady) {
         alert(data.message || "Modification impossible");
     }
 }
+
+document.addEventListener("DOMContentLoaded", () => {
+    const btnBack = document.getElementById("btn-back");
+
+    if (btnBack) {
+        const redirectionMap = {
+            "Admin": "/adminQuestionnaires",
+            "Prof": "/prof",
+            "Etudiant": "/student"
+        };
+
+        btnBack.addEventListener("click", async (e) => {
+            e.preventDefault();
+
+            try {
+                const res = await fetch("/session", { credentials: "include" });
+                const data = await res.json();
+
+                if (!data.connected || !data.user) {
+                    window.location.href = "/loginStudent";
+                    return;
+                }
+
+                const role = data.user.role;
+                const provenance = document.referrer;
+
+                if (role === "Admin" && provenance.includes("/adminQuestionnaires")) {
+                    window.location.href = provenance;
+                    return;
+                }
+
+                const destination = redirectionMap[role] || "/student";
+                window.location.href = destination;
+
+            } catch (err) {
+                console.error("Erreur lors de la redirection :", err);
+                window.history.back();
+            }
+        });
+    }
+});
