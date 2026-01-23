@@ -75,6 +75,7 @@ footer{
 #logout-btn, .small-link {
     color: white;
     text-decoration: none;
+    margin: 20px;
 }
 #header-logout img{
     filter: brightness(0) invert(1);

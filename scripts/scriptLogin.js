@@ -3,10 +3,11 @@ document.addEventListener("DOMContentLoaded", () => {
     const form = document.getElementById("auth-form");
     const feedback = document.getElementById("feedback");
 
-    if (!form) {
-        console.error("Formulaire de login introuvable");
-        return;
-    }
+    const ROLE_ROUTES = {
+        Etudiant: "/student",
+        Prof: "/prof",
+        Admin: "/admin"
+    };
 
     form.addEventListener("submit", async (e) => {
         e.preventDefault();
@@ -38,26 +39,18 @@ document.addEventListener("DOMContentLoaded", () => {
                 return;
             }
 
+	    const redirectPath = ROLE_ROUTES[data.role];
+
+            if (!redirectPath) {
+                feedback.textContent = "Rôle inconnu";
+                feedback.style.color = "red";
+                return;
+            }
+
             feedback.textContent = "Connexion réussie";
             feedback.style.color = "green";
 
-            switch (data.role) {
-                case "Etudiant":
-                    window.location.href = "http://164.81.120.71:3000/student";
-                    break;
-
-                case "Prof":
-                    window.location.href = "http://164.81.120.71:3000/prof";
-                    break;
-
-                case "Admin":
-                    window.location.href = "http://164.81.120.71:3000/admin";
-                    break;
-
-                default:
-                    feedback.textContent = "Rôle inconnu";
-                    feedback.style.color = "red";
-            }
+	    window.location.href = `http://164.81.120.71:3000${redirectPath}`;
 
         } catch (err) {
             console.error("Erreur serveur :", err);
