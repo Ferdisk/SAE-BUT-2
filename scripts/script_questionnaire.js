@@ -217,6 +217,7 @@ function addTexte(isSubQuestion = false) {
     const reponseQuestion = document.createElement("textarea");
     reponseQuestion.classList.add("reponseQuestion");
     reponseQuestion.placeholder = "[Réponse]";
+    reponseQuestion.maxLength = 100;
 
     containerReponse.appendChild(reponseQuestion);
 
@@ -785,10 +786,16 @@ function afficherQuestionnairesProf(questionnaires) {
             <strong>État :</strong> ${q.etat}
             <div class="actions">
                 <button class="btn-blue btn-view" data-id="${q.id}">Voir</button>
+		<button class="btn-blue btn-tracking" data-id="${q.id}">Suivi des étudiants</button>
 		<button class="btn-blue btn-export" data-id="${q.id}">Exporter les réponses</button>
                 <button class="btn-red btn-delete" date-id="${q.id}">Supprimer</button>
             </div>
         `;
+
+	const btnTracking = div.querySelector(".btn-tracking");
+    	btnTracking.addEventListener("click", () => {
+        	window.location.href = `/suivi/${q.id}`;
+    	});
 
 	const btnDelete = div.querySelector(".btn-delete");
 
@@ -874,7 +881,8 @@ async function loadQuestionnaire(id) {
 	const btnTexte = document.getElementById("btn-texte");
 	const btnEchelle = document.getElementById("btn-echelle");
 	const btnReset = document.getElementById("btn-reset");
-    const hint = document.querySelector(".hint");
+        const hint = document.querySelector(".hint");
+	const groupeCibleInput = document.getElementById("groupe-cible");
 
     if (hasQuestions() && hint) {
         hint.remove();
@@ -915,6 +923,8 @@ async function loadQuestionnaire(id) {
             updateBtn.style.display = "none";
 	    saveBtn.style.display = "none";
 	    submitBtn.style.display = "none";
+
+	    if (groupeCibleInput) groupeCibleInput.disabled = true;
 
             if (btnQCM) {
                 btnQCM.disabled = true;
@@ -957,6 +967,11 @@ function fillForm(questionnaire) {
     if (descInput) {
         descInput.value = questionnaire.description || "";
         descInput.disabled = true;
+    }
+
+    const groupeCibleInput = document.getElementById("groupe-cible");
+    if (groupeCibleInput && questionnaire.groupe_cible) {
+        groupeCibleInput.value = questionnaire.groupe_cible;
     }
 
     const timeLimitToggle = document.getElementById("time-limit-toggle");
@@ -1179,6 +1194,9 @@ async function updateFormInBDD(formReady) {
     const titre = document.querySelector(".title-box")?.value || "";
     const description = document.querySelector(".desc-box")?.value || "";
 
+    const groupeCibleInput = document.getElementById("groupe-cible");
+    const groupe_cible = groupeCibleInput ? groupeCibleInput.value : "BUT1";
+
     const timeToggle = document.getElementById("time-limit-toggle");
     const timeValue = document.querySelector(".time-input")?.value;
     const temps_limite = timeToggle && timeToggle.checked ? parseInt(timeValue, 10) : null;
@@ -1187,6 +1205,7 @@ async function updateFormInBDD(formReady) {
         titre,
         description,
         temps_limite,
+	groupe_cible,
         questions: formReady.questions
     };
 
