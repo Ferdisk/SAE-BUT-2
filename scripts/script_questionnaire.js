@@ -217,6 +217,7 @@ function addTexte(isSubQuestion = false) {
     const reponseQuestion = document.createElement("textarea");
     reponseQuestion.classList.add("reponseQuestion");
     reponseQuestion.placeholder = "[Réponse]";
+    reponseQuestion.maxLength = 100;
 
     containerReponse.appendChild(reponseQuestion);
 
@@ -701,9 +702,9 @@ async function sendFormToBDD(formReady) {
     const temps_limite = timeToggle && timeToggle.checked ? parseInt(timeValue, 10) : null;
 
     const payload = {
-        titre: titre,
-        description: description,
-        temps_limite: temps_limite,
+        titre,
+        description,
+        temps_limite,
         questions: formReady.questions
     };
 
@@ -785,10 +786,16 @@ function afficherQuestionnairesProf(questionnaires) {
             <strong>État :</strong> ${q.etat}
             <div class="actions">
                 <button class="btn-blue btn-view" data-id="${q.id}">Voir</button>
+		<button class="btn-blue btn-tracking" data-id="${q.id}">Suivi des étudiants</button>
 		<button class="btn-blue btn-export" data-id="${q.id}">Exporter les réponses</button>
                 <button class="btn-red btn-delete" date-id="${q.id}">Supprimer</button>
             </div>
         `;
+
+	const btnTracking = div.querySelector(".btn-tracking");
+    	btnTracking.addEventListener("click", () => {
+        	window.location.href = `/suivi/${q.id}`;
+    	});
 
 	const btnDelete = div.querySelector(".btn-delete");
 
@@ -869,12 +876,14 @@ async function loadQuestionnaire(id) {
 
         const saveBtn = document.getElementById("save-btn");
         const updateBtn = document.getElementById("update-btn");
+	const exportBtn = document.getElementById("export-btn");
         const submitBtn = document.getElementById("submit-btn");
 	const btnQCM = document.getElementById("btn-qcm");
 	const btnTexte = document.getElementById("btn-texte");
 	const btnEchelle = document.getElementById("btn-echelle");
 	const btnReset = document.getElementById("btn-reset");
-    const hint = document.querySelector(".hint");
+        const hint = document.querySelector(".hint");
+	const groupeCibleInput = document.getElementById("groupe-cible");
 
     if (hasQuestions() && hint) {
         hint.remove();
@@ -916,6 +925,8 @@ async function loadQuestionnaire(id) {
 	    saveBtn.style.display = "none";
 	    submitBtn.style.display = "none";
 
+	    if (groupeCibleInput) groupeCibleInput.disabled = true;
+
             if (btnQCM) {
                 btnQCM.disabled = true;
             }
@@ -936,6 +947,11 @@ async function loadQuestionnaire(id) {
 		if (el.id !== "btn-back") {
                     el.disabled = true;
 		}
+
+	    if (exportBtn) {
+		exportBtn.disabled = false;
+	    }
+
             });
         }
 
@@ -957,6 +973,11 @@ function fillForm(questionnaire) {
     if (descInput) {
         descInput.value = questionnaire.description || "";
         descInput.disabled = true;
+    }
+
+    const groupeCibleInput = document.getElementById("groupe-cible");
+    if (groupeCibleInput && questionnaire.groupe_cible) {
+        groupeCibleInput.value = questionnaire.groupe_cible;
     }
 
     const timeLimitToggle = document.getElementById("time-limit-toggle");
@@ -1061,6 +1082,7 @@ function fillFormStudent(questionnaire) {
 
     const titleInput = document.querySelector(".title-box");
     if (titleInput) {
+        titleInput.textContent = questionnaire.titre || "";
         titleInput.value = questionnaire.titre || "";
         titleInput.disabled = true;
     }
@@ -1076,68 +1098,126 @@ function fillFormStudent(questionnaire) {
 
     container.innerHTML = "";
 
-    questionnaire.questions.forEach(q => {
-        let element = null;
+    function createStudentChoixLi(c, questionId) {
+        const li = document.createElement("li");
+        li.classList.add("elementQCM");
 
-        if (q.type_question_id === 1) {
-            element = addTexte();
+        const checkbox = document.createElement("input");
+        checkbox.type = "checkbox";
+        checkbox.classList.add("qcm-checkbox");
+        checkbox.value = c.id;
+        checkbox.dataset.questionId = questionId;
 
-            element.querySelector(".titreQuestion").value = q.contenu;
-            element.querySelector(".titreQuestion").disabled = true;
+        const textContainer = document.createElement("span");
+        textContainer.classList.add("textQuestionContainer");
 
-            const reponse = element.querySelector(".reponseQuestion");
-            reponse.dataset.questionId = q.id;
-            reponse.disabled = false;
-        }
+        const textarea = document.createElement("textarea");
+        textarea.classList.add("textAreaQuestion");
+        textarea.textContent = c.contenu || "";
+        textarea.disabled = true;
 
-        if (q.type_question_id === 2) {
-            element = addQCM();
+        textContainer.appendChild(textarea);
+        li.appendChild(checkbox);
+        li.appendChild(textContainer);
 
-            element.querySelector(".titreQCM").value = q.contenu;
-            element.querySelector(".titreQCM").disabled = true;
-
-            const list = element.querySelector(".listQCM");
-            list.innerHTML = "";
-
-            q.choix.forEach(c => {
-                const li = document.createElement("li");
-                li.classList.add("elementQCM");
-
-                const checkbox = document.createElement("input");
-                checkbox.type = "checkbox";
-                checkbox.classList.add("qcm-checkbox");
-                checkbox.value = c.id;
-                checkbox.dataset.questionId = q.id;
-
-                const textarea = document.createElement("textarea");
-                textarea.classList.add("textAreaQuestion");
-                textarea.value = c.contenu;
-                textarea.disabled = true;
-
-                li.appendChild(checkbox);
-                li.appendChild(textarea);
-                list.appendChild(li);
+        if (c.sous_questions && c.sous_questions.length > 0) {
+            c.sous_questions.forEach(function(sq) {
+                const subElement = createStudentQuestionElement(sq, true);
+                if (subElement) {
+                    subElement.classList.add("sub-question");
+                    if (sq.id) subElement.dataset.questionId = sq.id;
+                    li.appendChild(subElement);
+                }
             });
         }
 
+        return li;
+    }
+
+    function createStudentQuestionElement(q, isSubQuestion) {
+        var element = null;
+
+        if (q.type_question_id === 1) {
+            element = addTexte(isSubQuestion);
+
+            if (!isSubQuestion) {
+                var titreTexte = element.querySelector(".titreQuestion");
+                if (titreTexte) {
+                    titreTexte.textContent = q.contenu || "";
+                    titreTexte.disabled = true;
+                }
+            }
+
+            var reponse = element.querySelector(".reponseQuestion");
+            if (reponse) {
+                reponse.dataset.questionId = q.id;
+                reponse.disabled = false;
+            }
+        }
+
+        if (q.type_question_id === 2) {
+            element = addQCM(isSubQuestion);
+
+            if (!isSubQuestion) {
+                var titreQCM = element.querySelector(".titreQCM");
+                if (titreQCM) {
+                    titreQCM.textContent = q.contenu || "";
+                    titreQCM.disabled = true;
+                }
+            }
+
+            var list = element.querySelector(".listQCM");
+            if (list) {
+                list.innerHTML = "";
+            }
+
+            if (list && q.choix && q.choix.length > 0) {
+                q.choix.forEach(function(c) {
+                    var li = createStudentChoixLi(c, q.id);
+                    list.appendChild(li);
+                });
+            }
+        }
+
         if (q.type_question_id === 3) {
-            element = addRatingScale();
+            element = addRatingScale(isSubQuestion);
 
-            element.querySelector(".titreRating").value = q.contenu;
-            element.querySelector(".titreRating").disabled = true;
+            if (!isSubQuestion) {
+                var titreRating = element.querySelector(".titreRating");
+                if (titreRating) {
+                    titreRating.textContent = q.contenu || "";
+                    titreRating.disabled = true;
+                }
+            }
 
-            const slider = element.querySelector(".rating-slider");
-            slider.dataset.questionId = q.id;
-            slider.disabled = false;
+            if (q.echelle_max) {
+                var selectScale = element.querySelector(".select-scale");
+                if (selectScale) {
+                    selectScale.value = q.echelle_max;
+                    selectScale.dispatchEvent(new Event('change'));
+                }
+            }
+
+            var slider = element.querySelector(".rating-slider");
+            if (slider) {
+                slider.dataset.questionId = q.id;
+            }
         }
 
         if (element) {
-
-            const obligatoireCheckbox = element.querySelector(".question-obligatoire");
+            var obligatoireCheckbox = element.querySelector(".question-obligatoire");
             if (obligatoireCheckbox) {
                 obligatoireCheckbox.checked = q.obligatoire === 1;
             }
+        }
 
+        return element;
+    }
+
+    questionnaire.questions.forEach(function(q) {
+        var element = createStudentQuestionElement(q, false);
+        if (element) {
+            if (q.id) element.dataset.questionId = q.id;
             container.appendChild(element);
         }
     });
@@ -1179,6 +1259,9 @@ async function updateFormInBDD(formReady) {
     const titre = document.querySelector(".title-box")?.value || "";
     const description = document.querySelector(".desc-box")?.value || "";
 
+    const groupeCibleInput = document.getElementById("groupe-cible");
+    const groupe_cible = groupeCibleInput ? groupeCibleInput.value : "BUT1";
+
     const timeToggle = document.getElementById("time-limit-toggle");
     const timeValue = document.querySelector(".time-input")?.value;
     const temps_limite = timeToggle && timeToggle.checked ? parseInt(timeValue, 10) : null;
@@ -1187,6 +1270,7 @@ async function updateFormInBDD(formReady) {
         titre,
         description,
         temps_limite,
+	groupe_cible,
         questions: formReady.questions
     };
 

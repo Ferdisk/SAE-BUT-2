@@ -84,3 +84,27 @@ function move_third_bar() {
     }
   }
 }
+
+async function afficherTotalReponses() {
+  try {
+  
+    const reponse = await fetch('/api/stats-globales');
+    
+    const data = await reponse.json();
+    if (data.succes === true) {
+      
+      document.getElementById('valeur-reponses').innerText = data.total_participants;
+      
+    } else {
+      console.error("Erreur renvoyée par le serveur.");
+      document.getElementById('valeur-reponses').innerText = "Erreur";
+    }
+
+  } catch (erreur) {
+    console.error("Impossible de contacter l'API :", erreur);
+    document.getElementById('valeur-reponses').innerText = "Hors ligne";
+  }
+}
+
+// On n'oublie pas d'exécuter la fonction dès que la page s'ouvre !
+afficherTotalReponses();

@@ -17,7 +17,7 @@
         </div>
 
         <div class="top-actions">
-            <button id="btn-back" class="small-link">Retour</button>
+            <button id="btn-back" class="btn-blue">Retour</button>
 	    <a href="#" id="logout-btn" class="small-link">Déconnexion</a>
         </div>
     </header>
@@ -39,6 +39,16 @@
                 <h3 class="desc-title">Description</h3>
                 <input class="desc-box" placeholder="Ajoutez une description pour ce questionnaire..."></input>
             </div>
+
+            <div class="sidebar-card card-red">
+    		<h3 class="desc-title">Groupe Ciblé</h3>
+    		<select id="groupe-cible" class="desc-box" style="width: 100%; cursor: pointer;">
+       			<option value="BUT1">BUT1</option>
+        		<option value="BUT2" selected>BUT2</option>
+        		<option value="BUT3">BUT3</option>
+    		</select>
+    		<p class="small-hint" style="font-size: 0.8em; margin-top: 5px; color: rgba(255,255,255,0.8);">Seuls les étudiants de ce groupe pourront voir et répondre.</p>
+	    </div>
 
         <div class="sidebar-card card-blue">
             <div class="time-limit-header">
@@ -78,10 +88,11 @@
 	<button id="save-btn" class="btn red-btn">Sauvegarder</button>
 	<button id="update-btn" class="btn blue-btn" style="display:none">Mettre à jour</button>
         <button id="submit-btn" class="btn red-btn">Envoyer</button>
-        <button class="btn blue-btn">Exporter</button>
+        <button id="export-btn" class="btn blue-btn">Exporter</button>
     </footer>
 
     <script src="../../scripts/script_questionnaire.js"></script>
+    <script src="../../scripts/script_exportJSON.js"></script>
 </body>
 
 </html>
