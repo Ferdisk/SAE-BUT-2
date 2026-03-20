@@ -19,15 +19,35 @@ function lockStudentUI() {
     });
 }
 
-document.addEventListener("DOMContentLoaded", () => {
-    const stored = sessionStorage.getItem("questionnaire");
+document.addEventListener("DOMContentLoaded", async () => {
+    let stored = sessionStorage.getItem("questionnaire");
+    let questionnaire;
 
     if (!stored) {
-        alert("Aucun questionnaire chargé");
-        return;
-    }
+        const pathParts = window.location.pathname.split('/');
+        const code = pathParts[pathParts.length - 1];
 
-    const questionnaire = JSON.parse(stored);
+        try {
+            const res = await fetch(`/questionnaireCharger/code/${code}`, {
+                credentials: "include"
+            });
+            const data = await res.json();
+
+            if (data.success) {
+                questionnaire = data.questionnaire;
+                sessionStorage.setItem("questionnaire", JSON.stringify(questionnaire));
+            } else {
+                alert("Aucun questionnaire trouvé pour ce code.");
+                return;
+            }
+        } catch (err) {
+            console.error(err);
+            alert("Erreur lors de la récupération automatique du questionnaire");
+            return;
+        }
+    } else {
+        questionnaire = JSON.parse(stored);
+    }
 
     if (questionnaire.repondu) {
         alert("Vous avez déjà répondu à ce questionnaire. Vous ne pouvez pas le remplir une seconde fois.");
@@ -39,7 +59,6 @@ document.addEventListener("DOMContentLoaded", () => {
     fillFormStudent(questionnaire);
     lockStudentUI();
 });
-
 
 function checkObligatoryAnswers() {
     let allFilled = true;

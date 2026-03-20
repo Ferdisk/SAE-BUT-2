@@ -14,13 +14,16 @@
     font-family: 'Segoe UI', Arial, sans-serif;
     background: var(--white);
     color: var(--text-gray);
+    overflow-x: hidden;
     }
     .body {
     display: flex;
     flex-direction: column;
+    align-items: stretch;
     gap: 1rem;
     }
     .header {
+    box-sizing: border-box;
     background: var(--primary-red);
     color: var(--white);
     display: flex;
@@ -121,6 +124,7 @@
         gap: 1em;    
         padding: 10px;
         padding-left: 10px;
+        order: 1;
         
 
 
@@ -149,12 +153,6 @@
         
     }
 
-    .stat-card-students,
-    .stat-card-completions,
-    .stat-card-average,
-    .stat-card-completion-rate .stat-value, .stat-card-completion-rate .stat-title {
-        
-    }
     .stat-text {
         display: flex;
         flex-direction: column;
@@ -181,6 +179,9 @@
         flex-direction: column;
         justify-content: center;
         gap: 1em;
+        order: 2;
+        padding-left: 10%;
+        padding-right: 10%;
     }
     .chart-left,
     .chart-right{
@@ -189,10 +190,46 @@
     box-shadow: var(--shadow);
     padding: .5em 1em;
     }
+    .chart-right{
+    position: relative;
+    padding-right: 3.25rem;
+    }
+    .text-question-info{
+    margin: 0.35rem 0 0.5rem;
+    color: #555;
+    font-size: 0.8rem;
+    font-weight: 600;
+    }
+    .text-question-nav{
+    position: absolute;
+    top: 50%;
+    right: 0.5rem;
+    transform: translateY(-50%);
+    display: flex;
+    flex-direction: column;
+    gap: 0.35rem;
+    }
+    .text-question-arrow{
+    width: 1.75rem;
+    height: 1.75rem;
+    border: 1px solid #cfcfcf;
+    background: #fff;
+    color: #444;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 0.9rem;
+    line-height: 1;
+    }
+    .text-question-arrow:disabled{
+    opacity: 0.45;
+    cursor: not-allowed;
+    }
 
     .individual-result{
     display: block;
+    order: 3;
     max-width: 1200px;
+    width: 80%;
     margin: 1.5rem auto 2rem auto;
     border: 1px solid #ddd;
     border-radius: 10px;

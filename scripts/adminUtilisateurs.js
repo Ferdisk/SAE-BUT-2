@@ -30,6 +30,19 @@ function displayUsers(users) {
         const div = document.createElement("div");
         div.className = "user-card d-flex justify-content-between align-items-center p-3 mb-2 bg-white shadow-sm rounded border";
 
+        let groupSelector = "";
+        if (user.role === 'Etudiant') {
+            groupSelector = `
+                <div class="ms-3 me-3">
+                    <select class="form-select form-select-sm" onchange="updateUserGroup(${user.id}, this.value)">
+                        <option value="BUT1" ${user.groupe === 'BUT1' ? 'selected' : ''}>BUT1</option>
+                        <option value="BUT2" ${user.groupe === 'BUT2' ? 'selected' : ''}>BUT2</option>
+                        <option value="BUT3" ${user.groupe === 'BUT3' ? 'selected' : ''}>BUT3</option>
+                        <option value="N/A" ${!user.groupe || user.groupe === 'N/A' ? 'selected' : ''}>N/A</option>
+                    </select>
+                </div>`;
+        }
+
         let profButton = "";
         if (user.role === 'Prof') {
             profButton = `
@@ -62,6 +75,7 @@ function displayUsers(users) {
                     </span>
                 </p>
             </div>
+	    ${groupSelector} </div>
             <div class="user-actions d-flex align-items-center">
                 ${profButton}
                 ${deleteButton}
@@ -79,6 +93,23 @@ function updateCounters(users) {
     const counterText = document.querySelector(".main-title p.text-muted");
     if (counterText) {
         counterText.textContent = `${etudiants} étudiant(s) et ${profs} professeur(s) inscrit(s)`;
+    }
+}
+
+async function updateUserGroup(userId, newGroup) {
+    try {
+        const res = await fetch("/admin/update-groupe", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ userId, newGroup }),
+            credentials: "include"
+        });
+        const data = await res.json();
+        if (!data.success) {
+            alert("Erreur lors de la mise à jour du groupe");
+        }
+    } catch (err) {
+        console.error("Erreur serveur group update:", err);
     }
 }
 

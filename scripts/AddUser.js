@@ -7,6 +7,8 @@ document.getElementById('submitUser').addEventListener('click', async function()
     const newUserMail = document.getElementById('newUserMail').value;
     const newUserPassword = document.getElementById('newUserPassword').value;
     const newUserPasswordConfirm = document.getElementById('newUserConfirm').value;
+    const groupElement = document.getElementById('newUserGroup');
+    const newUserGroup = groupElement ? groupElement.value : 'N/A';
     const feedback = document.getElementById('feedback');
     feedback.style.color = "red";
     if (!newUserMail || !newUserPassword) {
@@ -19,8 +21,11 @@ document.getElementById('submitUser').addEventListener('click', async function()
     }
 
     let role = '';
+    let groupe = 'N/A';
+
     if (newUserMail.includes("@etu.unilim.fr")) {
 	role = 'Etudiant';
+	groupe = newUserGroup;
     } else if (newUserMail.includes("@unilim.fr") || newUserMail.includes("aff@unilim.fr")) {
 	role = 'Prof';
     } else {
@@ -35,7 +40,7 @@ document.getElementById('submitUser').addEventListener('click', async function()
             method: "POST",
             headers: { "Content-Type": "application/json" },
             credentials: "include",
-            body: JSON.stringify({ newUserMail, newUserPassword, role})
+            body: JSON.stringify({ newUserMail, newUserPassword, role, groupe})
         });
 
         const data = await response.json();

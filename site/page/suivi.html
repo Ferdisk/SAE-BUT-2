@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>Suivi des réponses - Professeur</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="../../css/profview.css">
+</head>
+<body>
+    <header class="header">
+        <img src="../../images/media/logoUnilimBlancAvecTexte.png" alt="Université de Limoges" class="logo">
+        <div class="title">Gestionnaire de Questionnaires</div>
+        <div class="header-right">
+            <a href="#" id="logout-btn" class="small-link">Déconnexion</a>
+        </div>
+    </header>
+
+    <div class="container">
+        <div class="main-title">Suivi du questionnaire</div>
+        <div class="desc">Consultez l'état d'avancement et relancez les étudiants si besoin.</div>
+        
+        <div class="btns">
+            <button class="btn-blue" onclick="window.history.back()">
+                <i class="fa-solid fa-arrow-left"></i> Retour
+            </button>
+        </div>
+
+        <div class="table-container">
+
+	    <div style="margin-bottom: 15px; display: flex; align-items: center; gap: 10px;">
+        	<label for="filter-groupe" style="font-weight: bold;">Filtrer par groupe :</label>
+        	<select id="filter-groupe" class="desc-box" style="width: auto; padding: 5px;">
+            		<option value="tous">Tous les groupes</option>
+            		<option value="BUT1">BUT1</option>
+            		<option value="BUT2">BUT2</option>
+            		<option value="BUT3">BUT3</option>
+        	</select>
+            </div>
+
+            <table>
+                <thead>
+                    <tr>
+                        <th>Nom</th>
+                        <th>Prénom</th>
+                        <th>Statut</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody id="liste-suivi">
+                    </tbody>
+            </table>
+        </div>
+
+        <div id="zone-redaction">
+            <h3><i class="fa-regular fa-paper-plane"></i> Envoyer une relance à <span id="nom-etudiant"></span></h3>
+            <div class="form-group">
+                <label>Objet :</label>
+                <input type="text" id="mail-sujet">
+            </div>
+            <div class="form-group">
+                <label>Message :</label>
+                <textarea id="mail-corps" rows="5"></textarea>
+            </div>
+            <div class="btns" style="justify-content: flex-end; gap: 10px;">
+                <button class="btn-blue" style="background: #999;" onclick="annulerRedaction()">Annuler</button>
+                <button class="btn-red" id="confirm-send">Envoyer le mail</button>
+            </div>
+        </div>
+    </div>
+
+    <footer class="container-text-center-text-muted-my-4">
+        <small>© Université de Limoges</small>
+    </footer>
+
+    <script src="../../scripts/script_suivi.js"></script>
+</body>
+</html>

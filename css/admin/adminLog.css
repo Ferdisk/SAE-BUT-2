@@ -43,7 +43,11 @@ html, body {
   background: rgba(255,255,255,0.2);
 }
 
-
+#logout-btn{
+  color: white;
+  text-decoration: none;
+  font-family: Verdana, sans-serif;
+}
 
 .nav {
   background-color: var(--log-bg-color);
@@ -93,7 +97,6 @@ html, body {
   cursor: pointer;
   transition: background 0.15s ease, border-color 0.15s ease;
 }
-
 .logout:hover {
   background: #f8fafc;
   border-color: #d1d5db;

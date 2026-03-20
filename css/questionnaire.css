@@ -276,6 +276,13 @@ footer{
     font-size: 14px;
 }
 
+#btn-back {
+    color: white;
+    font-size: 15px;
+    text-decoration: none;
+    background: var(--main-red);
+    border: none;   
+}
 
 ul {
     list-style: none;

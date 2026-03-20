@@ -15,15 +15,28 @@
         </div>
     </header>
     <div class="container">
-        <div class="main-title">Mes questionnaires</div>
+        <div class="main-title">Mes questionnaire</div>
         <div class="desc">Créez et gérez vos questionnaires pour vos étudiants</div>
         <div class="btns">
             <a href="/questionnaire"><button class="btn-red"><i class="fa-solid fa-plus"></i> Créer un nouveau questionnaire</button></a>
-            <button class="btn-blue"><i class="fa-regular fa-file"></i> Importer un questionnaire</button>
+            <button id="import-btn" class="btn-blue"><i class="fa-regular fa-file"></i> Importer un questionnaire</button>
+	    <input type="file" id="import-file-input" accept=".json" style="display: none;">
         </div>
 	<div id="questionnaires-list" class="questionnaires-list"></div>
     </div>
+    <div id="qr-modal" class="modal-overlay" style="display:none;">
+    	<div class="modal-content">
+        	<span class="close-modal">&times;</span>
+        	<h2 style="margin-bottom: 20px;">Accès au Questionnaire</h2>
+        	<canvas id="qrcode"></canvas>
+        	<p style="margin-top: 20px;">Code : <strong id="qr-code-display"></strong></p>
+    	</div>
+    </div>
+
+<script src="../../scripts/bundle.js"></script>
 <script src="../../scripts/script_questionnaire.js"></script>
+<script src="../../scripts/script_statistiques.js"></script>
+<script src="../../scripts/script_importJSON.js"></script>
 </body>
 <footer class="container-text-center-text-muted-my-4">
     <small>© Université de Limoges</small>
