@@ -11,7 +11,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
     form.addEventListener("submit", async (e) => {
         e.preventDefault();
-	console.log("Bouton Connecter appooouiiiiyé");
 
         const email = document.getElementById("user-email").value.trim();
         const password = document.getElementById("user-password").value;

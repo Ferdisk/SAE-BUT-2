@@ -1,4 +1,16 @@
 document.addEventListener("DOMContentLoaded", () => {
+    const backLink = document.getElementById("back-link");
+
+    if (backLink) {
+        backLink.addEventListener("click", (e) => {
+            e.preventDefault();
+            window.history.back();
+        });
+    }
+});
+
+
+document.addEventListener("DOMContentLoaded", () => {
 
     const form = document.getElementById("auth-form");
     const feedback = document.getElementById("feedback");
@@ -6,10 +18,23 @@ document.addEventListener("DOMContentLoaded", () => {
     form.addEventListener("submit", async (e) => {
         e.preventDefault();
 
+	const termesAccepter = document.getElementById("accept-terms").checked;
         const email = document.getElementById("user-email").value;
         const password = document.getElementById("user-password").value;
         const passwordConfirm = document.getElementById("user-password-confirm").value;
         const url = window.location.href;
+
+
+	if (!termesAccepter) {
+       	    feedback.style.color = "red";
+            feedback.textContent = "Vous devez accepter les mentions légales pour vous inscrire.";
+
+            document.querySelector(".form-group-checkbox").style.border = "1px solid red";
+            return;
+        } else {
+            document.querySelector(".form-group-checkbox").style.border = "none";
+        }
+
         let role = '';
         if (url.includes("Prof")) {
             role = 'Prof';

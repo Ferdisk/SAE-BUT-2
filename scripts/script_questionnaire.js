@@ -11,6 +11,81 @@ const formActionButtons = formActionsContainer ? formActionsContainer.querySelec
 
 let currentFormId = null;
 let currentFormEtat = null;
+let questionnairesProf = [];
+let etatFilters = [{ value: "__all__", label: "Tous" }];
+let selectedEtatFilterValue = "__all__";
+
+function normalizeEtat(value) {
+    return String(value || "").trim().toLowerCase();
+}
+
+function formatEtat(value) {
+    const text = String(value || "").trim();
+    return text ? text.charAt(0).toUpperCase() + text.slice(1) : "Inconnu";
+}
+
+function renderEtatFilterSelect() {
+    const select = document.getElementById("state-filter-select");
+    if (!select) return;
+
+    select.innerHTML = "";
+
+    etatFilters.forEach((filter) => {
+        const option = document.createElement("option");
+        option.value = filter.value;
+        option.textContent = filter.label;
+        select.appendChild(option);
+    });
+
+    if (!etatFilters.some((filter) => filter.value === selectedEtatFilterValue)) {
+        selectedEtatFilterValue = "__all__";
+    }
+
+    select.value = selectedEtatFilterValue;
+}
+
+function setupEtatFilters(questionnaires) {
+    const etatMap = new Map();
+    const etatOrder = ["envoye", "brouillon", "archive", "ferme", "actif"];
+
+    questionnaires.forEach((q) => {
+        const normalized = normalizeEtat(q.etat);
+        if (!normalized) return;
+        if (!etatMap.has(normalized)) {
+            etatMap.set(normalized, formatEtat(q.etat));
+        }
+    });
+
+    const sortedEtats = Array.from(etatMap.entries()).sort((a, b) => {
+        const indexA = etatOrder.indexOf(a[0]);
+        const indexB = etatOrder.indexOf(b[0]);
+
+        const hasPriorityA = indexA !== -1;
+        const hasPriorityB = indexB !== -1;
+
+        if (hasPriorityA && hasPriorityB) return indexA - indexB;
+        if (hasPriorityA) return -1;
+        if (hasPriorityB) return 1;
+
+        return a[1].localeCompare(b[1], "fr");
+    });
+
+    etatFilters = [{ value: "__all__", label: "Tous" }, ...sortedEtats.map(([value, label]) => ({ value, label }))];
+    selectedEtatFilterValue = "__all__";
+    renderEtatFilterSelect();
+}
+
+function getFilteredQuestionnaires() {
+    if (selectedEtatFilterValue === "__all__") {
+        return questionnairesProf;
+    }
+
+    return questionnairesProf.filter((q) => normalizeEtat(q.etat) === selectedEtatFilterValue);
+}
+
+function applyEtatFilter() {
+    afficherQuestionnairesProf(getFilteredQuestionnaires());
+}
 
 function createOptionElement(listQCM, optionIndex) {
     const li = document.createElement("li");
@@ -733,6 +808,14 @@ document.addEventListener("DOMContentLoaded", () => {
     const listContainer = document.getElementById("questionnaires-list");
     if (!listContainer) return;
 
+    const filterSelect = document.getElementById("state-filter-select");
+    if (filterSelect) {
+        filterSelect.addEventListener("change", (event) => {
+            selectedEtatFilterValue = event.target.value || "__all__";
+            applyEtatFilter();
+        });
+    }
+
     const urlParams = new URLSearchParams(window.location.search);
     const authorId = urlParams.get('authorId');
 
@@ -757,7 +840,9 @@ async function chargerQuestionnairesProf(authorId = null) {
             return;
         }
 
-        afficherQuestionnairesProf(data.questionnaires);
+        questionnairesProf = Array.isArray(data.questionnaires) ? data.questionnaires : [];
+        setupEtatFilters(questionnairesProf);
+        applyEtatFilter();
     } catch (err) {
         console.error(err);
         alert("Erreur serveur");

@@ -20,6 +20,10 @@
         <div class="btns">
             <a href="/questionnaire"><button class="btn-red"><i class="fa-solid fa-plus"></i> Créer un nouveau questionnaire</button></a>
             <button id="import-btn" class="btn-blue"><i class="fa-regular fa-file"></i> Importer un questionnaire</button>
+        <label for="state-filter-select" class="state-filter-label"><i class="fa-solid fa-filter"></i> État :</label>
+        <select id="state-filter-select" class="state-filter-select" aria-label="Filtrer les questionnaires par état">
+        <option value="__all__">Tous</option>
+        </select>
 	    <input type="file" id="import-file-input" accept=".json" style="display: none;">
         </div>
 	<div id="questionnaires-list" class="questionnaires-list"></div>
