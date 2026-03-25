@@ -329,7 +329,11 @@ ul {
 }
 
 .red-btn { background: var(--main-red); color: white; }
-.blue-btn { background: var(--blue); color: white; }
+
+.blue-btn {
+    background: #007bba;
+    color: white;
+}
 
 .footer-actions {
     position: sticky;

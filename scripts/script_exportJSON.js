@@ -1,3 +1,5 @@
+import { getFullForm } from "./questionnaire/formUtils.js";
+
 document.addEventListener("DOMContentLoaded", () => {
     const btnExport = document.getElementById("export-btn");
 
