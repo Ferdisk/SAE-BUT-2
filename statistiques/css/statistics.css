@@ -1,0 +1,234 @@
+@media (min-width: 768px) {
+:root {
+  --primary-red: #e2001a;
+  --hover-red: #b80015;
+  --text-gray: #666;
+  --white: #fff;
+  --shadow: 0 2px 8px rgba(0,0,0,0.04);
+}
+body {
+  margin: 0;
+  font-family: 'Segoe UI', Arial, sans-serif;
+  background: var(--white);
+  color: var(--text-gray);
+  overflow-x: hidden;
+}
+.body {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: 1rem;
+}
+.header {
+  box-sizing: border-box;
+  background: var(--primary-red);
+  color: var(--white);
+  display: flex;
+  align-items: center;
+  padding: 0 3%;
+  height: 10vh;
+  min-height: 60px;
+  box-shadow: var(--shadow);
+  width: 100%;
+}
+
+.logo {
+  height: 7vh;
+  max-height: 50px;
+  margin-right: 2vw;
+}
+.title {
+  font-size: 1.8vw;
+  font-weight: 600;
+  flex: 1;
+  letter-spacing: 0.5px;
+}
+.header-right {
+  display: flex;
+  align-items: center;
+  gap: 2vw;
+}
+
+.logout {
+  color: var(--white);
+  text-decoration: none;
+  font-size: 1em;
+  display: flex;
+  align-items: center;
+  gap: 0.5em;
+  transition: opacity 0.2s;
+}
+.logout:hover {
+  opacity: 0.7;
+}
+.top-container {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.35rem 1rem;
+  padding: 1.5rem 10% 1rem 10%;
+}
+.main-title {
+  font-size: 1.1rem;
+  color: #e60000;
+  flex-basis: 100%;
+}
+.desc {
+  font-size: 0.95rem;
+  color: #444;
+  flex-basis: 100%;
+}
+.back-list-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  margin-top: 0.35rem;
+  color: #003b7a;
+  text-decoration: none;
+  font-weight: 600;
+}
+.back-list-btn:hover {
+  text-decoration: underline;
+}
+.mid-container{
+    display: flex;
+  justify-content: center;
+  align-items: stretch;
+    gap: 1em;    
+    padding: 10px;
+    padding-left: 10px;
+  order: 1;
+
+}
+
+.stat-card-completions {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-direction: row; /* texte à gauche, icône à droite */
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 0.1rem .7rem;
+    box-shadow: var(--shadow);
+    gap: .75em;
+    flex: 1 1 260px;
+    width: 100%;
+    font-size:10px;
+    
+}
+
+.stat-text {
+    display: flex;
+    flex-direction: column;
+    gap: 0.15rem;
+}
+
+.icon-completions {
+  align-items: right;
+  width: 32px;
+  height: 32px;
+}
+
+.top-container,
+.mid-container{
+    padding-left: 10%;
+    padding-right: 10%;
+}
+.chart-container{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: stretch;
+    gap: 1em;
+    order: 2;
+    padding-left: 10%;
+    padding-right: 10%;
+}
+.chart-left,
+.chart-right{
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  box-shadow: var(--shadow);
+  padding: .5em 1em;
+  flex: 1 1 380px;
+  max-width: 560px;
+}
+.chart-right{
+  position: relative;
+  padding-right: 4rem;
+}
+.text-question-info{
+  margin: 0.35rem 0 0.5rem;
+  color: #555;
+  font-size: 0.9rem;
+  font-weight: 600;
+}
+.text-question-nav{
+  position: absolute;
+  top: 50%;
+  right: 0.75rem;
+  transform: translateY(-50%);
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+.text-question-arrow{
+  width: 2rem;
+  height: 2rem;
+  border: 1px solid #cfcfcf;
+  background: #fff;
+  color: #444;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 1rem;
+  line-height: 1;
+  transition: background 0.2s ease, color 0.2s ease, border-color 0.2s ease;
+}
+.text-question-arrow:hover:not(:disabled){
+  background: #f5f9ff;
+  border-color: #0082c8;
+  color: #0082c8;
+}
+.text-question-arrow:disabled{
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+
+.individual-result{
+  display: block;
+  order: 3;
+  max-width: 1200px;
+  width: 80%;
+  margin: 1.5rem auto 2rem auto;
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  box-shadow: var(--shadow);
+  padding: 1rem 1.25rem;
+  background: var(--white);
+}
+.result-title{
+  font-weight: 600;
+  color: #333;
+  margin-bottom: 0.75rem;
+}
+.result-table{
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.95rem;
+  border: 1px solid #DDD 
+}
+.result-table th,
+.result-table td{
+  padding: 0.65rem 0.5rem;
+  border-bottom: 1px solid #f0f0f0;
+  text-align: left;
+}
+.result-table th{
+  color: #555;
+  font-weight: 600;
+  background: #fafafa;
+}
+.result-table tr:last-child td{
+  border-bottom: none;
+}
+}

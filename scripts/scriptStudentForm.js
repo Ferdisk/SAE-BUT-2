@@ -1,3 +1,6 @@
+import { fillFormStudent } from "./questionnaire/form/deserializerStudent.js";
+import { bindBackButtonListener } from "./questionnaire/listeners/navListeners.js";
+
 function lockStudentUI() {
     const selectors = [
         ".side-btn",
@@ -20,6 +23,8 @@ function lockStudentUI() {
 }
 
 document.addEventListener("DOMContentLoaded", async () => {
+    bindBackButtonListener();
+
     let stored = sessionStorage.getItem("questionnaire");
     let questionnaire;
 

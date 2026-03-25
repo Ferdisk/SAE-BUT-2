@@ -1,0 +1,70 @@
+<html lang="fr">
+      <head>
+    <meta charset="UTF-8">
+    <title>Statistics</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="/statistiques/css/statistics.css">
+    <link rel="stylesheet" href="/statistiques/cssPhone/statistics.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    </head>
+    <header class="header">
+        <img src="/images/media/logoUnilimBlancAvecTexte.png" alt="Université de Limoges" class="logo">
+        <div class="title">Gestionnaire de Questionnaires</div>
+        <div class="header-right">
+
+            <a href="/loginProf" id="logout-btn" class="logout">Déconnexion</a>
+        </div>
+    </header>
+  
+    <body class="body">
+        <div class="top-container">
+            <div class="main-title">Satisfaction du Questionnaire</div>
+            <div class="desc">Analysez les résultats de vos questionnaires</div>
+            <a href="/prof" class="back-list-btn">
+                <i class="fa-solid fa-arrow-left"></i>
+                Retour a la liste des questionnaires
+            </a>
+            
+        </div>
+        <div class="mid-container">
+          
+            <div class="stat-card-completions">
+                <div class="stat-text">
+                    <p class="stat-title">Réponses complétées</p>
+                    <p class="stat-value-nb-reponses" id="valeur-reponses">-</p>
+                </div>
+                <img src="/images/media/completion_icon.ico" alt="Icône Complétions" class="icon-completions">
+            </div>
+        </div>
+<!---ici les charts(digramme en barre) qui proviennent de ../../scripts/Chart.js -->
+        <div class="chart-container">
+            <div class="chart-left">
+                <div class="chart-title">Distribution des Étudiants ayant répondu</div>
+ <!--CHART NOTE--><canvas class="nbStudentChart" id="nbStudentChart"></canvas>
+            </div>
+            <div class="chart-right">
+                <div class="chart-title">Performance par Question</div>
+<!--CHART RATE--><canvas class="completionRateChart" id="completionRateChart"></canvas>
+            </div>
+        </div>
+<!-- Tableau des résultats individuels -->
+        <div class="individual-result">
+            <div class="result-title">Réponses par Question</div>
+            <table class="result-table">
+                <thead>
+                    <tr>
+                        <th>Question</th>
+                        <th>Nombre de réponses</th>
+                        <th>Contenu des réponses (aperçu)</th>
+                    </tr>
+                </thead>
+                <tbody id="stats-questions-tbody">
+                </tbody>
+            </table>
+
+        </div>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+        <script src="/statistiques/scripts/Charts.js"></script>
+        <script src="/statistiques/scripts/script_statistiques.js"></script>
+    </body>
+</html>

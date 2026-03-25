@@ -2,6 +2,7 @@ let nbStudentChart = null;
 let completionRateChart = null;
 let textQuestionRows = [];
 let textQuestionIndex = 0;
+let currentFormulaireId = null;
 
 function toInt(value) {
   const parsed = Number.parseInt(value, 10);
@@ -92,13 +93,34 @@ function updateTextQuestionChart() {
   if (infoEl) {
     const indexText = `Question ${textQuestionIndex + 1}/${textQuestionRows.length}`;
     const idText = questionId !== null ? ` - ID ${questionId}` : '';
-    infoEl.textContent = `${indexText}${idText}`;
+    infoEl.textContent = `${indexText}${idText} - Cliquez sur la barre pour voir le detail des reponses.`;
     infoEl.title = String(current.contenu || '');
   }
 
   const disableNav = textQuestionRows.length < 2;
   if (prevBtn) prevBtn.disabled = disableNav;
   if (nextBtn) nextBtn.disabled = disableNav;
+}
+
+function getFormulaireIdFromPath() {
+  const parts = window.location.pathname.split('/').filter(Boolean);
+  const last = parts[parts.length - 1];
+  const parsed = Number.parseInt(last, 10);
+  return Number.isNaN(parsed) ? null : parsed;
+}
+
+function goToCurrentTextQuestionDetails() {
+  if (!textQuestionRows.length) return;
+
+  const current = textQuestionRows[textQuestionIndex];
+  const questionId = toInt(current.question_id);
+  const formulaireId = currentFormulaireId || getFormulaireIdFromPath();
+
+  if (formulaireId === null || questionId === null) {
+    return;
+  }
+
+  window.location.href = `/statistiques/${formulaireId}/question/${questionId}`;
 }
 
 const nbStudentCanvas = document.getElementById('nbStudentChart');
@@ -139,6 +161,15 @@ if (completionRateCanvas) {
     },
     options: {
       responsive: true,
+      onClick: (_event, elements) => {
+        if (!elements || !elements.length) return;
+        goToCurrentTextQuestionDetails();
+      },
+      onHover: (event, elements) => {
+        const canvas = event?.native?.target;
+        if (!canvas) return;
+        canvas.style.cursor = (elements && elements.length && textQuestionRows.length) ? 'pointer' : 'default';
+      },
       scales: {
         y: {
           beginAtZero: true,
@@ -154,9 +185,10 @@ function toChartLabel(text, index) {
   return raw.length > 24 ? `${raw.slice(0, 24)}...` : raw;
 }
 
-window.renderStatsCharts = function renderStatsCharts(reponsesParQuestion, totalReponsesCompletees, qcmParChoix) {
+window.renderStatsCharts = function renderStatsCharts(reponsesParQuestion, totalReponsesCompletees, qcmParChoix, formulaireId) {
   const rows = Array.isArray(reponsesParQuestion) ? reponsesParQuestion : [];
   const qcmRows = Array.isArray(qcmParChoix) ? qcmParChoix : [];
+  currentFormulaireId = toInt(formulaireId);
 
   const labels = rows.map((row, index) => toChartLabel(row.contenu, index));
   const counts = rows.map(row => Number.parseInt(row.nb_reponses, 10) || 0);
@@ -198,62 +230,4 @@ window.renderStatsCharts = function renderStatsCharts(reponsesParQuestion, total
   }
 };
 
-//TODO fonction convertir le score obtenu /20 en %  
-//fonction move qui prendra des valeur en paramèètre les valeur du score 
-//  pour afficher le score en % (width)
-var i = 0;
-function move_first_bar() {
-  if (i == 0) {
-    i = 1;
-    var elem = document.getElementById("myBar1");
-    var width = 1;
-    var id = setInterval(frame, 10);
-    function frame() {
-      if (width >= 100) {
-        clearInterval(id);
-        i = 0;
-      } else {
-        width++;
-        elem.style.width = width + "%";
-      }
-    }
-  }
-}
-
-var j = 0;
-function move_second_bar() {
-  if (j == 0) {
-    j = 1;
-    var elem = document.getElementById("myBar2");
-    var width = 1;
-    var id = setInterval(frame, 10);
-    function frame() {
-      if (width >= 100) {
-        clearInterval(id);
-        j = 0;
-      } else {
-        width++;
-        elem.style.width = width + "%";
-      }
-    }
-  }
-}
-var k = 0;
-function move_third_bar() {
-  if (k == 0) {
-    k = 1;
-    var elem = document.getElementById("myBar3");
-    var width = 1;
-    var id = setInterval(frame, 10);
-    function frame() {
-      if (width >= 100) {
-        clearInterval(id);
-        k = 0;
-      } else {
-        width++;
-        elem.style.width = width + "%";
-      }
-    }
-  }
-}
-
+// Les données sont chargées par script_statistiques.js, puis envoyées ici via window.renderStatsCharts.
