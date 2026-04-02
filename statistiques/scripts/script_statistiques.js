@@ -1,60 +1,113 @@
-// Navigation vers la page de stats depuis la liste des questionnaires
+
 document.addEventListener("DOMContentLoaded", () => {
-    const listContainer = document.getElementById("questionnaires-list");
-    if (listContainer) {
-        listContainer.addEventListener("click", (e) => {
-            const btn = e.target.closest(".btn-stat");
-            if (!btn) return;
-            const formulaireId = btn.dataset.id;
-            if (!formulaireId || isNaN(formulaireId)) {
-                alert("Aucun formulaire disponible pour afficher les statistiques.");
-                return;
-            }
-            window.location.href = `/statistiques/${formulaireId}`;
-        });
-    }
+    setupQuestionnaireNavigation();
+    loadStatisticsPage();
 });
 
-// Affichage des stats sur la page statistiques
-document.addEventListener("DOMContentLoaded", async () => {
+function setupQuestionnaireNavigation() {
+    const listContainer = document.getElementById("questionnaires-list");
+    if (!listContainer) return;
+
+    listContainer.addEventListener("click", (e) => {
+        const btn = e.target.closest(".btn-stat");
+        if (!btn) return;
+
+        const formulaireId = btn.dataset.id;
+        if (!formulaireId || isNaN(formulaireId)) {
+            alert("Aucun formulaire disponible pour afficher les statistiques.");
+            return;
+        }
+
+        window.location.href = `/statistiques/${formulaireId}`;
+    });
+}
+
+function sanitizeText(value) {
+    return String(value || "").replace(/\s+/g, " ").trim();
+}
+
+function truncate(value, max = 70) {
+    return value.length > max ? `${value.slice(0, max)}...` : value;
+}
+
+function getQuestionKey(item) {
+    const id = Number.parseInt(item.question_id, 10);
+    if (!Number.isNaN(id)) return `id:${id}`;
+    return `q:${sanitizeText(item.contenu || item.question).toLowerCase()}`;
+}
+
+function buildTextResponsesMap(textRows) {
+    const map = new Map();
+
+    (Array.isArray(textRows) ? textRows : []).forEach((row) => {
+        const key = getQuestionKey(row);
+        const response = sanitizeText(row.reponse_texte);
+        if (!response) return;
+
+        if (!map.has(key)) {
+            map.set(key, []);
+        }
+
+        const values = map.get(key);
+        if (!values.includes(response)) {
+            values.push(response);
+        }
+    });
+
+    return map;
+}
+
+function safeRenderStatsCharts(reponses, totalReponsesCompletees, qcmParChoix, formulaireId) {
+    if (typeof window.renderStatsCharts === "function") {
+        window.renderStatsCharts(reponses, totalReponsesCompletees, qcmParChoix, formulaireId);
+    }
+}
+
+function renderQuestionsTable(tbody, reponses, textResponsesByQuestion) {
+    if (!tbody) return;
+
+    tbody.innerHTML = "";
+    reponses.forEach((r) => {
+        const key = getQuestionKey(r);
+        const textes = textResponsesByQuestion.get(key) || [];
+        const extrait = textes.length ? textes.slice(0, 3).map((t) => truncate(t)).join(" | ") : "-";
+
+        const tr = document.createElement("tr");
+
+        const questionTd = document.createElement("td");
+        questionTd.textContent = sanitizeText(r.contenu);
+
+        const countTd = document.createElement("td");
+        countTd.textContent = `${parseInt(r.nb_reponses, 10) || 0}`;
+
+        const contentTd = document.createElement("td");
+        contentTd.textContent = extrait;
+        contentTd.title = textes.join("\n") || "Aucune réponse textuelle";
+
+        tr.appendChild(questionTd);
+        tr.appendChild(countTd);
+        tr.appendChild(contentTd);
+        tbody.appendChild(tr);
+    });
+}
+
+async function loadStatisticsPage() {
     const valeurReponses = document.getElementById("valeur-reponses");
-    if (!valeurReponses) return; // On n'est pas sur la page stats
-
-    const sanitizeText = (value) => String(value || "").replace(/\s+/g, " ").trim();
-    const truncate = (value, max = 70) => value.length > max ? `${value.slice(0, max)}...` : value;
-    const getQuestionKey = (item) => {
-        const id = Number.parseInt(item.question_id, 10);
-        if (!Number.isNaN(id)) return `id:${id}`;
-        return `q:${sanitizeText(item.contenu || item.question).toLowerCase()}`;
-    };
-
-    const buildTextResponsesMap = (textRows) => {
-        const map = new Map();
-
-        (Array.isArray(textRows) ? textRows : []).forEach((row) => {
-            const key = getQuestionKey(row);
-            const response = sanitizeText(row.reponse_texte);
-            if (!response) return;
-
-            if (!map.has(key)) {
-                map.set(key, []);
-            }
-
-            const values = map.get(key);
-            if (!values.includes(response)) {
-                values.push(response);
-            }
-        });
-
-        return map;
-    };
+    if (!valeurReponses) return;
 
     const parts = window.location.pathname.split("/").filter(Boolean);
     const id = parts[parts.length - 1];
     if (!id || isNaN(id)) return;
 
+    const formulaireId = Number.parseInt(id, 10);
+    const tbody = document.getElementById("stats-questions-tbody");
+
     try {
         const res = await fetch(`/api/stats-globales/${id}`, { credentials: "include" });
+        if (!res.ok) {
+            throw new Error(`HTTP ${res.status}`);
+        }
+
         const data = await res.json();
 
         console.log("Stats API response:", data);
@@ -74,48 +127,27 @@ document.addEventListener("DOMContentLoaded", async () => {
         valeurReponses.textContent = totalReponsesCompletees;
 
         if (!reponses || reponses.length === 0) {
-            const tbody = document.getElementById("stats-questions-tbody");
-            if (tbody) tbody.innerHTML = "<tr><td colspan='3'>Aucune réponse pour ce questionnaire.</td></tr>";
-            if (typeof window.renderStatsCharts === "function") {
-                window.renderStatsCharts([], totalReponsesCompletees, qcmParChoix, Number.parseInt(id, 10));
+            if (tbody) {
+                tbody.innerHTML = "<tr><td colspan='3'>Aucune réponse pour ce questionnaire.</td></tr>";
+            }
+            try {
+                safeRenderStatsCharts([], totalReponsesCompletees, qcmParChoix, formulaireId);
+            } catch (chartError) {
+                console.error("Erreur rendu graphiques :", chartError);
             }
             return;
         }
 
-        const tbody = document.getElementById("stats-questions-tbody");
-        if (tbody) {
-            tbody.innerHTML = "";
-            reponses.forEach(r => {
-                const key = getQuestionKey(r);
-                const textes = textResponsesByQuestion.get(key) || [];
-                const extrait = textes.length ? textes.slice(0, 3).map((t) => truncate(t)).join(" | ") : "-";
-
-                const tr = document.createElement("tr");
-
-                const questionTd = document.createElement("td");
-                questionTd.textContent = sanitizeText(r.contenu);
-
-                const countTd = document.createElement("td");
-                countTd.textContent = `${parseInt(r.nb_reponses, 10) || 0}`;
-
-                const contentTd = document.createElement("td");
-                contentTd.textContent = extrait;
-                contentTd.title = textes.join("\n") || "Aucune réponse textuelle";
-
-                tr.appendChild(questionTd);
-                tr.appendChild(countTd);
-                tr.appendChild(contentTd);
-                tbody.appendChild(tr);
-            });
-        }
-
-        if (typeof window.renderStatsCharts === "function") {
-            window.renderStatsCharts(reponses, totalReponsesCompletees, qcmParChoix, Number.parseInt(id, 10));
+        renderQuestionsTable(tbody, reponses, textResponsesByQuestion);
+        try {
+            safeRenderStatsCharts(reponses, totalReponsesCompletees, qcmParChoix, formulaireId);
+        } catch (chartError) {
+            console.error("Erreur rendu graphiques :", chartError);
         }
     } catch (err) {
         console.error("Erreur chargement stats :", err);
         valeurReponses.textContent = "Erreur";
     }
-});
+}
 
 

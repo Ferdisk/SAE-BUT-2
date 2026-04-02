@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Detail QCM</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="/statistiques/css/statisticsQcmQuestionDetail.css">
+  </head>
+  <body>
+    <header class="header">
+      <img src="/images/media/logoUnilimBlancAvecTexte.png" alt="Universite de Limoges" class="logo">
+      <div class="title">Gestionnaire de Questionnaires</div>
+      <div class="header-right">
+        <a href="/loginProf" id="logout-btn" class="logout">Deconnexion</a>
+      </div>
+    </header>
+
+    <main class="page">
+      <div class="top-actions">
+        <a id="back-link" class="back-link" href="/statistics">
+          <i class="fa-solid fa-arrow-left"></i>
+          Retour aux statistiques
+        </a>
+      </div>
+
+      <section class="card">
+        <h1 class="main-title">Detail des reponses QCM</h1>
+        <p id="question-content" class="question-content">Chargement de la question...</p>
+      </section>
+
+      <section class="card">
+        <div class="meta-row">
+          <span class="meta-label">Total des reponses pour cette question:</span>
+          <span id="answer-count" class="meta-value">0</span>
+        </div>
+
+        <div class="chart-wrap">
+          <canvas id="qcm-detail-chart"></canvas>
+        </div>
+
+        <table class="answers-table" id="answers-table">
+          <thead>
+            <tr>
+              <th>#</th>
+              <th>Choix</th>
+              <th>Reponses</th>
+              <th>Part (%)</th>
+            </tr>
+          </thead>
+          <tbody id="answers-tbody"></tbody>
+        </table>
+
+        <p id="empty-state" class="empty-state" hidden>Aucune reponse QCM pour cette question.</p>
+      </section>
+    </main>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="/statistiques/scripts/script_statisticsQcmQuestionDetail.js"></script>
+  </body>
+</html>

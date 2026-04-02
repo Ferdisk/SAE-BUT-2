@@ -7,7 +7,7 @@ document.addEventListener("DOMContentLoaded", () => {
     if (!startBtn) return;
 
     const scanner = new Html5QrcodeScanner(
-        "reader", 
+        "reader",
         { fps: 10, qrbox: { width: 250, height: 250 } }
     );
 

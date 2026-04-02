@@ -1,0 +1,144 @@
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: 'Trebuchet MS', 'Segoe UI', sans-serif;
+  background: #f2f5f9;
+  color: #1b2838;
+}
+
+.header {
+  min-height: 70px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 0.8rem 1.2rem;
+  background: #cf0909;
+  color: #fff;
+}
+
+.logo {
+  height: 36px;
+  width: auto;
+}
+
+.title {
+  font-size: 1.1rem;
+  font-weight: 700;
+}
+
+.logout {
+  color: #fff;
+  text-decoration: none;
+  font-weight: 600;
+}
+
+.page {
+  width: min(1100px, 94vw);
+  margin: 1.2rem auto 2.5rem;
+  display: grid;
+  gap: 1rem;
+}
+
+.top-actions {
+  display: flex;
+  align-items: center;
+}
+
+.back-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  text-decoration: none;
+  color: #1d3557;
+  font-weight: 700;
+}
+
+.card {
+  background: #fff;
+  border-radius: 14px;
+  box-shadow: 0 10px 24px rgba(20, 34, 57, 0.08);
+  padding: 1rem 1.1rem;
+}
+
+.main-title {
+  margin: 0;
+  font-size: clamp(1.1rem, 2.2vw, 1.5rem);
+  color: #1d3557;
+}
+
+.question-content {
+  margin: 0.55rem 0 0;
+  line-height: 1.4;
+  font-weight: 600;
+}
+
+.meta-row {
+  display: flex;
+  align-items: baseline;
+  gap: 0.5rem;
+  margin-bottom: 1rem;
+}
+
+.meta-label {
+  font-weight: 600;
+}
+
+.meta-value {
+  font-size: 1.15rem;
+  color: #e2001a;
+  font-weight: 800;
+}
+
+.chart-wrap {
+  width: 100%;
+  max-width: 550px;
+  margin: 0 auto 1rem;
+}
+
+.answers-table {
+  width: 100%;
+  border-collapse: collapse;
+  overflow: hidden;
+  border-radius: 10px;
+}
+
+.answers-table th,
+.answers-table td {
+  border: 1px solid #d5deea;
+  padding: 0.62rem;
+  text-align: left;
+}
+
+.answers-table th {
+  background: #b00404;
+  color: #fff;
+}
+
+.answers-table tbody tr:nth-child(even) {
+  background: #f7f9fc;
+}
+
+.empty-state {
+  margin-top: 0.5rem;
+  color: #6b7280;
+  font-style: italic;
+}
+
+@media (max-width: 760px) {
+  .header {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .chart-wrap {
+    max-width: 100%;
+  }
+
+  .answers-table {
+    font-size: 0.92rem;
+  }
+}

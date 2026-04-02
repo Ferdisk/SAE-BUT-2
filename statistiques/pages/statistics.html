@@ -36,18 +36,18 @@
                 <img src="/images/media/completion_icon.ico" alt="Icône Complétions" class="icon-completions">
             </div>
         </div>
-<!---ici les charts(digramme en barre) qui proviennent de ../../scripts/Chart.js -->
+
         <div class="chart-container">
             <div class="chart-left">
                 <div class="chart-title">Distribution des Étudiants ayant répondu</div>
- <!--CHART NOTE--><canvas class="nbStudentChart" id="nbStudentChart"></canvas>
+                    <canvas class="nbStudentChart" id="nbStudentChart"></canvas>
             </div>
             <div class="chart-right">
                 <div class="chart-title">Performance par Question</div>
-<!--CHART RATE--><canvas class="completionRateChart" id="completionRateChart"></canvas>
+                    <canvas class="completionRateChart" id="completionRateChart"></canvas>
             </div>
         </div>
-<!-- Tableau des résultats individuels -->
+
         <div class="individual-result">
             <div class="result-title">Réponses par Question</div>
             <table class="result-table">
@@ -64,7 +64,8 @@
 
         </div>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-        <script src="/statistiques/scripts/Charts.js"></script>
+        <script src="/statistiques/scripts/chartsTextQuestions.js"></script>
+        <script src="/statistiques/scripts/qcmDetailAccess.js"></script>
         <script src="/statistiques/scripts/script_statistiques.js"></script>
     </body>
 </html>

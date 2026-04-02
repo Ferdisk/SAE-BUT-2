@@ -33,9 +33,6 @@ document.getElementById('submitUser').addEventListener('click', async function()
 	return;
     }
 
-    alert('mail :' + newUserMail);
-    alert('mdp:' + newUserPassword);
-
     const response = await fetch("http://164.81.120.71:3000/addUser", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
